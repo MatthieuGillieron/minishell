@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 17:20:04 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/08 17:13:28 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/08 17:13:28 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-int	g_exit_status = 0;
+void	execute_command(char **argv, char **envp);
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	init_signals();
-	shell_loop(envp);
-	return (g_exit_status);
-}
+#endif

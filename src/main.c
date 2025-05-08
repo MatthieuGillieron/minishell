@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 14:14:17 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:50:15 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
     (void)argv;
     (void)envp;
 
-    init_signals(); // Ajout du point-virgule ici
+    init_signals();
     while (1)
     {
         line = readline("shell$ ");  // <- ton prompt personnalisé ici

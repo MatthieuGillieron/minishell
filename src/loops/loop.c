@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:14:24 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 15:14:24 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/08 15:18:22 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 extern int g_exit_status;
 
-void	sigint_handler(int sig)
+void	shell_loop(void)
 {
-	(void)sig;
-	g_exit_status = 130;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	char	*line;
 
-void	init_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	while (1)
+	{
+		line = readline("shell$ ");
+		if (!line)
+		{
+			write(1, "exit\n", 5);
+			break;
+		}
+		if (*line)
+			add_history(line);
+		free(line);
+	}
 }

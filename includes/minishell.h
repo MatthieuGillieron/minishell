@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 14:07:26 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/08 15:21:21 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int g_exit_status;
 
 /*
 	Bibliotheque
@@ -31,6 +32,8 @@
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
+# include "signals.h"
+# include "loop.h"
 
 
 /*
@@ -45,7 +48,5 @@
 # define MAGENTA	"\033[1;35m"	
 # define CYAN		"\033[1;36m"	
 # define WHITE		"\033[1;37m"
-
-
 
 #endif

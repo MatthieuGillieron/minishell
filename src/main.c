@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 14:50:15 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/08 15:19:06 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,13 @@
 
 int	g_exit_status = 0;
 
-void	sigint_handler(int sig)
-{
-	(void)sig;
-	g_exit_status = 130;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	init_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);       
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-    char	*line;
+	(void)argc;
+	(void)argv;
+	(void)envp;
 
-    (void)argc;
-    (void)argv;
-    (void)envp;
-
-    init_signals();
-    while (1)
-    {
-        line = readline("shell$ ");  // <- ton prompt personnalisé ici
-        if (!line) // ctrl-D
-        {
-            write(1, "exit\n", 5);
-            break;
-        }
-        if (*line)
-            add_history(line);
-        free(line);
-    }
-    return (g_exit_status);
+	init_signals();
+	shell_loop();
+	return (g_exit_status);
 }

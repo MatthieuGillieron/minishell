@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:43 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:35:12 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,18 @@ void	shell_loop(void)
 	{
 		line = readline("shell$ ");
 		if (!line)
+		{
+			write(1, "exit\n", 5);
 			break;
+		}
 		if (*line)
 			add_history(line);
+		argv = parse_line(line);
+		if (argv && argv[0])
+		{
+			print_tokens(argv);
+			free_tokens(argv);
+		}
 		free(line);
 	}
 }

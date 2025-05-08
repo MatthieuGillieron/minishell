@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 15:21:21 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:23:05 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ extern int g_exit_status;
 # include <termios.h>
 # include "signals.h"
 # include "loop.h"
+# include "parsing.h"
+# include "../libft/includes/libft.h"
 
 
 /*

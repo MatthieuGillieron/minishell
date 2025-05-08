@@ -10,18 +10,14 @@ INCDIR = includes
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 
-# Ajouter tous les fichiers source nécessaires
-SRCS = $(SRCDIR)/main.c \
-        $(SRCDIR)/signals/signals.c \
-        $(SRCDIR)/loops/loop.c \
-        $(SRCDIR)/parsing/parser.c \
-		$(SRCDIR)/execution/executor.c
-        
+SRCS := $(shell find $(SRCDIR) -type f -name "*.c" | sort)
 
 # Modification importante ici pour conserver la structure de dossiers
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-# Création de la liste des dossiers objets nécessaires
-OBJ_DIRS = $(OBJDIR) $(OBJDIR)/signals $(OBJDIR)/loops $(OBJDIR)/parsing
+
+# Création dynamique de la liste des dossiers objets nécessaires
+# Cette commande extrait tous les dossiers présents dans les chemins d'objets
+OBJ_DIRS := $(shell dirname $(OBJS) | sort | uniq)
 
 # Flags for readline library - adaptés pour fonctionner sur différents systèmes
 ifeq ($(shell uname), Darwin) # macOS
@@ -34,13 +30,15 @@ else # Linux et autres
 endif
 
 # Colors for output messages
-SUCCESS = "\033[1;92m✅ Compilation réussie ! ✅\033[0m"
+SUCCESS = "\033[1;92m Compilation réussie ! ✅\033[0m"
 FAILURE = "\033[1;91m❌ Erreur de compilation ! ❌\033[0m"
 LIBFT_COMP = "\033[1;94m🔨 Compilation de la libft... 🔨\033[0m"
 MINISHELL_COMP = "\033[1;94m🔨 Compilation de minishell... 🔨\033[0m"
 CLEAN_MSG = "\033[1;93m🧹 Nettoyage des fichiers objets... 🧹\033[0m"
 FCLEAN_MSG = "\033[1;93m🧹 Nettoyage complet... 🧹\033[0m"
 NO_CHANGES = "\033[1;96m🔄 Aucun changement nécessaire 🔄\033[0m"
+
+# Suppression de la fonction print_success et utilisation d'une méthode plus directe
 
 all: $(OBJ_DIRS) libft_make $(NAME)
 
@@ -56,9 +54,22 @@ $(LIBFT):
 	@echo $(LIBFT_COMP)
 	@$(MAKE) -C $(LIBFTDIR) || (echo $(FAILURE) && exit 1)
 
+# Version simplifiée qui évite les problèmes de caractères spéciaux
 $(NAME): $(OBJS) $(LIBFT)
 	@echo $(MINISHELL_COMP)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(LDFLAGS) && echo $(SUCCESS) || (echo $(FAILURE) && exit 1)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(LDFLAGS) && { \
+        echo "\033[1;35m"; \
+        echo "                                  __              ___    ___      "; \
+        echo "           __          __        /\ \            /\_ \  /\_ \     "; \
+        echo "  ___ ___ /\_\    ___ /\_\    ___\ \ \___      __\//\ \ \//\ \    "; \
+        echo "/' __\` __\`\/\ \ /' _ \`\/\ \  /',__\ \  _ \`\  /'__\`\\\\ \ \  \ \ \   "; \
+        echo "/\ \/\ \/\ \ \ \/\ \/\ \ \ \/\__, \`\ \ \ \ \/\  __/ \_\ \_ \_\ \_ "; \
+        echo "\ \_\ \_\ \_\ \_\ \_\ \_\ \_\/\____/\ \_\ \_\ \____\/\____\/\____\\"; \
+        echo " \/_/\/_/\/_/\/_/\/_/\/_/\/_/\/___/  \/_/\/_/\/____/\/____/\/____/"; \
+        echo "\033[0m"; \
+        echo $(SUCCESS); \
+    } || { echo $(FAILURE) && exit 1; }
+	@touch $@
 
 # Règle modifiée pour la compilation des fichiers objets
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -71,7 +82,6 @@ clean:
 	@rm -rf $(OBJDIR) 2>/dev/null || true
 	@$(MAKE) -C $(LIBFTDIR) clean
 
-# fclean ne dépend plus de clean
 fclean:
 	@echo $(FCLEAN_MSG)
 	@$(RM) $(NAME)
@@ -81,4 +91,13 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re libft_make
+# Règle pour vérifier les leaks mémoire (utilise valgrind sous Linux et leaks sous macOS)
+leaks: $(NAME)
+	@echo "\033[1;94m🔍 Vérification des fuites mémoire... 🔍\033[0m"
+ifeq ($(shell uname), Darwin)
+	@leaks -atExit -- ./$(NAME) || true
+else
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+endif
+
+.PHONY: all clean fclean re libft_make leaks

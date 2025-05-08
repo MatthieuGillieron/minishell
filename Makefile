@@ -13,7 +13,9 @@ LIBFT = $(LIBFTDIR)/libft.a
 # Ajouter tous les fichiers source nécessaires
 SRCS = $(SRCDIR)/main.c \
 		$(SRCDIR)/signals/signals.c \
-		$(SRCDIR)/loops/loop.c
+		$(SRCDIR)/loops/loop.c \
+		$(SRCDIR)/parsing/parser.c \
+		
 
 # Modification importante ici pour conserver la structure de dossiers
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
@@ -55,7 +57,7 @@ $(NAME): $(OBJS) $(LIBFT)
 # Règle modifiée pour la compilation des fichiers objets
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -I$(INCDIR) -I$(LIBFTDIR) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -I$(INCDIR) -I$(LIBFTDIR) -c $< -o $@
 
 clean:
 	@echo $(CLEAN_MSG)

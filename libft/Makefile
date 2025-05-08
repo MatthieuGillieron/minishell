@@ -1,16 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mg <mg@student.42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/05 11:12:59 by mg                #+#    #+#              #
-#    Updated: 2025/05/08 15:53:13 by mg               ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-
 NAME = libft.a
 
 SRC_LIBFT = src/libft/ft_isalpha.c src/libft/ft_isdigit.c src/libft/ft_isalnum.c \
@@ -36,19 +23,24 @@ CC = gcc
 AR = ar rcs
 RM = rm -f
 
+# Colors for output messages
+SUCCESS = "\033[1;92m✅ libft compilée! ✅\033[0m"
+FAILURE = "\033[1;91m❌ Erreur de compilation libft! ❌\033[0m"
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
+	@echo $(SUCCESS)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@ || (echo $(FAILURE) && exit 1)
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

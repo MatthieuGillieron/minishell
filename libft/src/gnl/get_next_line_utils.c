@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:47:00 by mg                #+#    #+#             */
-/*   Updated: 2025/02/12 22:53:58 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/08 18:48:14 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(const char *str)
 }
 
 /* affcihe suite (i = o : hello wordl -> o world)*/
-char	*ft_strchr(const char *src, int i)
+char	*gnl_strchr(const char *src, int i)
 {
 	if (!src)
 		return (NULL);
@@ -40,7 +40,7 @@ char	*ft_strchr(const char *src, int i)
 	return (0);
 }
 
-char	*ft_strdup(const char *src)
+char	*gnl_strdup(const char *src)
 {
 	int		i;
 	int		len;
@@ -60,7 +60,7 @@ char	*ft_strdup(const char *src)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;

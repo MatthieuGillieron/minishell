@@ -1,46 +1,6 @@
 
 # Fichier pour doc projet 
 
-## 🧠 Comprendre les signaux Unix
-
-Un **signal Unix** est un mécanisme de communication entre le système d’exploitation et un processus, ou entre processus.  
-C’est comme un message envoyé pour dire : "attention, il s’est passé quelque chose !"
-
-Quand un signal est reçu par un processus :
-- soit il applique le **comportement par défaut** (exemple : arrêter le process)
-- soit il intercepte le signal avec une **fonction handler personnalisée**
-- soit il ignore le signal
-
----
-
-### 📋 Quelques signaux importants
-
-| Signal   | Numéro | Nom complet   | Comportement par défaut      | Provoqué par              |
-|----------|--------|---------------|------------------------------|--------------------------|
-| SIGINT    | 2      | Interrupt     | Arrêter le processus          | **Ctrl+C** dans terminal  |
-| SIGQUIT   | 3      | Quit          | Arrêter + créer un core dump  | **Ctrl+\\**               |
-| SIGTERM   | 15     | Terminate     | Arrêter le processus          | `kill pid`                |
-| SIGKILL   | 9      | Kill          | Forcer l’arrêt (non interceptable) | `kill -9 pid`         |
-| SIGSTOP   | 19     | Stop          | Suspendre (non interceptable) | `kill -STOP pid` ou Ctrl+Z |
-
----
-
-## 🚩 Les signaux gérés actuellement
-
-Notre minishell gère **SIGINT** et **SIGQUIT**.
-
-### 🔧 SIGINT (Ctrl+C)
-
-Quand l’utilisateur tape **Ctrl+C**, le terminal envoie **SIGINT (signal numéro 2)** au shell.  
-Par défaut, ce signal **tue le processus en cours.**
-
-Mais dans notre minishell, on intercepte ce signal grâce à :
-
-```c
-signal(SIGINT, sigint_handler);
-
----
-
 # 🐚 Minishell – Documentation (état actuel)
 
 ## 📖 Introduction
@@ -117,3 +77,42 @@ Ensuite, nous ajouterons la recherche de l’exécutable dans le PATH, la gestio
 
 ---
 
+## 🧠 Comprendre les signaux Unix
+
+Un **signal Unix** est un mécanisme de communication entre le système d’exploitation et un processus, ou entre processus.  
+C’est comme un message envoyé pour dire : "attention, il s’est passé quelque chose !"
+
+Quand un signal est reçu par un processus :
+- soit il applique le **comportement par défaut** (exemple : arrêter le process)
+- soit il intercepte le signal avec une **fonction handler personnalisée**
+- soit il ignore le signal
+
+---
+
+### 📋 Quelques signaux importants
+
+| Signal   | Numéro | Nom complet   | Comportement par défaut      | Provoqué par              |
+|----------|--------|---------------|------------------------------|--------------------------|
+| SIGINT    | 2      | Interrupt     | Arrêter le processus          | **Ctrl+C** dans terminal  |
+| SIGQUIT   | 3      | Quit          | Arrêter + créer un core dump  | **Ctrl+\\**               |
+| SIGTERM   | 15     | Terminate     | Arrêter le processus          | `kill pid`                |
+| SIGKILL   | 9      | Kill          | Forcer l’arrêt (non interceptable) | `kill -9 pid`         |
+| SIGSTOP   | 19     | Stop          | Suspendre (non interceptable) | `kill -STOP pid` ou Ctrl+Z |
+
+---
+
+## 🚩 Les signaux gérés actuellement
+
+Notre minishell gère **SIGINT** et **SIGQUIT**.
+
+### 🔧 SIGINT (Ctrl+C)
+
+Quand l’utilisateur tape **Ctrl+C**, le terminal envoie **SIGINT (signal numéro 2)** au shell.  
+Par défaut, ce signal **tue le processus en cours.**
+
+Mais dans notre minishell, on intercepte ce signal grâce à :
+
+```c
+signal(SIGINT, sigint_handler);
+
+---

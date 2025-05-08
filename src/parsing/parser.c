@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:19:01 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:55 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/08 17:52:40 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ char	**parse_line(char *line)
 	if (!line)
 		return (NULL);
 	return (ft_split(line, ' '));
-}
-
-void	print_tokens(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		printf("argv[%d]: %s\n", i, argv[i]);
-		i++;
-	}
 }
 
 void	free_tokens(char **argv)

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 16:19:28 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:52:44 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/08 17:53:19 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/08 17:53:19 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef PATH_H
+# define PATH_H
 
-char	**parse_line(char *line);
-void	free_tokens(char **argv);
-
+char	*get_path_env(char **envp);
+char	*find_command_path(char *cmd, char **envp);
+void	free_split(char **split);
 
 #endif

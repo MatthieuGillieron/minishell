@@ -30,22 +30,19 @@ MINISHELL_COMP = "\033[1;94m🔨 Compilation de minishell... 🔨\033[0m"
 CLEAN_MSG = "\033[1;93m🧹 Nettoyage des fichiers objets... 🧹\033[0m"
 FCLEAN_MSG = "\033[1;93m🧹 Nettoyage complet... 🧹\033[0m"
 
-# Compilation complète
-all: $(OBJ_DIRS) $(LIBFT) $(NAME)
+all: $(OBJ_DIRS) libft $(NAME)
 
 # Création dossier obj
 $(OBJ_DIRS):
 	@mkdir -p $@
 
-# Compilation libft
-$(LIBFT):
+libft:
 	@echo $(LIBFT_COMP)
 	@$(MAKE) -C $(LIBFTDIR)
 
-# Compilation de minishell
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS)
 	@echo $(MINISHELL_COMP)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFTDIR) -lft -o $(NAME) $(LDFLAGS) && echo $(SUCCESS) || echo $(FAILURE)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFTDIR) -lft $(LDFLAGS) && echo $(SUCCESS) || echo $(FAILURE)
 
 # Compilation des .o
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJ_DIRS)
@@ -66,3 +63,5 @@ fclean: clean
 
 # Rebuild complet
 re: fclean all
+
+.PHONY: all clean fclean re

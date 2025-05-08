@@ -23,18 +23,13 @@ CC = gcc
 AR = ar rcs
 RM = rm -f
 
-# Colors for output messages
-SUCCESS = "\033[1;92m✅ libft compilée! ✅\033[0m"
-FAILURE = "\033[1;91m❌ Erreur de compilation libft! ❌\033[0m"
-
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
-	@echo $(SUCCESS)
 
 %.o: %.c
-	@$(CC) $(FLAGS) -c $< -o $@ || (echo $(FAILURE) && exit 1)
+	@$(CC) $(FLAGS) -c $< -o $@ || exit 1
 
 clean:
 	@$(RM) $(OBJS)

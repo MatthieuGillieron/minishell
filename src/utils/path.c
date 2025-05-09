@@ -6,11 +6,19 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:53:04 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:53:04 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:52:36 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*get_command_path(char *cmd, char **envp)
+{
+	if (ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
+	return (find_command_path(cmd, envp));
+}
+
 
 char	*get_path_env(char **envp)
 {

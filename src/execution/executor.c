@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 18:22:57 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:51:08 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ void	execute_command(char **argv, char **envp)
 	char	*path;
 	int		status;
 
-	path = NULL;
-	if (ft_strchr(argv[0], '/'))
-		path = ft_strdup(argv[0]);
-	else
-		path = find_command_path(argv[0], envp);
+	if (check_builtin(argv))
+		return ;
+	path = get_command_path(argv[0], envp);
 	if (!path)
 		return (ft_putstr_fd("command not found: ", 2),
 			ft_putendl_fd(argv[0], 2));

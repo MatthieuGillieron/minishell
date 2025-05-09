@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:23:13 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:06:45 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	shell_loop(char **envp)
 
 	while (1)
 	{
-		line = readline("shell$ ");
+		line = readline(MAGENTA"MNM$ "RST);
 		if (!line)
 		{
 			write(1, "exit\n", 5);

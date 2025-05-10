@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 11:04:13 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/10 17:17:55 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/10 16:56:36 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/10 17:04:29 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef ENV_H
+# define ENV_H
 
-/**
- * Affiche toutes les variables d'environnement (équivalent de la commande env).
- *
- * @param env_copy Le tableau d'environnement dynamique à afficher.
- */
-void	builtin_env(char **env_copy)
-{
-	int	i;
+char	**copy_env(char **envp);
+void	free_env(char **env);
 
-	i = 0;
-	while (env_copy[i])
-	{
-		printf("%s\n", env_copy[i]);
-		i++;
-	}
-}
+#endif

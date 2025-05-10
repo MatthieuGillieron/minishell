@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:33:41 by mg                #+#    #+#             */
-/*   Updated: 2025/05/10 15:19:05 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:25:53 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_home_directory(void)
 	if (!home)
 	{
 		// HOME n'est pas défini → affiche une erreur
-		fprintf(stderr, "minishell: cd: HOME not set\n");
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		return (1);
 	}
 	// Tente de changer de répertoire vers HOME
@@ -71,7 +71,7 @@ static int	handle_oldpwd(void)
 	if (!old_pwd)
 	{
 		// OLDPWD n'est pas défini → affiche une erreur
-		fprintf(stderr, "minishell: cd: OLDPWD not set\n");
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		return (1);
 	}
 	// Change de répertoire vers OLDPWD

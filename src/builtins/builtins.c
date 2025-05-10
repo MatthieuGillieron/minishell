@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:58:52 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/10 15:36:57 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:15:36 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static int	check_builtin_control(char **argv)
 {
 	if (ft_strcmp(argv[0], "cd") == 0)
 		return (builtin_cd(argv), 1);
-	// Ajouter export, unset, exit quand fonction cree
+	if (strcmp(argv[0], "exit") == 0)
+		return (builtin_exit(argv), 1);
+	// Ajouter export, unset, quand fonction cree
 	return (0);
 }
 

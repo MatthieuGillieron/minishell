@@ -11,7 +11,7 @@ src/libft/ft_calloc.c src/libft/ft_strdup.c src/libft/ft_substr.c \
 src/libft/ft_strjoin.c src/libft/ft_strtrim.c src/libft/ft_split.c \
 src/libft/ft_itoa.c src/libft/ft_strmapi.c src/libft/ft_striteri.c \
 src/libft/ft_putchar_fd.c src/libft/ft_putstr_fd.c src/libft/ft_putendl_fd.c \
-src/libft/ft_putnbr_fd.c
+src/libft/ft_putnbr_fd.c src/libft/ft_strncmp.c
 
 SRC_GNL = src/gnl/get_next_line.c src/gnl/get_next_line_utils.c
 SRC_PRINTF = src/printf/ft_print.c src/printf/utils.c src/printf/utils_2.c src/printf/utils_3.c

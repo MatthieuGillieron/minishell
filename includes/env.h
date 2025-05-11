@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.h                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 17:53:19 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:42:12 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/10 16:56:36 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/11 13:27:41 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_H
-# define PATH_H
+#ifndef ENV_H
+# define ENV_H
 
-char	*get_path_env(t_env *env);
-char	*get_command_path(char *cmd, t_env *env);
-void	free_split(char **split);
-char	*get_command_path(char *cmd, t_env *env);
+t_env	*init_env_list(char **envp);
+char	*env_get(t_env *env, const char *key);
+int		env_set(t_env **env, const char *key, const char *value);
+int		env_unset(t_env **env, const char *key);
+char	**env_to_array(t_env *env);
+void	free_env_list(t_env *env);
 
 #endif

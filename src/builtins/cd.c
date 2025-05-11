@@ -6,88 +6,79 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:33:41 by mg                #+#    #+#             */
-/*   Updated: 2025/05/11 13:56:40 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/11 17:11:17 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-#include "../../includes/minishell.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 /**
- * Gère le cas où cd est appelé sans argument (aller au $HOME)
+ * update_env_vars - Met à jour les variables PWD et OLDPWD.
+ * @env: Double pointeur sur liste env.
  * 
- * @return 0 en cas de succès, 1 sinon
+ * Retourne 0 si tout est ok, 1 en cas d'erreur.
  */
-static int	handle_home_directory(void)
+static int	update_env_vars(t_env **env)
 {
-	char	*home;
+	char	cwd[1024];
 
-	home = getenv("HOME");
-	if (!home)
-	{
-		fprintf(stderr, "minishell: cd: HOME not set\n");
+	if (!getcwd(cwd, sizeof(cwd)))
 		return (1);
-	}
-	if (chdir(home) != 0)
-	{
-		perror("minishell: cd");
-		return (1);
-	}
-	return (0);
+	return (
+		env_set(env, "OLDPWD", env_get(*env, "PWD")) ||
+		env_set(env, "PWD", cwd)
+	);
 }
 
 /**
- * Implémentation de la commande builtin cd
- * Change le répertoire courant
- *
- * @param argv Arguments de la commande (argv[0] est "cd")
- * @return 0 en cas de succès, 1 sinon
+ * handle_home_directory - Gère `cd` sans argument, vers HOME.
+ * @env: Pointeur sur env.
+ * 
+ * Retourne 0 si succès, sinon 1.
  */
-int	builtin_cd(char **argv)
+static int	handle_home_directory(t_env **env)
 {
-    if (!argv[1] || ft_strcmp(argv[1], "~") == 0)
-        return (handle_home_directory());
-    else if (ft_strcmp(argv[1], "-") == 0)
-    {
-        // Implémentation du cd - (retour au répertoire précédent)
-        char *oldpwd = getenv("OLDPWD");
-        if (!oldpwd)
-        {
-            fprintf(stderr, "minishell: cd: OLDPWD not set\n");
-            return (1);
-        }
-        if (chdir(oldpwd) != 0)
-        {
-            perror("minishell: cd");
-            return (1);
-        }
-        printf("%s\n", oldpwd);
-        return (0);
-    }
-    else
-    {
-        if (chdir(argv[1]) != 0)
-        {
-            perror("minishell: cd");
-            return (1);
-        }
-    }
-    
-    // Mise à jour des variables d'environnement PWD et OLDPWD
-    char current_dir[1024];
-    char *old_pwd;
-    
-    old_pwd = getenv("PWD");
-    if (old_pwd)
-        setenv("OLDPWD", old_pwd, 1);
-    
-    if (getcwd(current_dir, sizeof(current_dir)))
-        setenv("PWD", current_dir, 1);
-    
-    return (0);
+	char	*home = env_get(*env, "HOME");
+
+	if (!home)
+		return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
+	if (chdir(home) != 0)
+		return (perror("cd"), 1);
+	return (update_env_vars(env));
+}
+
+/**
+ * handle_oldpwd - Gère `cd -`, pour revenir à l’ancien répertoire.
+ * @env: Environnement.
+ * 
+ * Retourne 0 si succès, sinon 1.
+ */
+static int	handle_oldpwd(t_env **env)
+{
+	char	*old_pwd = env_get(*env, "OLDPWD");
+
+	if (!old_pwd)
+		return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
+	if (chdir(old_pwd) != 0)
+		return (perror("cd"), 1);
+	printf("%s\n", old_pwd);
+	return (update_env_vars(env));
+}
+
+/**
+ * builtin_cd - Implémente le builtin cd (déplacement répertoire).
+ * @argv: Arguments.
+ * @env: Liste env modifiable.
+ * 
+ * Retourne 0 ou 1 selon le succès.
+ */
+int	builtin_cd(char **argv, t_env **env)
+{
+	if (!argv[1] || ft_strcmp(argv[1], "~") == 0)
+		return (handle_home_directory(env));
+	else if (ft_strcmp(argv[1], "-") == 0)
+		return (handle_oldpwd(env));
+	else if (chdir(argv[1]) != 0)
+		return (perror("cd"), 1);
+	return (update_env_vars(env));
 }

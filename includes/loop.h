@@ -6,13 +6,13 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:20:18 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:24:06 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:41:24 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOOP_H
 # define LOOP_H
 
-void	shell_loop(char **envp);
+void	shell_loop(t_env *env);
 
 #endif

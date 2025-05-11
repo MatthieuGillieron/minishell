@@ -6,17 +6,22 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:03:52 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/09 11:03:52 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:55:01 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	builtin_echo(char **argv)
+/**
+ * builtin_echo - Affiche les arguments à la suite avec un espace.
+ * @argv: Liste des mots à afficher.
+ * 
+ * Retourne toujours 0.
+ */
+int	builtin_echo(char **argv)
 {
-	int	i;
+	int	i = 1;
 
-	i = 1;
 	while (argv[i])
 	{
 		printf("%s", argv[i]);
@@ -25,4 +30,5 @@ void	builtin_echo(char **argv)
 		i++;
 	}
 	printf("\n");
+	return (0);
 }

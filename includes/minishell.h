@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/10 16:57:44 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:33:29 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define MINISHELL_H
 
 extern int g_exit_status;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 
 /*
 	Bibliotheque

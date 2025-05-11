@@ -6,33 +6,30 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:45:04 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/10 16:14:51 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:55:38 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * is_valid_exit_char - Vérifie si le caractère est valide pour un nombre.
+ * @c: caractère à tester.
+ * @pos: position dans la chaîne (utile pour '+' ou '-').
+ * 
+ * Retourne 1 si c’est un caractère valide, 0 sinon.
+ */
 static int	is_valid_exit_char(char c, int pos)
 {
 	return (ft_isdigit(c) || (pos == 0 && (c == '-' || c == '+')));
 }
 
 /**
- * Implémentation de la commande builtin `exit`
- *
- * Comporte uniquement le comportement standard attendu par Bash :
- * - Affiche "exit" sur la sortie standard avant de quitter (même cas d'erreur)
- * - Si aucun argument : quitte avec code 0
- * - Si un argument numérique valide : quitte avec ce code
- * - Si un argument non numérique : affiche une erreur et quitte avec code 2
- * - Si plus d'un argument : affiche "too many arguments" et NE quitte PAS
- *
- * Restrictions respectées :
- * - Utilise uniquement printf et ft_putstr_fd/ft_putendl_fd pour stderr
- * - Conforme au comportement de Bash
- *
- * @param argv Tableau des arguments (argv[0] = "exit", argv[1] = value option)
- * @return 1 si trop d'arguments et le shell ne quitte pas, rien sinon
+ * builtin_exit - Gère le comportement du builtin exit.
+ * @argv: Arguments. Peut inclure un code de sortie.
+ * 
+ * Quitte le programme ou affiche erreur si trop d’arguments.
+ * Retourne 1 si trop d’arguments (ne quitte pas).
  */
 int	builtin_exit(char **argv)
 {

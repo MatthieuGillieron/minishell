@@ -6,18 +6,31 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:19:01 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:52:40 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:58:26 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * Découpe une ligne de commande en tokens.
+ * Utilise un simple split par espaces.
+ *
+ * @param line Ligne entrée par l'utilisateur.
+ * @return Un tableau de chaînes représentant les tokens.
+ */
 char	**parse_line(char *line)
 {
 	if (!line)
 		return (NULL);
 	return (ft_split(line, ' '));
 }
+
+/**
+ * Libère un tableau de tokens généré par parse_line.
+ *
+ * @param argv Le tableau à libérer.
+ */
 
 void	free_tokens(char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/10 17:15:26 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:00:41 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,29 @@
 int	g_exit_status = 0;
 
 /**
- * Point d'entrée principal du shell.
- * Initialise les signaux, copie l'environnement, démarre la boucle principale.
+ * Fonction principale du programme minishell.
  *
- * @param argc Nombre d'arguments (non utilisé).
- * @param argv Arguments du programme (non utilisé).
- * @param envp Environnement initial du système.
- * @return Le code de sortie final (g_exit_status).
+ * - Initialise les signaux pour intercepter Ctrl+C / Ctrl+\
+ * - Transforme le tableau d’environnement de base `envp` en liste chaînée
+ * - Démarre la boucle d'exécution du shell (`shell_loop`)
+ * - Nettoie la mémoire à la fin de l'exécution
+ *
+ * @param argc Nombre d’arguments passés au programme (non utilisé ici)
+ * @param argv Tableau des arguments (non utilisé ici)
+ * @param envp Tableau de chaînes représentant l’environnement système initial
+ * @return Code de sortie global défini dans `g_exit_status`
  */
 int	main(int argc, char **argv, char **envp)
 {
-	char	**env_copy;
+	t_env	*env;
 
 	(void)argc;
 	(void)argv;
-	env_copy = copy_env(envp);
-	if (!env_copy)
+	env = init_env_list(envp);
+	if (!env)
 		return (1);
 	init_signals();
-	shell_loop(env_copy);
-	free_env(env_copy);
+	shell_loop(env);
+	free_env_list(env);
 	return (g_exit_status);
 }

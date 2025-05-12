@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:13:43 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 15:28:56 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/12 15:42:38 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,16 @@ static int	is_valid_identifier(char *name)
     return (1);
 }
 
-/**
- * handle_export_arg - Traite un argument de export.
- * @arg: Argument à traiter.
- * @env: Pointeur sur la liste d'environnement.
- * 
- * Retourne 0 si succès, 1 si erreur.
- */
-static int	handle_export_arg(char *arg, t_env **env)
-{
-    char	*eq_pos;
-    char	*key = NULL;
-    char	*value = NULL;
-    int		result;
 
-    eq_pos = ft_strchr(arg, '=');
+/**
+ * validate_export_arg - Valide un argument d'export.
+ * @arg: Argument à valider.
+ * @eq_pos: Position du signe égal ou NULL.
+ * 
+ * Retourne 0 si valide, 1 si invalide.
+ */
+static int	validate_export_arg(char *arg, char *eq_pos)
+{
     if (!eq_pos)
     {
         if (!is_valid_identifier(arg))
@@ -65,7 +60,6 @@ static int	handle_export_arg(char *arg, t_env **env)
         }
         return (0);
     }
-    
     *eq_pos = '\0';
     if (!is_valid_identifier(arg))
     {
@@ -75,7 +69,28 @@ static int	handle_export_arg(char *arg, t_env **env)
         ft_putendl_fd("': not a valid identifier", 2);
         return (1);
     }
-    
+    return (0);
+}
+
+/**
+ * handle_export_arg - Traite un argument de export.
+ * @arg: Argument à traiter.
+ * @env: Pointeur sur la liste d'environnement.
+ * 
+ * Retourne 0 si succès, 1 si erreur.
+ */
+static int	handle_export_arg(char *arg, t_env **env)
+{
+    char	*eq_pos;
+    char	*key;
+    char	*value;
+    int		result;
+
+    eq_pos = ft_strchr(arg, '=');
+    if (validate_export_arg(arg, eq_pos))
+        return (1);
+    if (!eq_pos)
+        return (0);
     key = ft_strdup(arg);
     value = ft_strdup(eq_pos + 1);
     *eq_pos = '=';

@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 18:56:04 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 12:54:08 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/12 15:50:23 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,39 +107,22 @@ static void	sort_env_array(char **array)
  */
 void	print_sorted_env(t_env *env)
 {
-	printf("DEBUG: print_sorted_env appelé avec env=%p\n", (void*)env);
-
     char	**keys;
     int		i;
     t_env	*current;
     
-    keys = create_env_array(env);
-    if (!keys)
+    if (!(keys = create_env_array(env)))
         return ;
-    
     sort_env_array(keys);
-    
-    i = 0;
-    while (keys[i])
+    i = -1;
+    while (keys[++i])
     {
         current = env;
-        while (current)
-        {
-            if (ft_strcmp(current->key, keys[i]) == 0)
-            {
-                print_export_var(current->key, current->value);
-                break;
-            }
+        while (current && ft_strcmp(current->key, keys[i]) != 0)
             current = current->next;
-        }
-		printf("DEBUG: Nombre de variables: %d\n", i);
-
-        i++;
-		printf("DEBUG: Affichage des variables triées:\n");
-
+        if (current)
+            print_export_var(current->key, current->value);
     }
-    
-    // Libération du tableau
     i = 0;
     while (keys[i])
         free(keys[i++]);

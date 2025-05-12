@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 15:21:21 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:36:39 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define MINISHELL_H
 
 extern int g_exit_status;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 
 /*
 	Bibliotheque
@@ -34,7 +42,12 @@ extern int g_exit_status;
 # include <termios.h>
 # include "signals.h"
 # include "loop.h"
-
+# include "parsing.h"
+# include "executor.h"
+# include "path.h"
+# include "builtins.h"
+# include "env.h"
+# include "../libft/includes/libft.h"
 
 /*
 	Colors

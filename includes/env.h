@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 16:33:28 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:56:02 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/10 16:56:36 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/11 13:27:41 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef ENV_H
+# define ENV_H
 
-/**
- * builtin_unset - Supprime des variables d’environnement.
- * @argv: Liste de variables à supprimer.
- * @env: Double pointeur vers liste env.
- * 
- * Retourne toujours 0.
- */
- int	builtin_unset(char **argv, t_env **env)
- {
-	 int	i = 1;
- 
-	 while (argv[i])
-	 {
-		 env_unset(env, argv[i]);
-		 i++;
-	 }
-	 return (0);
- }
- 
- 
- 
+t_env	*init_env_list(char **envp);
+char	*env_get(t_env *env, const char *key);
+int		env_set(t_env **env, const char *key, const char *value);
+int		env_unset(t_env **env, const char *key);
+char	**env_to_array(t_env *env);
+void	free_env_list(t_env *env);
+
+#endif

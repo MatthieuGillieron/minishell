@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.h                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:20:18 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/12 14:58:11 by mg               ###   ########.fr       */
+/*   Created: 2025/05/10 11:46:24 by mg                #+#    #+#             */
+/*   Updated: 2025/05/10 11:50:24 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOOP_H
-# define LOOP_H
+#include <stdio.h>
 
-void	shell_loop(t_env **env);
-
-#endif
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}

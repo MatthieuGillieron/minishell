@@ -6,13 +6,13 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:14:24 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 15:14:24 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:59:45 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 void	sigint_handler(int sig)
 {

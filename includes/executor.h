@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.h                                             :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:20:18 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/12 14:58:11 by mg               ###   ########.fr       */
+/*   Created: 2025/05/08 17:13:28 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/12 14:58:05 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOOP_H
-# define LOOP_H
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-void	shell_loop(t_env **env);
+void	execute_command(char **argv, t_env **env);
 
 #endif

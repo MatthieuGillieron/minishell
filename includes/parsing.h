@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 16:33:28 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:56:02 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/08 16:19:28 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/08 17:52:44 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-/**
- * builtin_unset - Supprime des variables d’environnement.
- * @argv: Liste de variables à supprimer.
- * @env: Double pointeur vers liste env.
- * 
- * Retourne toujours 0.
- */
- int	builtin_unset(char **argv, t_env **env)
- {
-	 int	i = 1;
- 
-	 while (argv[i])
-	 {
-		 env_unset(env, argv[i]);
-		 i++;
-	 }
-	 return (0);
- }
- 
- 
- 
+char	**parse_line(char *line);
+void	free_tokens(char **argv);
+
+
+#endif

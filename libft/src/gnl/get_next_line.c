@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:00:59 by mg                #+#    #+#             */
-/*   Updated: 2024/10/28 10:14:29 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/08 18:48:44 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static char	*read_n_stash(int fd, char *buf, char *stash)
 			break ;
 		buf[read_line] = '\0';
 		if (!stash)
-			stash = ft_strdup("");
+			stash = gnl_strdup("");
 		tmp = stash;
-		stash = ft_strjoin(tmp, buf);
+		stash = gnl_strjoin(tmp, buf);
 		free(tmp);
 		tmp = NULL;
-		if (ft_strchr (buf, '\n'))
+		if (gnl_strchr (buf, '\n'))
 			break ;
 	}
 	return (stash);

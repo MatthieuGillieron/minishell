@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/11 14:00:41 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:48:39 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 		return (1);
 	init_signals();
-	shell_loop(env);
+	shell_loop(&env);
 	free_env_list(env);
 	return (g_exit_status);
 }

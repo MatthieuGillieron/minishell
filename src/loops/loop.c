@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:58:04 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:47:53 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ extern int	g_exit_status;
  *
  * @param env Structure chaînée contenant l'environnement courant.
  */
-void	shell_loop(t_env *env)
+void	shell_loop(t_env **env)
 {
 	char	*line;
 	char	**argv;

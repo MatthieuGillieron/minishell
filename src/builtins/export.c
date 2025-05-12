@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:13:43 by mg                #+#    #+#             */
-/*   Updated: 2025/05/11 19:00:47 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/12 15:28:56 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	is_valid_identifier(char *name)
 static int	handle_export_arg(char *arg, t_env **env)
 {
     char	*eq_pos;
-    char	*key;
-    char	*value;
+    char	*key = NULL;
+    char	*value = NULL;
     int		result;
 
     eq_pos = ft_strchr(arg, '=');
@@ -65,6 +65,7 @@ static int	handle_export_arg(char *arg, t_env **env)
         }
         return (0);
     }
+    
     *eq_pos = '\0';
     if (!is_valid_identifier(arg))
     {
@@ -74,6 +75,7 @@ static int	handle_export_arg(char *arg, t_env **env)
         ft_putendl_fd("': not a valid identifier", 2);
         return (1);
     }
+    
     key = ft_strdup(arg);
     value = ft_strdup(eq_pos + 1);
     *eq_pos = '=';
@@ -97,6 +99,9 @@ int	builtin_export(char **argv, t_env **env)
 {
     int	i;
     int	status;
+
+    if (!env)
+        return (1);
 
     if (!argv[1])
     {

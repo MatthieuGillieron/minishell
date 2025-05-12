@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:13:28 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:38:59 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:58:05 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-void	execute_command(char **argv, t_env *env);
+void	execute_command(char **argv, t_env **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 15:36:39 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 11:18:45 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,10 @@
 
 extern int g_exit_status;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
 
 
 /*
-	Bibliotheque
+Bibliotheque
 */
 
 # include <stdio.h>
@@ -50,7 +44,7 @@ typedef struct s_env
 # include "../libft/includes/libft.h"
 
 /*
-	Colors
+Colors
 */
 
 # define RST		"\033[0m"		
@@ -61,5 +55,37 @@ typedef struct s_env
 # define MAGENTA	"\033[1;35m"	
 # define CYAN		"\033[1;36m"	
 # define WHITE		"\033[1;37m"
+
+//	*** ENUM *** 
+
+typedef enum e_token_type
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
+	ENV_VAR,
+	QUOTE,
+	WHITESPACE,
+	END_OF_INPUT
+}	t_token_type;
+
+//	*** STRUCTURE ***
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	int				position;
+}					t_token;
 
 #endif

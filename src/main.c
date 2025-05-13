@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 14:48:39 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 16:33:30 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	g_exit_status = 0;
  * @param envp Tableau de chaînes représentant l’environnement système initial
  * @return Code de sortie global défini dans `g_exit_status`
  */
-int	main(int argc, char **argv, char **envp)
+
+ int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 
@@ -38,6 +39,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	init_signals();
 	shell_loop(&env);
+	test_lexer("echo hello | grep world > file.txt");
 	free_env_list(env);
 	return (g_exit_status);
 }
+

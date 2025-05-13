@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   u_lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 18:57:02 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 14:45:57 by mg               ###   ########.fr       */
+/*   Created: 2025/05/13 16:07:22 by mg                #+#    #+#             */
+/*   Updated: 2025/05/13 16:33:20 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#include "../../includes/minishell.h"
 
-struct s_env;
-typedef struct s_env t_env;
+int is_whitespace(char c)
+{
+    return (c == ' ' || c == '\t' || c == '\n');
+}
 
-int		builtin_export(char **argv, t_env **env);
-void	print_sorted_env(t_env *env);
+int is_special_char(char c)
+{
+    return (c == '|' || c == '<' || c == '>');
+}
 
-#endif
+int is_quote(char c)
+{
+    return (c == '\'' || c == '"');
+}

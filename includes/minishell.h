@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/13 11:53:01 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 16:24:58 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 # define MINISHELL_H
 
 extern int g_exit_status;
+
+struct s_token;
+typedef struct  s_token t_token;
+
+struct s_env;
+typedef struct s_env t_env;
+
+struct s_lexer;
+typedef struct s_lexer t_lexer;
 
 
 
@@ -41,6 +50,7 @@ Bibliotheque
 # include "path.h"
 # include "builtins.h"
 # include "env.h"
+# include "lexer.h"
 # include "../libft/includes/libft.h"
 
 /*
@@ -95,5 +105,7 @@ typedef struct s_lexer
 	size_t 	position;
 	char	current_char;
 }			t_lexer;
+
+void	test_lexer(char *input);
 
 #endif

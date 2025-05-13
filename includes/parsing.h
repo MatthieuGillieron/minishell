@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:19:28 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/08 17:52:44 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:27:02 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSING_H
 
 char	**parse_line(char *line);
-void	free_tokens(char **argv);
+void	free_args(char **argv);
 
 
 #endif

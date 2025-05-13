@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:19:01 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:58:26 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:27:04 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**parse_line(char *line)
  * @param argv Le tableau à libérer.
  */
 
-void	free_tokens(char **argv)
+void	free_args(char **argv)
 {
 	int	i;
 

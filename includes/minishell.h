@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 15:36:39 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 16:24:58 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 
 extern int g_exit_status;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+struct s_token;
+typedef struct  s_token t_token;
+
+struct s_env;
+typedef struct s_env t_env;
+
+struct s_lexer;
+typedef struct s_lexer t_lexer;
+
 
 
 /*
-	Bibliotheque
+Bibliotheque
 */
 
 # include <stdio.h>
@@ -47,10 +50,11 @@ typedef struct s_env
 # include "path.h"
 # include "builtins.h"
 # include "env.h"
+# include "lexer.h"
 # include "../libft/includes/libft.h"
 
 /*
-	Colors
+Colors
 */
 
 # define RST		"\033[0m"		
@@ -61,5 +65,47 @@ typedef struct s_env
 # define MAGENTA	"\033[1;35m"	
 # define CYAN		"\033[1;36m"	
 # define WHITE		"\033[1;37m"
+
+//	*** ENUM *** 
+
+typedef enum e_token_type
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
+	ENV_VAR,
+	QUOTE,
+	WHITESPACE,
+	END_OF_INPUT
+}	t_token_type;
+
+//	*** STRUCTURE ***
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	int				position;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct s_lexer
+{
+	char	*input;
+	size_t 	position;
+	char	current_char;
+}			t_lexer;
+
+void	test_lexer(char *input);
 
 #endif

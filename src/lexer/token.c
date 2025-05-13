@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:08:06 by mg                #+#    #+#             */
-/*   Updated: 2025/05/13 16:10:03 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 17:20:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ void free_token(t_token *token)
     {
         free(token->value);
         free(token);
-    }
-}
-
-/**
- * Affiche tous les tokens pour le débogage.
- */
-void print_tokens(t_token **tokens)
-{
-    int i = 0;
-
-    while (tokens[i])
-    {
-        printf("Token[%d]: Type=%d, Value=%s\n", i, tokens[i]->type, tokens[i]->value);
-        i++;
     }
 }
 

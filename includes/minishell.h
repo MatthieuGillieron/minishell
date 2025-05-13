@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/13 11:18:45 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/13 11:53:01 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 	int				position;
+	struct s_token	*next;
 }					t_token;
+
+typedef struct s_lexer
+{
+	char	*input;
+	size_t 	position;
+	char	current_char;
+}			t_lexer;
 
 #endif

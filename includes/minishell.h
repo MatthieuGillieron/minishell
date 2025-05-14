@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/13 16:24:58 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/14 16:13:23 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 extern int g_exit_status;
 
+// Forward declarations des structures de parser.h
 struct s_token;
 typedef struct  s_token t_token;
 
@@ -23,6 +24,12 @@ typedef struct s_env t_env;
 
 struct s_lexer;
 typedef struct s_lexer t_lexer;
+
+typedef struct s_redirect t_redirect;
+
+typedef struct s_simple_cmd t_simple_cmd;
+
+typedef struct s_command t_command;
 
 
 
@@ -51,6 +58,7 @@ Bibliotheque
 # include "builtins.h"
 # include "env.h"
 # include "lexer.h"
+# include "parser.h"
 # include "../libft/includes/libft.h"
 
 /*

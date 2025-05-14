@@ -6,16 +6,18 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:20:06 by mg                #+#    #+#             */
-/*   Updated: 2025/05/14 16:15:46 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/14 16:17:50 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+
+//forward dec.
+
 struct s_token;
 typedef struct s_token t_token;
-
 typedef enum e_token_type	t_token_type;
 
 typedef enum e_redir_type

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simple_parser.c                                    :+:      :+:    :+:   */
+/*   p_simple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:16:14 by mg                #+#    #+#             */
-/*   Updated: 2025/05/16 14:10:02 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/18 16:21:09 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../includes/parser.h"
 
 static int	add_arg(t_simple_cmd *cmd, char *arg)
 {
@@ -71,8 +72,13 @@ t_simple_cmd *parse_simple_command(t_token ***tokens_ptr)
     cmd->redirects = NULL;
     
     // Parcourir les tokens jusqu'à trouver un pipe ou la fin
-    while (**tokens_ptr && (***tokens_ptr).type != PIPE)
+    while (**tokens_ptr && (***tokens_ptr).type != PIPE && (***tokens_ptr).type != END_OF_INPUT)
     {
+
+        printf("Traitement du token: type=%d, value=%s\n", 
+			(***tokens_ptr).type, (***tokens_ptr).value);
+
+
         if ((***tokens_ptr).type == WORD)
         {
             // Ajouter l'argument à la commande
@@ -86,10 +92,16 @@ t_simple_cmd *parse_simple_command(t_token ***tokens_ptr)
             t_token_type redir_type = (***tokens_ptr).type;
             (*tokens_ptr)++; // Avancer au token après la redirection
             
+            printf("Parsing redirection de type %d\n", redir_type);
+
             // Parser la redirection
             redirect = parse_redirection(tokens_ptr, redir_type);
             if (!redirect)
-                return (NULL);
+			{
+				printf("Erreur: parse_redirection a échoué\n");
+				return (NULL);
+
+			}
             
             // Ajouter la redirection à la commande
             if (!add_redirect(cmd, redirect))
@@ -101,6 +113,9 @@ t_simple_cmd *parse_simple_command(t_token ***tokens_ptr)
             return (NULL);
         }
     }
+	 // Si on a atteint END_OF_INPUT, avancer pour éviter de le traiter à nouveau
+	 if (**tokens_ptr && (***tokens_ptr).type == END_OF_INPUT)
+	 (*tokens_ptr)++;
     
     return (cmd);
 }

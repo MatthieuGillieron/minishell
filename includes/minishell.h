@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/14 16:13:23 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/18 15:40:41 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 
 extern int g_exit_status;
 
-// Forward declarations des structures de parser.h
+// Forward declarations des structures
 struct s_token;
-typedef struct  s_token t_token;
-
+typedef struct s_token t_token;
 struct s_env;
 typedef struct s_env t_env;
-
 struct s_lexer;
 typedef struct s_lexer t_lexer;
-
+struct s_redirect;
 typedef struct s_redirect t_redirect;
-
+struct s_simple_cmd;
 typedef struct s_simple_cmd t_simple_cmd;
-
+struct s_command;
 typedef struct s_command t_command;
 
 

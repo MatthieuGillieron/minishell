@@ -6,11 +6,12 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:19:01 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/13 17:27:04 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/18 16:11:53 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../../includes/parser.h"
 
 /**
  * Découpe une ligne de commande en tokens.

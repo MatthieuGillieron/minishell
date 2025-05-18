@@ -6,13 +6,14 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:19:26 by mg                #+#    #+#             */
-/*   Updated: 2025/05/16 14:19:21 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/18 16:11:34 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../includes/parser.h"
 
-t_command	*parse_token(t_token **tokens)
+t_command	*parse_tokens(t_token **tokens)
 {
 	t_command	*cmd;
 	t_token		**current_token;

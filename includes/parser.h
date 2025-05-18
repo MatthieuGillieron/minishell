@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:20:06 by mg                #+#    #+#             */
-/*   Updated: 2025/05/14 16:17:50 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/18 15:51:44 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ struct s_token;
 typedef struct s_token t_token;
 typedef enum e_token_type	t_token_type;
 
+
 typedef enum e_redir_type
 {
 	REDIR_INPUT,
 	REDIR_OUTPUT,
-	REDIR_APPEND,
-	REDIR_HEREDOC
+	REDIR_APPEND_OUT,
+	REDIR_HEREDOC_OUT
 }	t_redir_type;
 
 
@@ -59,5 +60,11 @@ t_command *parse_tokens(t_token **tokens);
 t_simple_cmd *parse_simple_command(t_token ***tokens_ptr);
 t_redirect *parse_redirection(t_token ***tokens_ptr, t_token_type redir_type);
 void free_command(t_command *cmd);
+
+// Ajoutez cette ligne pour déclarer print_command
+void print_command(t_command *cmd);
+
+// Fonction de conversion
+t_redir_type token_to_redir_type(t_token_type token_type);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:37:37 by mg                #+#    #+#             */
-/*   Updated: 2025/05/19 12:08:36 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/19 13:58:44 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,22 @@ static void free_simple_cmd(t_simple_cmd *cmd)
 }
 
 // Libérer une structure de commande complète
-void free_command(t_command *cmd)
+void	free_command(t_command *cmd)
 {
-    int i;
+    int	i;
 
     if (!cmd)
-        return;
-
+        return ;
     if (cmd->commands)
     {
-        for (i = 0; i < cmd->cmd_count; i++)
+        i = 0;
+        while (i < cmd->cmd_count)
+        {
             free_simple_cmd(cmd->commands[i]);
+            i++;
+        }
         free(cmd->commands);
     }
-    
     free(cmd);
 }
+

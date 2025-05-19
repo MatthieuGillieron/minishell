@@ -6,71 +6,88 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:19:26 by mg                #+#    #+#             */
-/*   Updated: 2025/05/18 16:11:34 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/19 12:23:54 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/parser.h"
 
-t_command	*parse_tokens(t_token **tokens)
+/**
+ * Initialise une structure de commande avec un nombre donné de commandes
+ */
+t_command	*initialize_command(int cmd_count)
 {
-	t_command	*cmd;
-	t_token		**current_token;
-	int i;
+    t_command	*cmd;
+    int			i;
 
-	if (!tokens || !tokens[0])
-		return (NULL);
-
-	// Allouer la structure de commande principale
-	cmd = (t_command *)malloc(sizeof(t_command));
-	if (!cmd)
-		return (NULL);
-
-	// Compter le nombre de commandes (nombre de pipes + 1)
-	cmd->cmd_count = 1; // au moin une commande
-	current_token = tokens;
-	while (*current_token)
-	{
-		if ((*current_token)->type == PIPE)
-			cmd->cmd_count++;
-		current_token++;
-	}
-
-	// Allouer le tableau de commandes simples
-	cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd->cmd_count);
-	if (!cmd->commands)
-	{
-		free(cmd);
-		return (NULL);
-	}
-
-	 
-    // Initialiser le tableau à NULL
+    cmd = (t_command *)malloc(sizeof(t_command));
+    if (!cmd)
+        return (NULL);
+    cmd->cmd_count = cmd_count;
+    cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd_count);
+    if (!cmd->commands)
+    {
+        free(cmd);
+        return (NULL);
+    }
     i = 0;
     while (i < cmd->cmd_count)
     {
         cmd->commands[i] = NULL;
         i++;
     }
-    
-    // Parser chaque commande simple
-    current_token = tokens;
+    return (cmd);
+}
+
+/**
+ * Compte le nombre de commandes dans un pipeline (nombre de pipes + 1)
+ */
+static int	count_commands(t_token **tokens)
+{
+    int			count;
+    t_token		**current;
+
+    count = 1;
+    current = tokens;
+    while (*current)
+    {
+        if ((*current)->type == PIPE)
+            count++;
+        current++;
+    }
+    return (count);
+}
+
+/**
+ * Fonction principale du parsing qui transforme un tableau de tokens en structure de commande
+ */
+t_command	*parse_tokens(t_token **tokens)
+{
+    t_command	*cmd;
+    t_token		**current;
+    int			i;
+    int			cmd_count;
+
+    if (!tokens || !tokens[0])
+        return (NULL);
+    cmd_count = count_commands(tokens);
+    cmd = initialize_command(cmd_count);
+    if (!cmd)
+        return (NULL);
+    current = tokens;
     i = 0;
     while (i < cmd->cmd_count)
     {
-        cmd->commands[i] = parse_simple_command(&current_token);
+        cmd->commands[i] = parse_simple_command(&current);
         if (!cmd->commands[i])
         {
             free_command(cmd);
             return (NULL);
         }
-        
-        // Si on est sur un pipe, avancer au token suivant
-        if (*current_token && (*current_token)->type == PIPE)
-            current_token++;
+        if (*current && (*current)->type == PIPE)
+            current++;
         i++;
     }
-    
     return (cmd);
 }
+

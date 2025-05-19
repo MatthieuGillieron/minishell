@@ -6,12 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:37:37 by mg                #+#    #+#             */
-/*   Updated: 2025/05/18 16:11:58 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:36 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/parser.h"
 
 // Libérer une redirection et toutes celles qui suivent
 static void free_redirects(t_redirect *redirect)

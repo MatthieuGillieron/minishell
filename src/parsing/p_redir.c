@@ -6,12 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:18:40 by mg                #+#    #+#             */
-/*   Updated: 2025/05/18 16:11:41 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:49 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/parser.h"
 
 // Convertir un type de token en type de redirection
 t_redir_type token_to_redir_type(t_token_type token_type)

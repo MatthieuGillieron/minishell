@@ -6,12 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:26:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/18 16:11:49 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:54 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/parser.h"
 
 // Afficher le type de redirection
 static void print_redir_type(t_redir_type type)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_core.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:19:26 by mg                #+#    #+#             */
-/*   Updated: 2025/05/19 12:23:54 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/21 16:08:37 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@
  */
 t_command	*initialize_command(int cmd_count)
 {
-    t_command	*cmd;
-    int			i;
+	t_command	*cmd;
+	int			i;
 
-    cmd = (t_command *)malloc(sizeof(t_command));
-    if (!cmd)
-        return (NULL);
-    cmd->cmd_count = cmd_count;
-    cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd_count);
-    if (!cmd->commands)
-    {
-        free(cmd);
-        return (NULL);
-    }
-    i = 0;
-    while (i < cmd->cmd_count)
-    {
-        cmd->commands[i] = NULL;
-        i++;
-    }
-    return (cmd);
+	cmd = (t_command *)malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	cmd->cmd_count = cmd_count;
+	cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd_count);
+	if (!cmd->commands)
+	{
+		free(cmd);
+		return (NULL);
+	}
+	i = 0;
+	while (i < cmd->cmd_count)
+	{
+		cmd->commands[i] = NULL;
+		i++;
+	}
+	return (cmd);
 }
 
 /**
@@ -44,50 +44,69 @@ t_command	*initialize_command(int cmd_count)
  */
 static int	count_commands(t_token **tokens)
 {
-    int			count;
-    t_token		**current;
+	int			count;
+	t_token		**current;
 
-    count = 1;
-    current = tokens;
-    while (*current)
-    {
-        if ((*current)->type == PIPE)
-            count++;
-        current++;
-    }
-    return (count);
+	count = 1;
+	current = tokens;
+	while (*current)
+	{
+		if ((*current)->type == PIPE)
+			count++;
+		current++;
+	}
+	return (count);
 }
 
 /**
- * Fonction principale du parsing qui transforme un tableau de tokens en structure de commande
+ * Remplit la structure de commandes avec des commandes simples
+ * extraites depuis la liste de tokens.
+ *
+ * @param cmd      Structure de commande à remplir.
+ * @param tokens   Liste de tokens à parser.
+ * @return         1 en cas de succès, 0 si une erreur survient.
  */
-t_command	*parse_tokens(t_token **tokens)
+static int	fill_commands(t_command *cmd, t_token **tokens)
 {
-    t_command	*cmd;
-    t_token		**current;
-    int			i;
-    int			cmd_count;
+	t_token	**current;
+	int		i;
 
-    if (!tokens || !tokens[0])
-        return (NULL);
-    cmd_count = count_commands(tokens);
-    cmd = initialize_command(cmd_count);
-    if (!cmd)
-        return (NULL);
-    current = tokens;
-    i = 0;
-    while (i < cmd->cmd_count)
-    {
-        cmd->commands[i] = parse_simple_command(&current);
-        if (!cmd->commands[i])
-        {
-            free_command(cmd);
-            return (NULL);
-        }
-        if (*current && (*current)->type == PIPE)
-            current++;
-        i++;
-    }
-    return (cmd);
+	current = tokens;
+	i = 0;
+	while (i < cmd->cmd_count)
+	{
+		cmd->commands[i] = parse_simple_command(&current);
+		if (!cmd->commands[i])
+			return (0);
+		if (*current && (*current)->type == PIPE)
+			current++;
+		i++;
+	}
+	return (1);
 }
 
+/**
+  * Fonction principale du parsing qui transforme
+  * un tableau de tokens en structure de commande.
+  *
+  * @param tokens   Tableau de tokens analysés.
+  * @return         Structure t_command ou NULL en cas d'erreur.
+*/
+t_command	*parse_tokens(t_token **tokens)
+{
+	t_command	*cmd;
+	int			cmd_count;
+
+	if (!tokens || !tokens[0])
+		return (NULL);
+	cmd_count = count_commands(tokens);
+	cmd = initialize_command(cmd_count);
+	if (!cmd)
+		return (NULL);
+	if (!fill_commands(cmd, tokens))
+	{
+		free_command(cmd);
+		return (NULL);
+	}
+	return (cmd);
+}

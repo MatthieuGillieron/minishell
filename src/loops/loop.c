@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/13 17:27:02 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/21 16:02:35 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// Variable globale utilisée pour stocker le code de retour de la dernière commande
+// Variable globale utilisée pour stocker
+// 	le code de retour de la dernière commande
 extern int	g_exit_status;
 
 /**
@@ -32,7 +33,7 @@ void	shell_loop(t_env **env)
 {
 	char	*line;
 	char	**argv;
- 
+
 	while (1)
 	{
 		line = readline(MAGENTA"MNM$ "RST);

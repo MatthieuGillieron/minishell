@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:03:52 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/11 13:55:01 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:40:59 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
  */
 int	builtin_echo(char **argv)
 {
-	int	i = 1;
+	int	i;
 
+	i = 1;
 	while (argv[i])
 	{
 		printf("%s", argv[i]);

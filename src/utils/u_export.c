@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_display.c                                   :+:      :+:    :+:   */
+/*   u_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 18:56:04 by mg                #+#    #+#             */
-/*   Updated: 2025/05/12 15:50:23 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/21 16:10:14 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
  */
 static void	print_export_var(char *key, char *value)
 {
-    printf("declare -x %s", key);
-    if (value)
-        printf("=\"%s\"", value);
-    printf("\n");
+	printf("declare -x %s", key);
+	if (value)
+		printf("=\"%s\"", value);
+	printf("\n");
 }
 
 /**
@@ -33,15 +33,15 @@ static void	print_export_var(char *key, char *value)
  */
 static int	count_env(t_env *env)
 {
-    int	count;
+	int	count;
 
-    count = 0;
-    while (env)
-    {
-        count++;
-        env = env->next;
-    }
-    return (count);
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
 }
 
 /**
@@ -52,23 +52,23 @@ static int	count_env(t_env *env)
  */
 static char	**create_env_array(t_env *env)
 {
-    char	**array;
-    int		count;
-    int		i;
+	char	**array;
+	int		count;
+	int		i;
 
-    count = count_env(env);
-    array = malloc(sizeof(char *) * (count + 1));
-    if (!array)
-        return (NULL);
-    i = 0;
-    while (env)
-    {
-        array[i] = ft_strdup(env->key);
-        i++;
-        env = env->next;
-    }
-    array[i] = NULL;
-    return (array);
+	count = count_env(env);
+	array = malloc(sizeof(char *) * (count + 1));
+	if (!array)
+		return (NULL);
+	i = 0;
+	while (env)
+	{
+		array[i] = ft_strdup(env->key);
+		i++;
+		env = env->next;
+	}
+	array[i] = NULL;
+	return (array);
 }
 
 /**
@@ -77,28 +77,28 @@ static char	**create_env_array(t_env *env)
  */
 static void	sort_env_array(char **array)
 {
-    int		i;
-    int		j;
-    char	*temp;
+	int		i;
+	int		j;
+	char	*temp;
 
-    if (!array)
-        return ;
-    i = 0;
-    while (array[i])
-    {
-        j = i + 1;
-        while (array[j])
-        {
-            if (ft_strcmp(array[i], array[j]) > 0)
-            {
-                temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-            j++;
-        }
-        i++;
-    }
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		j = i + 1;
+		while (array[j])
+		{
+			if (ft_strcmp(array[i], array[j]) > 0)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 /**
@@ -107,24 +107,29 @@ static void	sort_env_array(char **array)
  */
 void	print_sorted_env(t_env *env)
 {
-    char	**keys;
-    int		i;
-    t_env	*current;
-    
-    if (!(keys = create_env_array(env)))
-        return ;
-    sort_env_array(keys);
-    i = -1;
-    while (keys[++i])
-    {
-        current = env;
-        while (current && ft_strcmp(current->key, keys[i]) != 0)
-            current = current->next;
-        if (current)
-            print_export_var(current->key, current->value);
-    }
-    i = 0;
-    while (keys[i])
-        free(keys[i++]);
-    free(keys);
+	char	**keys;
+	int		i;
+	t_env	*current;
+
+	keys = create_env_array(env);
+	if (!keys)
+		return ;
+	sort_env_array(keys);
+	i = 0;
+	while (keys[i])
+	{
+		current = env;
+		while (current && ft_strcmp(current->key, keys[i]) != 0)
+			current = current->next;
+		if (current)
+			print_export_var(current->key, current->value);
+		i++;
+	}
+	i = 0;
+	while (keys[i])
+	{
+		free(keys[i]);
+		i++;
+	}
+	free(keys);
 }

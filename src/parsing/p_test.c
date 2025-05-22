@@ -6,12 +6,13 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:26:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:07:30 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/22 15:15:15 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
 static void	print_redir_type(t_redir_type type)
 {
 	if (type == REDIR_INPUT)
@@ -74,13 +75,17 @@ void	print_command(t_command *cmd)
 		i++;
 	}
 }
-/**
+*/
+
+
+/*
  * Fonction pour tester le parser
  * 
  * @param input Ligne de commande à parser
- 
-/*
+ */
 
+
+/*
 void	test_parser(char *input)
 {
 	t_token		**tokens;
@@ -120,10 +125,12 @@ void	test_parser(char *input)
 		free_token(tokens[i++]);
 	free(tokens);
 }
+*/
 
-/**
+/*
  * Fonction principale du programme minishell.
  */
+
 /*
 int	main(int argc, char **argv, char **envp)
 {

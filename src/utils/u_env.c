@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:53:08 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/22 13:56:44 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/22 15:17:42 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,38 +113,3 @@ int	env_unset(t_env **env, const char *key)
 	}
 	return (0);
 }
-
-/**
- * Convertit la liste chaînée d'environnement en tableau de strings "KEY=VALUE".
- */
-char	**env_to_array(t_env *env)
-{
-	char	**envp;
-	char	*tmp;
-	int		count;
-	int		i;
-	t_env	*iter;
-
-	count = 0;
-	iter = env;
-	while (iter)
-	{
-		count++;
-		iter = iter->next;
-	}
-	envp = malloc(sizeof(char *) * (count + 1));
-	if (!envp)
-		return (NULL);
-	i = 0;
-	while (env)
-	{
-		tmp = ft_strjoin(env->key, "=");
-		envp[i++] = ft_strjoin(tmp, env->value);
-		free(tmp);
-		env = env->next;
-	}
-	envp[i] = NULL;
-	return (envp);
-}
-
-

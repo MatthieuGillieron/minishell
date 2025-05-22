@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/22 15:05:35 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/22 15:12:07 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	shell_loop(t_env **env)
 			cmd = parse_tokens(tokens);
 			if (cmd)
 			{
+				(void)*env; // c est en attendant trou de bal  pour vesqui le flag
+				 
 				// TODO: Implémenter l'exécution de la commande
                 // execute_command(cmd, env);
 				free_command(cmd);

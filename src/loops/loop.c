@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 16:02:35 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:05:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ extern int	g_exit_status;
  */
 void	shell_loop(t_env **env)
 {
-	char	*line;
-	char	**argv;
+	char		*line;
+	t_token		**tokens;
+	t_command	*cmd;
+	int			i;
 
 	while (1)
 	{
@@ -44,10 +46,21 @@ void	shell_loop(t_env **env)
 		}
 		if (*line)
 			add_history(line);
-		argv = parse_line(line);
-		if (argv && argv[0])
-			execute_command(argv, env);
-		free_args(argv);
+		tokens = tokenize_input(line);
+		if (tokens)
+		{
+			cmd = parse_tokens(tokens);
+			if (cmd)
+			{
+				// TODO: Implémenter l'exécution de la commande
+                // execute_command(cmd, env);
+				free_command(cmd);
+			}
+			i = 0;
+			while (tokens[i])
+				free_token(tokens[i++]);
+			free(tokens);
+		}
 		free(line);
 	}
 }

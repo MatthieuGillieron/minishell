@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_test.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:26:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/21 16:03:35 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:07:30 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,3 +74,77 @@ void	print_command(t_command *cmd)
 		i++;
 	}
 }
+/**
+ * Fonction pour tester le parser
+ * 
+ * @param input Ligne de commande à parser
+ 
+/*
+
+void	test_parser(char *input)
+{
+	t_token		**tokens;
+	t_command	*cmd;
+
+	printf("\n=== Test du Parser ===\n");
+	printf("Input: %s\n", input);
+	// Tokenisation de l'entrée
+	tokens = tokenize_input(input);
+	if (!tokens)
+	{
+		printf("Erreur : Impossible de tokeniser l'entrée.\n");
+		return;
+	}
+	// Affichage des tokens (pour debug)
+	printf("\n-- Tokens --\n");
+	print_tokens(tokens);
+	// Parsing des tokens en structure de commande
+	cmd = parse_tokens(tokens);
+	if (!cmd)
+	{
+		printf("\nErreur : Impossible de parser les tokens.\n");
+		// Libération des tokens
+		int i = 0;
+		while (tokens[i])
+			free_token(tokens[i++]);
+		free(tokens);
+		return;
+	}
+	// Affichage de la structure de commande (à implémenter)
+	printf("\n-- Structure de Commande --\n");
+	print_command(cmd);
+	// Libération de la mémoire
+	free_command(cmd);
+	int i = 0;
+	while (tokens[i])
+		free_token(tokens[i++]);
+	free(tokens);
+}
+
+/**
+ * Fonction principale du programme minishell.
+ */
+/*
+int	main(int argc, char **argv, char **envp)
+{
+	t_env	*env;
+
+	(void)argc;
+	(void)argv;
+	
+	env = init_env_list(envp);
+	if (!env)
+		return (1);
+	init_signals();
+	// Tests du parser avec différentes commandes
+	test_parser("echo hello");
+	test_parser("ls -la | grep .c | wc -l");
+	test_parser("cat < input.txt > output.txt");
+	test_parser("echo hello > file | grep world");
+	test_parser("cat < input > output >> append");
+	// Décommenter pour lancer le shell interactif
+	// shell_loop(&env);
+	free_env_list(env);
+	return (g_exit_status);
+}
+*/

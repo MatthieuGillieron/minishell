@@ -6,13 +6,14 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/13 17:27:02 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/22 15:12:07 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// Variable globale utilisée pour stocker le code de retour de la dernière commande
+// Variable globale utilisée pour stocker
+// 	le code de retour de la dernière commande
 extern int	g_exit_status;
 
 /**
@@ -30,9 +31,11 @@ extern int	g_exit_status;
  */
 void	shell_loop(t_env **env)
 {
-	char	*line;
-	char	**argv;
- 
+	char		*line;
+	t_token		**tokens;
+	t_command	*cmd;
+	int			i;
+
 	while (1)
 	{
 		line = readline(MAGENTA"MNM$ "RST);
@@ -43,10 +46,23 @@ void	shell_loop(t_env **env)
 		}
 		if (*line)
 			add_history(line);
-		argv = parse_line(line);
-		if (argv && argv[0])
-			execute_command(argv, env);
-		free_args(argv);
+		tokens = tokenize_input(line);
+		if (tokens)
+		{
+			cmd = parse_tokens(tokens);
+			if (cmd)
+			{
+				(void)*env; // c est en attendant trou de bal  pour vesqui le flag
+				 
+				// TODO: Implémenter l'exécution de la commande
+                // execute_command(cmd, env);
+				free_command(cmd);
+			}
+			i = 0;
+			while (tokens[i])
+				free_token(tokens[i++]);
+			free(tokens);
+		}
 		free(line);
 	}
 }

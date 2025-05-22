@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/18 15:40:41 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/22 15:28:57 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ Bibliotheque
 # include <termios.h>
 # include "signals.h"
 # include "loop.h"
-# include "parsing.h"
 # include "executor.h"
 # include "path.h"
 # include "builtins.h"

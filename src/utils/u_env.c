@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_env.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:53:08 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 16:47:51 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:56:44 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,19 +147,4 @@ char	**env_to_array(t_env *env)
 	return (envp);
 }
 
-/**
- * Libère toute la mémoire associée à la liste chaînée d’environnement.
- */
-void	free_env_list(t_env *env)
-{
-	t_env	*tmp;
 
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
-}

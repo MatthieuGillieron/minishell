@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   u_status.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:14:24 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/23 14:47:58 by mtaramar         ###   ########.fr       */
+/*   Created: 2025/05/23 14:47:01 by mtaramar          #+#    #+#             */
+/*   Updated: 2025/05/23 14:47:01 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	sigint_handler(int sig)
+t_status *get_status(void)
 {
-	(void)sig;
-	get_status()->exit_code = 130;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	init_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	static t_status status = {0};
+	return (&status);
 }

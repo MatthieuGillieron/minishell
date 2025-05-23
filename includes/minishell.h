@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:28:57 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/23 14:49:31 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern int g_exit_status;
 
 // Forward declarations des structures
 struct s_token;
@@ -112,5 +110,12 @@ typedef struct s_lexer
 }			t_lexer;
 
 void	test_lexer(char *input);
+
+typedef struct s_status
+{
+	int	exit_code;
+}	t_status;
+
+t_status	*get_status(void);
 
 #endif

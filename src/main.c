@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:09:06 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/23 14:47:39 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_exit_status = 0;
 
 /**
  * Fonction principale du programme minishell.
@@ -40,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	init_signals();
 	shell_loop(&env);
 	free_env_list(env);
-	return (g_exit_status);
+	return (get_status()->exit_code);
 }
 
 

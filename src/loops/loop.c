@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/22 15:12:07 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/23 14:48:35 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// Variable globale utilisée pour stocker
-// 	le code de retour de la dernière commande
-extern int	g_exit_status;
 
 /**
  * @brief Boucle principale de l'interpréteur Minishell.

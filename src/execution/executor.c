@@ -6,11 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 16:12:05 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:43:34 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * execute_command - Fonction principale pour exécuter une commande.
@@ -31,7 +31,7 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 {
 	pid_t	pid;
 	char	*path;
-	int		status;
+	int		cmd_status;
 	char	**envp;
 
 	if (check_builtin(argv, env, status))
@@ -44,7 +44,7 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 		status->exit_code = 127;
 		return ;
 	}
-	handle_signals_parent();
+	handle_signal_parent();
 	pid = fork();
 	if (pid == 0)
 	{
@@ -59,14 +59,14 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 	set_signal_mode(INTERACTIVE_MODE);
 
 	if(WIFEXITED(status))
-		status->exit_code = WEXITSTATUS(status);
+		status->exit_code = WEXITSTATUS(cmd_status);
 
-	else if (WIFSIGNALED(status))
+	else if (WIFSIGNALED(cmd_status))
 	{
-		status->exit_code = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGINT)
+		status->exit_code = 128 + WTERMSIG(cmd_status);
+		if (WTERMSIG(cmd_status) == SIGINT)
 			write(1, "^C\n", 3);
-		else if (WTERMSIG(status) == SIGQUIT)
+		else if (WTERMSIG(cmd_status) == SIGQUIT)
 			write(1, "^\\Quit\n", 7);
 	}
 	free(path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/23 14:47:39 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:24:15 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,24 @@
  * @param envp Tableau de chaînes représentant l’environnement système initial
  * @return Code de sortie global défini dans `g_exit_status`
  */
- 
+
+int	g_sig_received = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
+	t_status	status;
 
 	(void)argc;
 	(void)argv;
-	env = init_env_list(envp);
-	if (!env)
+
+	status.env = init_env_list(envp);
+	status.exit_code = 0;
+	status.running = 1;
+
+	if (!status.env)
 		return (1);
 	init_signals();
-	shell_loop(&env);
-	free_env_list(env);
-	return (get_status()->exit_code);
+	shell_loop(&status);
+	free_env_list(status.env);
+	return (status.exit_code);
 }
-
-

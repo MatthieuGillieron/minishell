@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/26 14:19:18 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:16:01 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 
-extern g_sig_received = 0;
+extern g_sig_received;
 
 // Forward declarations des structures
 

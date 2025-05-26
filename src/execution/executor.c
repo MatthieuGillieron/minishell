@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 11:57:46 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:12:05 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 		status->exit_code = 127;
 		return ;
 	}
+	handle_signals_parent();
 	pid = fork();
 	if (pid == 0)
 	{
+		handle_signals_child();
 		envp = env_to_array(*env);
 		execve(path, argv, envp);
 		perror("execve");
@@ -54,9 +56,18 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
+	set_signal_mode(INTERACTIVE_MODE);
+
 	if(WIFEXITED(status))
 		status->exit_code = WEXITSTATUS(status);
+
 	else if (WIFSIGNALED(status))
+	{
 		status->exit_code = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "^C\n", 3);
+		else if (WTERMSIG(status) == SIGQUIT)
+			write(1, "^\\Quit\n", 7);
+	}
 	free(path);
 }

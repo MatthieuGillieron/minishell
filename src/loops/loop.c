@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/23 14:48:35 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:32:18 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
  *
  * @param env Structure chaînée contenant l'environnement courant.
  */
-void	shell_loop(t_env **env)
+void	shell_loop(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
 	t_command	*cmd;
 	int			i;
 
-	while (1)
+	while (status->running)
 	{
 		line = readline(MAGENTA"MNM$ "RST);
 		if (!line)
@@ -48,10 +48,7 @@ void	shell_loop(t_env **env)
 			cmd = parse_tokens(tokens);
 			if (cmd)
 			{
-				(void)*env; // c est en attendant trou de bal  pour vesqui le flag
-				 
-				// TODO: Implémenter l'exécution de la commande
-                // execute_command(cmd, env);
+				execute_parsed_command(cmd, &status->env, status);
 				free_command(cmd);
 			}
 			i = 0;

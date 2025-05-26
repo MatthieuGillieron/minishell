@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:58:52 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 15:38:39 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:13:38 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,26 @@
  * 
  * Retourne 1 si un builtin a été exécuté, 0 sinon.
  */
-static int	check_builtin_display(char **argv, t_env *env)
+static int	check_builtin_display(char **argv, t_env *env, t_status *status)
 {
 	if (ft_strcmp(argv[0], "echo") == 0)
-		return (builtin_echo(argv), 1);
+	{
+		builtin_echo(argv);
+		status->exit_code = 0;
+		return (1);
+	}
 	if (ft_strcmp(argv[0], "pwd") == 0)
-		return (builtin_pwd(), 1);
+	{
+		builtin_pwd();
+		status->exit_code = 0;
+		return (1);
+	}
 	if (ft_strcmp(argv[0], "env") == 0)
-		return (builtin_env(env), 1);
+	{
+		builtin_env(env);
+		status->exit_code = 0;
+		return (1);
+	}
 	return (0);
 }
 
@@ -37,16 +49,32 @@ static int	check_builtin_display(char **argv, t_env *env)
  * 
  * Retourne 1 si un builtin a été exécuté, sinon 0.
  */
-static int	check_builtin_control(char **argv, t_env **env)
+static int	check_builtin_control(char **argv, t_env **env, t_status *status)
 {
 	if (ft_strcmp(argv[0], "cd") == 0)
-		return (builtin_cd(argv, env), 1);
+	{
+		builtin_cd(argv, env);
+		status->exit_code = 0;
+		return (1);
+	}
 	if (ft_strcmp(argv[0], "exit") == 0)
-		return (builtin_exit(argv), 1);
+	{
+		builtin_exit(argv);
+		return (1);
+	}
 	if (ft_strcmp(argv[0], "unset") == 0)
-		return (builtin_unset(argv, env), 1);
+	{
+		builtin_unset(argv, env);
+		status->exit_code = 0;
+		return (1);
+
+	}
 	if (ft_strcmp(argv[0], "export") == 0)
-		return (builtin_export(argv, env), 1);
+	{
+		builtin_export(argv, env);
+		status->exit_code = 0;
+		return (1);
+	}
 	return (0);
 }
 
@@ -57,13 +85,13 @@ static int	check_builtin_control(char **argv, t_env **env)
  * 
  * Retourne 1 si exécutée, 0 sinon.
  */
-int	check_builtin(char **argv, t_env **env)
+int	check_builtin(char **argv, t_env **env, t_status *status)
 {
 	if (!argv || !argv[0])
 		return (0);
-	if (check_builtin_display(argv, *env))
+	if (check_builtin_display(argv, *env, status))
 		return (1);
-	if (check_builtin_control(argv, env))
+	if (check_builtin_control(argv, env, status))
 		return (1);
 	return (0);
 }

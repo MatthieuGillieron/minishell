@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 15:50:40 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:57:46 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,24 @@
  * @param env: Liste chaînée contenant les
  	variables d’environnement (type t_env*)
  */
-void	execute_command(char **argv, t_env **env)
+
+void	execute_command(char **argv, t_env **env, t_status *status)
 {
 	pid_t	pid;
 	char	*path;
 	int		status;
 	char	**envp;
 
-	if (check_builtin(argv, env))
+	if (check_builtin(argv, env, status))
 		return ;
 	path = get_command_path(argv[0], *env);
 	if (!path)
-		return (ft_putstr_fd("command not found: ", 2),
-			ft_putendl_fd(argv[0], 2));
+	{
+		ft_putstr_fd("command not found: ", 2);
+		ft_putendl_fd(argv[0], 2);
+		status->exit_code = 127;
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -49,5 +54,9 @@ void	execute_command(char **argv, t_env **env)
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
+	if(WIFEXITED(status))
+		status->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		status->exit_code = 128 + WTERMSIG(status);
 	free(path);
 }

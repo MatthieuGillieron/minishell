@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:21:31 by mg                #+#    #+#             */
-/*   Updated: 2025/05/26 16:46:57 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:54:07 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,28 @@
  * @param status Structure contenant l'état du shell
 */
 
-static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
+static void	execute_simple_cmd(t_command *cmd, t_env **env, t_status *status)
 {
-	if (!cmd)
+	if (!cmd || !cmd->commands)
+		return ;
+	if (cmd->cmd_count == 1)
+	{
+		execute_simple_cmd(cmd->commands[0], env, status);
+		return ;
+	}
+}
+
+void	execute_parsed_command(t_command *cmd, t_env **env, t_status *status)
+{
+	if (!cmd || cmd->commands)
+		return ;
+	if (cmd->cmd_count == 1)
+	{
+		execute_simple_cmd(cmd->commands[0], env, status);
+		return ;
+	}
+	ft_putstr_fd("Pipeline pas encore fais (", 2);
+	ft_putnbr_fd(cmd->cmd_count, 2);
+	ft_putendl_fd(" commandes)", 2);
+	// a faire
 }

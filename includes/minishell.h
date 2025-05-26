@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/26 11:14:14 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 14:19:18 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 extern g_sig_received = 0;
 
 // Forward declarations des structures
+
 struct s_token;
 typedef struct s_token t_token;
 struct s_env;

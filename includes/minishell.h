@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/23 14:49:31 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:12:51 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ void	test_lexer(char *input);
 
 typedef struct s_status
 {
-	int	exit_code;
+	t_env	*env;
+	int		exit_code;
+	int		running;
 }	t_status;
 
 t_status	*get_status(void);

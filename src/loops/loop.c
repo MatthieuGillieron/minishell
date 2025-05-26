@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 16:15:29 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:59:53 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	shell_loop(t_status *status)
 
 	while (status->running)
 	{
+		set_signal_mode(INTERACTIVE_MODE);
+		g_sig_received = 0;
 		line = readline(MAGENTA"MNM$ "RST);
 		if (!line)
 		{
@@ -48,7 +50,7 @@ void	shell_loop(t_status *status)
 			cmd = parse_tokens(tokens);
 			if (cmd)
 			{
-				execute_parsed_command(cmd, &status->env, status);
+				execute_parsed_command(cmd, status->env, status);
 				free_command(cmd);
 			}
 			i = 0;

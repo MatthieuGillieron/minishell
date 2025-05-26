@@ -6,14 +6,14 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:46:02 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/13 15:16:18 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 17:09:29 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-int		check_builtin(char **argv, t_env **env);
+int		check_builtin(char **argv, t_env **env, t_status *status);
 int		builtin_cd(char **argv, t_env **env);
 int		builtin_exit(char **argv);
 int		builtin_unset(char **argv, t_env **env);

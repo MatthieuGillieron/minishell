@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 16:43:34 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 17:07:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 		free_split(envp);
 		exit(1);
 	}
-	waitpid(pid, &status, 0);
+	waitpid(pid, &cmd_status, 0);
 	set_signal_mode(INTERACTIVE_MODE);
 
-	if(WIFEXITED(status))
+	if(WIFEXITED(cmd_status))
 		status->exit_code = WEXITSTATUS(cmd_status);
 
 	else if (WIFSIGNALED(cmd_status))

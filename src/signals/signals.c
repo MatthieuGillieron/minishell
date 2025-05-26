@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:14:24 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 15:58:15 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/26 16:17:56 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * Ctrl+C (SIGINT) affiche un nouveau prompt
  */
 
-static void	sigint_intercative_handler(int sig)
+static void	sigint_interactive_handler(int sig)
 {
 	(void)sig;
 	g_sig_received = 1;
@@ -58,7 +58,7 @@ void	set_signal_mode(t_signal_mode mode)
 {
 	if (mode == INTERACTIVE_MODE)
 	{
-		signal(SIGINT, sigint_intercative_handler);
+		signal(SIGINT, sigint_interactive_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == EXECUTION_MODE)

@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/26 11:24:15 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 15:04:42 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	status.env = init_env_list(envp);
+
+	if (!status.env)
+		return (1);
 	status.exit_code = 0;
 	status.running = 1;
 

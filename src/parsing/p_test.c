@@ -6,13 +6,13 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:26:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:15:15 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 14:56:12 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
+
 static void	print_redir_type(t_redir_type type)
 {
 	if (type == REDIR_INPUT)
@@ -75,7 +75,7 @@ void	print_command(t_command *cmd)
 		i++;
 	}
 }
-*/
+
 
 
 /*
@@ -85,7 +85,7 @@ void	print_command(t_command *cmd)
  */
 
 
-/*
+
 void	test_parser(char *input)
 {
 	t_token		**tokens;
@@ -125,7 +125,7 @@ void	test_parser(char *input)
 		free_token(tokens[i++]);
 	free(tokens);
 }
-*/
+
 
 /*
  * Fonction principale du programme minishell.
@@ -135,13 +135,13 @@ void	test_parser(char *input)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
-
+	
 	(void)argc;
 	(void)argv;
 	
 	env = init_env_list(envp);
 	if (!env)
-		return (1);
+	return (1);
 	init_signals();
 	// Tests du parser avec différentes commandes
 	test_parser("echo hello");

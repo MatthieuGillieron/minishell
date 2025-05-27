@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:14:24 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 16:19:45 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 11:08:53 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	init_signals(void)
  * Configure les signaux pour un processus parent
 */
 
-void	handle_signal_parent(void)
+void	handle_signals_parent(void)
 {
 	set_signal_mode(EXECUTION_MODE);
 }

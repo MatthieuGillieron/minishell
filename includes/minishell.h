@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/27 10:40:53 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 11:02:24 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ Bibliotheque
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include <signal.h>
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -64,6 +63,7 @@ Bibliotheque
 # include "env.h"
 # include "lexer.h"
 # include "parser.h"
+# include "signals.h"
 # include "../libft/includes/libft.h"
 
 /*

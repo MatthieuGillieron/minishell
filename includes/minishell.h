@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/26 17:07:32 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 10:40:53 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ struct s_command;
 typedef struct s_command t_command;
 struct s_status;
 typedef struct s_status t_status;
+struct s_simple_cmd;
+typedef struct s_simple_cmd t_simple_cmd;
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:14:37 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/26 17:11:53 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 10:48:07 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 		status->exit_code = 127;
 		return ;
 	}
-	handle_signal_parent();
+	handle_signals_parent();
 	pid = fork();
 	if (pid == 0)
 	{

@@ -6,23 +6,24 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:26:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/27 14:56:12 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/28 09:01:56 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
 
 static void	print_redir_type(t_redir_type type)
 {
 	if (type == REDIR_INPUT)
-		printf("<");
+	printf("<");
 	else if (type == REDIR_OUTPUT)
-		printf(">");
+	printf(">");
 	else if (type == REDIR_APPEND_OUT)
-		printf(">>");
+	printf(">>");
 	else if (type == REDIR_HEREDOC_OUT)
-		printf("<<");
+	printf("<<");
 }
 
 static void	print_redirects(t_redirect *redirect)
@@ -39,25 +40,25 @@ static void	print_redirects(t_redirect *redirect)
 static void	print_simple_cmd(t_simple_cmd *cmd)
 {
 	int	i;
-
+	
 	if (!cmd)
-		return ;
+	return ;
 	i = 0;
 	while (i < cmd->arg_count)
 	{
 		printf("%s", cmd->args[i]);
 		if (i < cmd->arg_count - 1)
-			printf(" ");
+		printf(" ");
 		i++;
 	}
 	if (cmd->redirects)
-		print_redirects(cmd->redirects);
+	print_redirects(cmd->redirects);
 }
 
 void	print_command(t_command *cmd)
 {
 	int	i;
-
+	
 	if (!cmd)
 	{
 		printf("Command is NULL\n");
@@ -70,27 +71,28 @@ void	print_command(t_command *cmd)
 		printf("  %d: ", i + 1);
 		print_simple_cmd(cmd->commands[i]);
 		if (i < cmd->cmd_count - 1)
-			printf(" | ");
+		printf(" | ");
 		printf("\n");
 		i++;
 	}
 }
 
 
+*/
 
 /*
- * Fonction pour tester le parser
- * 
- * @param input Ligne de commande à parser
- */
+* Fonction pour tester le parser
+* 
+* @param input Ligne de commande à parser
+*/
 
 
-
+/*
 void	test_parser(char *input)
 {
 	t_token		**tokens;
 	t_command	*cmd;
-
+	
 	printf("\n=== Test du Parser ===\n");
 	printf("Input: %s\n", input);
 	// Tokenisation de l'entrée
@@ -111,7 +113,7 @@ void	test_parser(char *input)
 		// Libération des tokens
 		int i = 0;
 		while (tokens[i])
-			free_token(tokens[i++]);
+		free_token(tokens[i++]);
 		free(tokens);
 		return;
 	}
@@ -122,14 +124,15 @@ void	test_parser(char *input)
 	free_command(cmd);
 	int i = 0;
 	while (tokens[i])
-		free_token(tokens[i++]);
+	free_token(tokens[i++]);
 	free(tokens);
 }
 
+*/
 
 /*
- * Fonction principale du programme minishell.
- */
+* Fonction principale du programme minishell.
+*/
 
 /*
 int	main(int argc, char **argv, char **envp)

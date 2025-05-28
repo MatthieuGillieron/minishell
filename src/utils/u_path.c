@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:53:04 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/27 12:23:17 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/28 09:13:00 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,9 @@ char	*get_command_path(char *cmd, t_env *env)
             return (ft_strdup(cmd));
         return (NULL);
     }
-
-    ft_putstr_fd("DEBUG: Commande recherchée: ", 2);
-    ft_putendl_fd(cmd, 2);
-
-	
     path_env = env_get(env, "PATH");
     if (!path_env)
-	{
-        ft_putendl_fd("DEBUG: PATH non trouvé dans l'environnement", 2);
-		return (NULL);
-	}
-
-	ft_putstr_fd("DEBUG: PATH = ", 2);
-    ft_putendl_fd(path_env, 2);
-        
+		return (NULL);    
     paths = ft_split(path_env, ':');
     if (!paths)
         return (NULL);

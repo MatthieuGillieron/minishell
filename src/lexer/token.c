@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:08:06 by mg                #+#    #+#             */
-/*   Updated: 2025/05/21 15:59:35 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:19 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,21 @@ void	free_token(t_token *token)
 	}
 }
 
-/**
- * Tokenise un mot.
- */
 t_token	*tokenize_word(t_lexer *lexer)
 {
 	size_t	start;
 	char	*value;
 
 	start = lexer->position;
-	value = ft_substr(lexer->input, start, lexer->position - start);
 	while (lexer->current_char && !is_whitespace(lexer->current_char)
 		&& !is_special_char(lexer->current_char))
 		advance_lexer(lexer);
+	value = ft_substr(lexer->input, start, lexer->position - start);
 	if (!value)
 		return (NULL);
 	return (create_token(WORD, value, start));
 }
+
 
 /**
  * Tokenise un opérateur.

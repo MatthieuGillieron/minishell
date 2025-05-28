@@ -6,13 +6,13 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:20:18 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/13 15:16:00 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 10:49:48 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOOP_H
 # define LOOP_H
 
-void	shell_loop(t_env **env);
+void	shell_loop(t_status *status);
 
 #endif

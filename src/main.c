@@ -6,13 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:05:28 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:09:06 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 15:04:42 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_exit_status = 0;
 
 /**
  * Fonction principale du programme minishell.
@@ -27,20 +25,27 @@ int	g_exit_status = 0;
  * @param envp Tableau de chaînes représentant l’environnement système initial
  * @return Code de sortie global défini dans `g_exit_status`
  */
- 
+
+int	g_sig_received = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
+	t_status	status;
 
 	(void)argc;
 	(void)argv;
-	env = init_env_list(envp);
-	if (!env)
+
+	status.env = init_env_list(envp);
+
+	if (!status.env)
+		return (1);
+	status.exit_code = 0;
+	status.running = 1;
+
+	if (!status.env)
 		return (1);
 	init_signals();
-	shell_loop(&env);
-	free_env_list(env);
-	return (g_exit_status);
+	shell_loop(&status);
+	free_env_list(status.env);
+	return (status.exit_code);
 }
-
-

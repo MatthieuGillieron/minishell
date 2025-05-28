@@ -6,15 +6,11 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/22 15:12:07 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/28 09:11:07 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// Variable globale utilisée pour stocker
-// 	le code de retour de la dernière commande
-extern int	g_exit_status;
 
 /**
  * @brief Boucle principale de l'interpréteur Minishell.
@@ -29,15 +25,19 @@ extern int	g_exit_status;
  *
  * @param env Structure chaînée contenant l'environnement courant.
  */
-void	shell_loop(t_env **env)
+
+
+void	shell_loop(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
 	t_command	*cmd;
 	int			i;
-
-	while (1)
+	
+	while (status->running)
 	{
+		set_signal_mode(INTERACTIVE_MODE);
+		g_sig_received = 0;
 		line = readline(MAGENTA"MNM$ "RST);
 		if (!line)
 		{
@@ -45,22 +45,19 @@ void	shell_loop(t_env **env)
 			break ;
 		}
 		if (*line)
-			add_history(line);
+		add_history(line);
 		tokens = tokenize_input(line);
 		if (tokens)
 		{
 			cmd = parse_tokens(tokens);
 			if (cmd)
 			{
-				(void)*env; // c est en attendant trou de bal  pour vesqui le flag
-				 
-				// TODO: Implémenter l'exécution de la commande
-                // execute_command(cmd, env);
+				execute_parsed_command(cmd, &status->env, status);
 				free_command(cmd);
 			}
 			i = 0;
 			while (tokens[i])
-				free_token(tokens[i++]);
+			free_token(tokens[i++]);
 			free(tokens);
 		}
 		free(line);

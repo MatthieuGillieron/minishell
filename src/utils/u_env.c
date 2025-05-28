@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:53:08 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/22 15:17:42 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 21:20:55 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ t_env	*init_env_list(char **envp)
 {
 	t_env	*head;
 	t_env	*node;
+	t_env	*last;
 	char	*equal;
 	int		i;
 
 	head = NULL;
+	last = NULL;
 	i = 0;
 	while (envp[i])
 	{
@@ -34,11 +36,34 @@ t_env	*init_env_list(char **envp)
 				return (NULL);
 			node->key = ft_substr(envp[i], 0, equal - envp[i]);
 			node->value = ft_strdup(equal + 1);
-			node->next = head;
-			head = node;
+			node->next = NULL;
+			
+			if (!head)
+				head = node;
+			else
+				last->next = node;
+			last = node;
 		}
 		i++;
 	}
+	
+	// Si PATH n'est pas défini, ajoutons un PATH par défaut
+	if (!env_get(head, "PATH"))
+	{
+		node = malloc(sizeof(t_env));
+		if (node)
+		{
+			node->key = ft_strdup("PATH");
+			node->value = ft_strdup("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
+			node->next = NULL;
+			
+			if (!head)
+				head = node;
+			else
+				last->next = node;
+		}
+	}
+	
 	return (head);
 }
 

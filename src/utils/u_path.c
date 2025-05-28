@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_path.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:53:04 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 15:30:27 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:13:00 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,21 @@ char	*get_path_env(t_env *env)
 	return (NULL);
 }
 
+char *join_path(char *path, char *cmd)
+{
+    char *tmp;
+    char *result;
+    
+    tmp = ft_strjoin(path, "/");
+    if (!tmp)
+        return (NULL);
+    
+    result = ft_strjoin(tmp, cmd);
+    free(tmp);
+    
+    return (result);
+}
+
 /**
  * Retourne le chemin complet vers une commande, en vérifiant
  * si elle est absolue ou en la recherchant dans les dossiers de PATH.
@@ -71,10 +86,45 @@ char	*get_path_env(t_env *env)
  */
 char	*get_command_path(char *cmd, t_env *env)
 {
-	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	return (find_command_path(cmd, ft_split(get_path_env(env), ':')));
+    char	*path_env;
+    char	**paths;
+    char	*full_path;
+    int		i;
+
+    if (!cmd || !*cmd)
+        return (NULL);
+    
+    // Si la commande contient un '/', c'est déjà un chemin
+    if (ft_strchr(cmd, '/'))
+    {
+        // Vérifier si le fichier est exécutable
+        if (access(cmd, X_OK) == 0)
+            return (ft_strdup(cmd));
+        return (NULL);
+    }
+    path_env = env_get(env, "PATH");
+    if (!path_env)
+		return (NULL);    
+    paths = ft_split(path_env, ':');
+    if (!paths)
+        return (NULL);
+        
+    i = 0;
+    while (paths[i])
+    {
+        full_path = join_path(paths[i], cmd);
+        if (full_path && access(full_path, X_OK) == 0)
+        {
+            free_split(paths);
+            return (full_path);
+        }
+        free(full_path);
+        i++;
+    }
+    free_split(paths);
+    return (NULL);
 }
+
 
 /**
  * Libère un tableau de chaînes alloué dynamiquement.

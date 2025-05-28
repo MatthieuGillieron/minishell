@@ -6,16 +6,18 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:02:48 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:28:57 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 11:02:24 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int g_exit_status;
+
+extern int g_sig_received;
 
 // Forward declarations des structures
+
 struct s_token;
 typedef struct s_token t_token;
 struct s_env;
@@ -28,6 +30,12 @@ struct s_simple_cmd;
 typedef struct s_simple_cmd t_simple_cmd;
 struct s_command;
 typedef struct s_command t_command;
+struct s_status;
+typedef struct s_status t_status;
+struct s_simple_cmd;
+typedef struct s_simple_cmd t_simple_cmd;
+
+
 
 
 
@@ -41,7 +49,6 @@ Bibliotheque
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include <signal.h>
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -56,6 +63,7 @@ Bibliotheque
 # include "env.h"
 # include "lexer.h"
 # include "parser.h"
+# include "signals.h"
 # include "../libft/includes/libft.h"
 
 /*
@@ -112,5 +120,14 @@ typedef struct s_lexer
 }			t_lexer;
 
 void	test_lexer(char *input);
+
+typedef struct s_status
+{
+	t_env	*env;
+	int		exit_code;
+	int		running;
+}	t_status;
+
+t_status	*get_status(void);
 
 #endif

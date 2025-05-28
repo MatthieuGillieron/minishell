@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:16:14 by mg                #+#    #+#             */
-/*   Updated: 2025/05/22 15:28:05 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/27 15:09:04 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 
 	if ((***tokens_ptr).type == WORD)
 	{
-		if (!add_arg(cmd, (***tokens_ptr).value))
-			return (0);
+		if ((***tokens_ptr).value && (***tokens_ptr).value[0])
+        {
+            if (!add_arg(cmd, (***tokens_ptr).value))
+				return (0);
+        }
 		(*tokens_ptr)++;
 	}
 	else if ((***tokens_ptr).type == REDIR_IN

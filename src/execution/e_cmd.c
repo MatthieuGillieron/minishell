@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   e_cmd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:21:31 by mg                #+#    #+#             */
-/*   Updated: 2025/05/28 09:01:37 by mg               ###   ########.fr       */
+/*   Updated: 2025/05/30 16:00:18 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 {
 	if (!cmd || !cmd->args[0])
 		return ;
-	
-		execute_command(cmd->args, env, status);
+
+	execute_command(cmd->args, env, status);
 }
 
 void	execute_parsed_command(t_command *cmd, t_env **env, t_status *status)

@@ -1,0 +1,10 @@
+doc
+includes
+libft
+Makefile
+minishell
+obj
+README.md
+src
+sujet.txt
+test.txt

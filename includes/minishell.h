@@ -52,6 +52,7 @@ Bibliotheque
 # include "lexer.h"
 # include "parser.h"
 # include "signals.h"
+# include "executor.h"
 # include "../libft/includes/libft.h"
 
 /*

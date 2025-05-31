@@ -51,17 +51,17 @@ char	*get_path_env(t_env *env)
 
 char *join_path(char *path, char *cmd)
 {
-    char *tmp;
-    char *result;
-    
-    tmp = ft_strjoin(path, "/");
-    if (!tmp)
-        return (NULL);
-    
-    result = ft_strjoin(tmp, cmd);
-    free(tmp);
-    
-    return (result);
+	char *tmp;
+	char *result;
+	
+	tmp = ft_strjoin(path, "/");
+	if (!tmp)
+		return (NULL);
+	
+	result = ft_strjoin(tmp, cmd);
+	free(tmp);
+	
+	return (result);
 }
 
 /**
@@ -74,43 +74,43 @@ char *join_path(char *path, char *cmd)
  */
 char	*get_command_path(char *cmd, t_env *env)
 {
-    char	*path_env;
-    char	**paths;
-    char	*full_path;
-    int		i;
+	char	*path_env;
+	char	**paths;
+	char	*full_path;
+	int		i;
 
-    if (!cmd || !*cmd)
-        return (NULL);
-    
-    // Si la commande contient un '/', c'est déjà un chemin
-    if (ft_strchr(cmd, '/'))
-    {
-        // Vérifier si le fichier est exécutable
-        if (access(cmd, X_OK) == 0)
-            return (ft_strdup(cmd));
-        return (NULL);
-    }
-    path_env = env_get(env, "PATH");
-    if (!path_env)
+	if (!cmd || !*cmd)
+		return (NULL);
+	
+	// Si la commande contient un '/', c'est déjà un chemin
+	if (ft_strchr(cmd, '/'))
+	{
+		// Vérifier si le fichier est exécutable
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	path_env = env_get(env, "PATH");
+	if (!path_env)
 		return (NULL);    
-    paths = ft_split(path_env, ':');
-    if (!paths)
-        return (NULL);
-        
-    i = 0;
-    while (paths[i])
-    {
-        full_path = join_path(paths[i], cmd);
-        if (full_path && access(full_path, X_OK) == 0)
-        {
-            free_split(paths);
-            return (full_path);
-        }
-        free(full_path);
-        i++;
-    }
-    free_split(paths);
-    return (NULL);
+	paths = ft_split(path_env, ':');
+	if (!paths)
+		return (NULL);
+		
+	i = 0;
+	while (paths[i])
+	{
+		full_path = join_path(paths[i], cmd);
+		if (full_path && access(full_path, X_OK) == 0)
+		{
+			free_split(paths);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	free_split(paths);
+	return (NULL);
 }
 
 

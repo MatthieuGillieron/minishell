@@ -7,6 +7,8 @@
 struct s_token;
 typedef struct s_token t_token;
 typedef enum e_token_type	t_token_type;
+struct s_env;
+typedef struct s_env t_env;
 
 
 typedef enum e_redir_type
@@ -54,5 +56,10 @@ void print_command(t_command *cmd);
 
 // Fonction de conversion
 t_redir_type token_to_redir_type(t_token_type token_type);
+
+// Fonctions d'expansion
+void expand_tokens(t_token **tokens, t_env *env, t_status *status);
+t_token *process_dquote_token(t_token *token, t_env *env, t_status *status);
+t_token *process_word_token(t_token *token, t_env *env, t_status *status);
 
 #endif

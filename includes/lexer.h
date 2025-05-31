@@ -20,11 +20,22 @@ void	free_token(t_token *token);
 void	print_tokens(t_token **tokens);
 t_token *tokenize_word(t_lexer *lexer);
 t_token *tokenize_operator(t_lexer *lexer);
+t_token *tokenize_squote(t_lexer *lexer);
+t_token *tokenize_dquote(t_lexer *lexer);
 
 // 	*** Utils ***
 
 int		is_whitespace(char c);
 int		is_special_char(char c);
 int		is_quote(char c);
+
+// 	*** Expansion ***
+
+char	*expand_variables(char *str, t_env *env, t_status *status);
+char	*extract_var_name(char *str);
+void	expand_exit_code(char *result, int *j, t_status *status);
+void	expand_env_var(char *result, int *j, char *var_name, t_env *env);
+int		process_dollar(char *str, int i, char *result, int *j,
+						t_env *env, t_status *status);
 
 #endif

@@ -33,6 +33,10 @@ t_token	*get_next_token(t_lexer *lexer)
 	skip_whitespace(lexer);
 	if (lexer->current_char == '\0')
 		return (create_token(END_OF_INPUT, NULL, lexer->position));
+	if (lexer->current_char == '\'')
+		return (tokenize_squote(lexer));
+	if (lexer->current_char == '"')
+		return (tokenize_dquote(lexer));
 	if (is_special_char(lexer->current_char))
 		return (tokenize_operator(lexer));
 	if (!is_whitespace(lexer->current_char))

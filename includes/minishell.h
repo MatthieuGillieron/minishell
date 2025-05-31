@@ -80,6 +80,8 @@ typedef enum e_token_type
 	HEREDOC,
 	ENV_VAR,
 	QUOTE,
+	SQUOTE,
+	DQUOTE,
 	WHITESPACE,
 	END_OF_INPUT
 }	t_token_type;

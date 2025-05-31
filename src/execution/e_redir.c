@@ -45,8 +45,8 @@ static void	read_heredoc_input(int pipe_fd, char *delimiter)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, pipe_fd);
-		ft_putstr_fd("\n", pipe_fd);
+		write(pipe_fd, line, ft_strlen(line));
+		write(pipe_fd, "\n", 1);
 		free(line);
 	}
 }
@@ -65,7 +65,9 @@ static int	apply_heredoc_redirection(char *delimiter)
 		perror("minishell: pipe");
 		return (-1);
 	}
+	set_signal_mode(HEREDOC_MODE);
 	read_heredoc_input(pipe_fd[1], delimiter);
+	set_signal_mode(INTERACTIVE_MODE);
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 	{

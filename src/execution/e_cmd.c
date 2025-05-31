@@ -11,8 +11,8 @@ int apply_redirections(t_redirect *redirects);
 */
 static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 {
-	int stdin_backup;
-	int stdout_backup;
+	int	stdin_backup;
+	int	stdout_backup;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return;
@@ -30,7 +30,7 @@ static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 			dup2(stdout_backup, STDOUT_FILENO);
 			close(stdin_backup);
 			close(stdout_backup);
-			return;
+			return ;
 		}
 	}
 	// Exécuter la commande
@@ -45,16 +45,12 @@ static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 void	execute_parsed_command(t_command *cmd, t_env **env, t_status *status)
 {
 	if (!cmd || !cmd->commands)
-		return;
+		return ;
 	
 	if (cmd->cmd_count == 1)
 	{
 		execute_simple_cmd(cmd->commands[0], env, status);
-		return;
+		return ;
 	}
-	ft_putstr_fd("Pipeline pas encore fait (", 2);
-	ft_putnbr_fd(cmd->cmd_count, 2);
-	ft_putendl_fd(" commandes)", 2);
-	status->exit_code = 1;
-	// à faire
+	execute_pipeline(cmd, env, status);
 }

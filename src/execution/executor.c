@@ -14,16 +14,15 @@
  * @param env: Liste chaînée contenant les
  	variables d’environnement (type t_env*)
  */
-
 void	execute_command(char **argv, t_env **env, t_status *status)
 {
 	pid_t	pid;
 	char	*path;
 	int		cmd_status;
 	char	**envp;
-	
+
 	if (check_builtin(argv, env, status))
-	return ;	
+		return ;
 	path = get_command_path(argv[0], *env);
 	if (!path)
 	{
@@ -46,19 +45,15 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 	}
 	waitpid(pid, &cmd_status, 0);
 	set_signal_mode(INTERACTIVE_MODE);
-	
-	if(WIFEXITED(cmd_status))
-	status->exit_code = WEXITSTATUS(cmd_status);
-	
+	if (WIFEXITED(cmd_status))
+		status->exit_code = WEXITSTATUS(cmd_status);
 	else if (WIFSIGNALED(cmd_status))
 	{
 		status->exit_code = 128 + WTERMSIG(cmd_status);
 		if (WTERMSIG(cmd_status) == SIGINT)
-		write(1, "^C\n", 3);
+			write(1, "^C\n", 3);
 		else if (WTERMSIG(cmd_status) == SIGQUIT)
-		write(1, "^\\Quit\n", 7);
+			write(1, "^\\Quit\n", 7);
 	}
 	free(path);
 }
-
-

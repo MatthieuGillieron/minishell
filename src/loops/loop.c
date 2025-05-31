@@ -56,6 +56,14 @@ static int	read_and_process_line(t_status *status)
 	}
 	if (*line)
 		add_history(line);
+	
+	// Vérifier si c'est une commande spéciale
+	if (is_special_command(line, status))
+	{
+		free(line);
+		return (1);
+	}
+	
 	tokens = tokenize_input(line);
 	if (tokens)
 		process_tokens(tokens, status);

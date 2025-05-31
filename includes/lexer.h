@@ -28,6 +28,7 @@ t_token *tokenize_dquote(t_lexer *lexer);
 int		is_whitespace(char c);
 int		is_special_char(char c);
 int		is_quote(char c);
+int		is_special_command(char *str, t_status *status);
 
 // 	*** Expansion ***
 

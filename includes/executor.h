@@ -23,5 +23,6 @@ int		apply_append_redirection(char *file_path);
 void	execute_child_process(t_simple_cmd *cmd_data, t_env **env, 
 								t_status *status);
 void	wait_for_children(pid_t *pids, int count, t_status *status);
+int		apply_redirections(t_redirect *redirects);
 
 #endif

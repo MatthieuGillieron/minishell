@@ -8,6 +8,7 @@ int		builtin_unset(char **argv, t_env **env);
 int		builtin_env(t_env *env);
 int		builtin_pwd(void);
 int		builtin_echo(char **argv);
+int		builtin_echo_status(t_status *status);
 
 /* Commande export et fonctions associées */
 int		builtin_export(char **argv, t_env **env);

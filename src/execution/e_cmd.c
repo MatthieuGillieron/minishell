@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-// Déclaration de la fonction définie dans e_redir.c
-int apply_redirections(t_redirect *redirects);
-
 /**
  * Exécute une commande simple
  * @param cmd Commande simple à exécuter
@@ -46,7 +43,6 @@ void	execute_parsed_command(t_command *cmd, t_env **env, t_status *status)
 {
 	if (!cmd || !cmd->commands)
 		return ;
-	
 	if (cmd->cmd_count == 1)
 	{
 		execute_simple_cmd(cmd->commands[0], env, status);

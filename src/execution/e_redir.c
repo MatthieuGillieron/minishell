@@ -45,8 +45,8 @@ static void	read_heredoc_input(int pipe_fd, char *delimiter)
 			free(line);
 			break ;
 		}
-		write(pipe_fd, line, ft_strlen(line));
-		write(pipe_fd, "\n", 1);
+		ft_putstr_fd(line, pipe_fd);
+		ft_putstr_fd("\n", pipe_fd);
 		free(line);
 	}
 }

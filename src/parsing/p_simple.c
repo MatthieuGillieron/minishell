@@ -40,10 +40,6 @@ static int	add_redirect(t_simple_cmd *cmd, t_redirect *redirect)
 	return (1);
 }
 
-/**
- * Traite les tokens dans la commande simple
- * Retourne 0 si erreur, 1 si succès
- */
 static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 {
 	t_token_type	redir_type;

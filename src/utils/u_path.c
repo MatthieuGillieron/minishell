@@ -1,14 +1,5 @@
 #include "../includes/minishell.h"
 
-/**
- * Tente de trouver un chemin exécutable valide pour une commande.
- * Construit un chemin complet avec chaque dossier de PATH
- * et vérifie avec access() si la commande y est exécutable.
- *
- * @param cmd Le nom de la commande.
- * @param paths Un tableau de chemins extraits de PATH.
- * @return Un chemin alloué contenant la commande valide, ou NULL.
- */
 char	*find_command_path(char *cmd, char **paths)
 {
 	char	*path;
@@ -32,12 +23,6 @@ char	*find_command_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-/**
- * Recherche la variable PATH dans la liste chaînée de l’environnement.
- *
- * @param env La liste chaînée contenant les paires clé/valeur.
- * @return Une chaîne représentant la valeur de PATH, ou NULL si absente.
- */
 char	*get_path_env(t_env *env)
 {
 	while (env)
@@ -57,21 +42,11 @@ char *join_path(char *path, char *cmd)
 	tmp = ft_strjoin(path, "/");
 	if (!tmp)
 		return (NULL);
-	
 	result = ft_strjoin(tmp, cmd);
 	free(tmp);
-	
 	return (result);
 }
 
-/**
- * Retourne le chemin complet vers une commande, en vérifiant
- * si elle est absolue ou en la recherchant dans les dossiers de PATH.
- *
- * @param cmd La commande à exécuter.
- * @param env L’environnement sous forme de liste chaînée.
- * @return Une chaîne allouée avec le chemin trouvé, ou NULL.
- */
 char	*get_command_path(char *cmd, t_env *env)
 {
 	char	*path_env;
@@ -81,11 +56,8 @@ char	*get_command_path(char *cmd, t_env *env)
 
 	if (!cmd || !*cmd)
 		return (NULL);
-	
-	// Si la commande contient un '/', c'est déjà un chemin
 	if (ft_strchr(cmd, '/'))
 	{
-		// Vérifier si le fichier est exécutable
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
@@ -96,7 +68,6 @@ char	*get_command_path(char *cmd, t_env *env)
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		return (NULL);
-		
 	i = 0;
 	while (paths[i])
 	{
@@ -113,12 +84,6 @@ char	*get_command_path(char *cmd, t_env *env)
 	return (NULL);
 }
 
-
-/**
- * Libère un tableau de chaînes alloué dynamiquement.
- *
- * @param split Le tableau à libérer.
- */
 void	free_split(char **split)
 {
 	int	i;

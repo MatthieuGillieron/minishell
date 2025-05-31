@@ -1,7 +1,7 @@
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-typedef enum	e_signal_mode
+typedef enum e_signal_mode
 {
 	INTERACTIVE_MODE,
 	EXECUTION_MODE,

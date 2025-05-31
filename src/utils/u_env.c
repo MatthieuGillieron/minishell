@@ -1,8 +1,5 @@
 #include "../includes/minishell.h"
 
-/**
- * Initialise la liste chaînée des variables d'environnement à partir de envp.
- */
 t_env	*init_env_list(char **envp)
 {
 	t_env	*head;
@@ -25,7 +22,6 @@ t_env	*init_env_list(char **envp)
 			node->key = ft_substr(envp[i], 0, equal - envp[i]);
 			node->value = ft_strdup(equal + 1);
 			node->next = NULL;
-			
 			if (!head)
 				head = node;
 			else
@@ -34,8 +30,6 @@ t_env	*init_env_list(char **envp)
 		}
 		i++;
 	}
-	
-	// Si PATH n'est pas défini, ajoutons un PATH par défaut
 	if (!env_get(head, "PATH"))
 	{
 		node = malloc(sizeof(t_env));
@@ -44,20 +38,15 @@ t_env	*init_env_list(char **envp)
 			node->key = ft_strdup("PATH");
 			node->value = ft_strdup("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 			node->next = NULL;
-			
 			if (!head)
 				head = node;
 			else
 				last->next = node;
 		}
 	}
-	
 	return (head);
 }
 
-/**
- * Récupère la valeur associée à une clé donnée dans la liste env.
- */
 char	*env_get(t_env *env, const char *key)
 {
 	while (env)
@@ -69,9 +58,6 @@ char	*env_get(t_env *env, const char *key)
 	return (NULL);
 }
 
-/**
- * Modifie ou ajoute une variable d'environnement dans la liste.
- */
 int	env_set(t_env **env, const char *key, const char *value)
 {
 	t_env	*tmp;
@@ -98,9 +84,6 @@ int	env_set(t_env **env, const char *key, const char *value)
 	return (0);
 }
 
-/**
- * Supprime une variable d'environnement de la liste.
- */
 int	env_unset(t_env **env, const char *key)
 {
 	t_env	*curr;

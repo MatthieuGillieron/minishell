@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-// Convertir un type de token en type de redirection
 t_redir_type	token_to_redir_type(t_token_type token_type)
 {
 	if (token_type == REDIR_IN)
@@ -11,26 +10,21 @@ t_redir_type	token_to_redir_type(t_token_type token_type)
 		return (REDIR_APPEND_OUT);
 	else if (token_type == HEREDOC)
 		return (REDIR_HEREDOC_OUT);
-	return (REDIR_INPUT); // Par défaut
+	return (REDIR_INPUT);
 }
 
-// Parser une redirection (< fichier, > fichier, etc.)
 t_redirect	*parse_redirection(t_token ***tokens_ptr, t_token_type redir_type)
 {
 	t_redirect	*redirect;
 
-	// Vérifier qu'il y a un token après la redirection
 	if (!**tokens_ptr || (***tokens_ptr).type != WORD)
-		return (NULL); // Erreur: redirection sans fichier/délimiteur
-	// Créer la structure de redirection
+		return (NULL);
 	redirect = (t_redirect *)malloc(sizeof(t_redirect));
 	if (!redirect)
 		return (NULL);
-	// Initialiser la redirection
 	redirect->type = token_to_redir_type(redir_type);
 	redirect->file_or_delimiter = (***tokens_ptr).value;
 	redirect->next = NULL;
-	// Avancer au token suivant
 	(*tokens_ptr)++;
 	return (redirect);
 }

@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-/**
- * Crée un nouveau token.
- */
 t_token	*create_token(t_token_type type, char *value, int position)
 {
 	t_token	*token;
@@ -50,10 +47,6 @@ t_token	*tokenize_word(t_lexer *lexer)
 	return (create_token(WORD, value, start));
 }
 
-
-/**
- * Tokenise un opérateur.
-*/
 t_token	*tokenize_operator(t_lexer *lexer)
 {
 	char	op;

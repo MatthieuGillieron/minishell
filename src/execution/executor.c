@@ -1,19 +1,5 @@
 #include "../../includes/minishell.h"
 
-/**
- * execute_command - Fonction principale pour exécuter une commande.
- *
- * Cette fonction prend une ligne de commande splittée (argv),
- * vérifie si c'est une commande builtin (comme cd, echo, etc.),
- * et l'exécute si c’est le cas.
- * Sinon, elle essaie de localiser le binaire via PATH, puis forke
- * un processus fils pour l’exécuter avec execve.
- *
- * @param argv: Liste des arguments de la commande
- 	(argv[0] est le nom de la commande)
- * @param env: Liste chaînée contenant les
- 	variables d’environnement (type t_env*)
- */
 void	execute_command(char **argv, t_env **env, t_status *status)
 {
 	pid_t	pid;

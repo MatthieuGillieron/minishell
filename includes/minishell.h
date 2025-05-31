@@ -1,10 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*
-Bibliotheque
-*/
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -17,44 +13,29 @@ Bibliotheque
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
-# include "signals.h"
-# include "loop.h"
-# include "executor.h"
-# include "path.h"
-# include "builtins.h"
-# include "env.h"
-# include "lexer.h"
-# include "parser.h"
-# include "signals.h"
-# include "executor.h"
 # include "../libft/includes/libft.h"
 
-
-extern int g_sig_received;
+extern int	g_sig_received;
 
 // Forward declarations des structures
-
-struct						s_token;
-typedef struct s_token 		t_token;
-struct						s_env;
-typedef struct s_env		t_env;
-struct						s_lexer;
-typedef struct s_lexer		t_lexer;
-struct						s_redirect;
+struct		s_token;
+typedef struct s_token	t_token;
+struct		s_env;
+typedef struct s_env	t_env;
+struct		s_lexer;
+typedef struct s_lexer	t_lexer;
+struct		s_redirect;
 typedef struct s_redirect	t_redirect;
-struct						s_simple_cmd;
+struct		s_simple_cmd;
 typedef struct s_simple_cmd	t_simple_cmd;
-struct						s_command;
+struct		s_command;
 typedef struct s_command	t_command;
-struct						s_status;
-typedef struct s_status		t_status;
-struct						s_simple_cmd;
-typedef struct s_simple_cmd	t_simple_cmd;
+struct		s_status;
+typedef struct s_status	t_status;
 
 /*
 Colors
 */
-
 # define RST		"\033[0m"		
 # define RED		"\033[1;31m"	
 # define GREEN		"\033[1;32m"	
@@ -65,7 +46,6 @@ Colors
 # define WHITE		"\033[1;37m"
 
 //	*** ENUM *** 
-
 typedef enum e_token_type
 {
 	WORD,
@@ -83,7 +63,6 @@ typedef enum e_token_type
 }	t_token_type;
 
 //	*** STRUCTURE ***
-
 typedef struct s_env
 {
 	char			*key;
@@ -97,16 +76,14 @@ typedef struct s_token
 	char			*value;
 	int				position;
 	struct s_token	*next;
-}					t_token;
+}	t_token;
 
 typedef struct s_lexer
 {
 	char	*input;
-	size_t 	position;
+	size_t	position;
 	char	current_char;
-}			t_lexer;
-
-void	test_lexer(char *input);
+}	t_lexer;
 
 typedef struct s_status
 {
@@ -115,6 +92,17 @@ typedef struct s_status
 	int		running;
 }	t_status;
 
+// Maintenant que les structures sont définies, on peut inclure les autres headers
+# include "signals.h"
+# include "loop.h"
+# include "executor.h"
+# include "path.h"
+# include "builtins.h"
+# include "env.h"
+# include "lexer.h"
+# include "parser.h"
+
+void		test_lexer(char *input);
 t_status	*get_status(void);
 
 #endif

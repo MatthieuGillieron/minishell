@@ -1,10 +1,5 @@
 #include "../includes/minishell.h"
 
-/**
- * Gestionnaire de signal pour le mode interactif (prompt)
- * Ctrl+C (SIGINT) affiche un nouveau prompt
- */
-
 static void	sigint_interactive_handler(int sig)
 {
 	(void)sig;
@@ -14,21 +9,12 @@ static void	sigint_interactive_handler(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-/**
- * Gestionnaire de signal pour le mode d'exécution
- * Utilisé quand un processus enfant est en cours d'exécution
- */
 
 static void	sigint_execution_handler(int sig)
 {
 	(void)sig;
 	g_sig_received = 1;
 }
-
-/**
- * Gestionnaire de signal pour le mode heredoc
- * Ctrl+C (SIGINT) doit interrompre la lecture du heredoc
- */
 
 static void	sigint_heredoc_handler(int sig)
 {
@@ -37,10 +23,6 @@ static void	sigint_heredoc_handler(int sig)
 	write(1, "\n", 1);
 	close(STDIN_FILENO);
 }
-
-/**
- * Configure le mode de traitement des signaux
-*/
 
 void	set_signal_mode(t_signal_mode mode)
 {
@@ -57,7 +39,7 @@ void	set_signal_mode(t_signal_mode mode)
 	else if (mode == HEREDOC_MODE)
 	{
 		signal(SIGINT, sigint_heredoc_handler);
-		signal(SIGQUIT, SIG_IGN);		
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 
@@ -65,10 +47,6 @@ void	init_signals(void)
 {
 	set_signal_mode(INTERACTIVE_MODE);
 }
-
-/**
- * Configure les signaux pour un processus parent
-*/
 
 void	handle_signals_parent(void)
 {

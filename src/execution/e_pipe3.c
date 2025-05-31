@@ -1,12 +1,5 @@
 #include "../../includes/minishell.h"
 
-/**
- * Crée les processus enfants et exécute les commandes du pipeline
- * @param cmd Structure de commande contenant le pipeline
- * @param env Pointeur vers l'environnement
- * @param status Structure contenant l'état du shell
- * @param data Structure contenant les données du pipeline
- */
 void	execute_pipeline_commands(t_command *cmd, t_env **env, t_status *status,
 								t_pipeline_data *data)
 {

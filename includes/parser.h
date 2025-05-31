@@ -2,12 +2,11 @@
 # define PARSER_H
 
 //forward dec.
-
 struct s_token;
-typedef struct s_token t_token;
+typedef struct s_token	t_token;
 typedef enum e_token_type	t_token_type;
 struct s_env;
-typedef struct s_env t_env;
+typedef struct s_env	t_env;
 
 typedef enum e_redir_type
 {
@@ -22,7 +21,6 @@ typedef struct s_redirect
 	t_redir_type		type;
 	char				*file_or_delimiter;
 	struct s_redirect	*next;
-
 }	t_redirect;
 
 typedef struct s_simple_cmd
@@ -40,15 +38,19 @@ typedef struct s_command
 }	t_command;
 
 // Fonction principale du parser
-t_command 		*parse_tokens(t_token **tokens);
+t_command	*parse_tokens(t_token **tokens);
+
 // Sous-fonctions du parser
-t_simple_cmd 	*parse_simple_command(t_token ***tokens_ptr);
-t_redirect 		*parse_redirection(t_token ***tokens_ptr, t_token_type redir_type);
+t_simple_cmd	*parse_simple_command(t_token ***tokens_ptr);
+t_redirect		*parse_redirection(t_token ***tokens_ptr, t_token_type redir_type);
 void			free_command(t_command *cmd);
+
 // Ajoutez cette ligne pour déclarer print_command
 void			print_command(t_command *cmd);
+
 // Fonction de conversion
 t_redir_type	token_to_redir_type(t_token_type token_type);
+
 // Fonctions d'expansion
 void			expand_tokens(t_token **tokens, t_env *env, t_status *status);
 t_token			*process_dquote_token(t_token *token, t_env *env, t_status *status);

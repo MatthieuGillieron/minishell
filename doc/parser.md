@@ -1,6 +1,6 @@
-# **# Documentation Détaillée du Parser de Minishell**
+## Documentation Détaillée du Parser de Minishell**
 
-## **## Table des Matières**
+### **Table des Matières**
 
 1. Architecture Globale
 2. Structures de Données
@@ -10,11 +10,11 @@
 6. Gestion des Erreurs
 7. Conformité à la Norme 42
 
-## **## Architecture Globale**
+### **Architecture Globale**
 
 Le parser de Minishell est responsable de transformer une série de tokens générés par le lexer en une structure de données hiérarchique représentant une commande shell. Cette structure peut ensuite être exécutée par le module d'exécution.
 
-### ## Organisation des Fichiers
+## Organisation des Fichiers
 
 Le parser est divisé en plusieurs fichiers pour respecter la norme 42:
 
@@ -24,9 +24,9 @@ Le parser est divisé en plusieurs fichiers pour respecter la norme 42:
 - **p_test.c**: Fonctions d'affichage pour le débogage
 - **u_parse.c**: Fonctions utilitaires pour la libération de mémoire
 
-## **## Structures de Données**
+## **Structures de Données**
 
-### ### Énumération des Types de Redirection
+### Énumération des Types de Redirection
 
 ```c
 
@@ -34,13 +34,13 @@ typedef *enum* e_redir_type
 
 {
 
-REDIR_INPUT,         *// Redirection d'entrée (<)*
+    REDIR_INPUT,         *// Redirection d'entrée (<)*
 
-REDIR_OUTPUT,        *// Redirection de sortie (>)*
+    REDIR_OUTPUT,        *// Redirection de sortie (>)*
 
-REDIR_APPEND_OUT,    *// Redirection de sortie en mode append (>>)*
+    REDIR_APPEND_OUT,    *// Redirection de sortie en mode append (>>)*
 
-REDIR_HEREDOC_OUT    *// Heredoc (<<)*
+    REDIR_HEREDOC_OUT    *// Heredoc (<<)*
 
 } t_redir_type;
 
@@ -48,7 +48,7 @@ REDIR_HEREDOC_OUT    *// Heredoc (<<)*
 
 Cette énumération définit les différents types de redirections que le shell peut gérer, permettant une représentation claire et typée dans le code.
 
-### ## Structure de Redirection
+## Structure de Redirection
 
 ```c
 
@@ -56,11 +56,11 @@ typedef *struct* s_redirect
 
 {
 
-t_redir_type        type;                *// Type de redirection*
+    t_redir_type        type;                *// Type de redirection*
 
-*char*                *file_or_delimiter;  *// Fichier ou délimiteur*
+    *char*                *file_or_delimiter;  *// Fichier ou délimiteur*
 
-*struct* s_redirect   *next;               *// Pointeur vers la redirection suivante*
+    *struct* s_redirect   *next;               *// Pointeur vers la redirection suivante*
 
 } t_redirect;
 ```
@@ -71,7 +71,7 @@ Cette structure représente une redirection individuelle avec:
 - Un nom de fichier ou un délimiteur
 - Un pointeur vers la redirection suivante, permettant de créer une liste chaînée
 
-### ## Structure de Commande Simple
+## Structure de Commande Simple
 
 ```c
 
@@ -79,11 +79,11 @@ typedef *struct* s_simple_cmd
 
 {
 
-*char*        **args;       *// Tableau d'arguments (args[0] est la commande)*
+    *char*        **args;       *// Tableau d'arguments (args[0] est la commande)*
 
-*int*         arg_count;    *// Nombre d'arguments*
+    *int*         arg_count;    *// Nombre d'arguments*
 
-t_redirect  *redirects;   *// Liste chaînée de redirections*
+    t_redirect  *redirects;   *// Liste chaînée de redirections*
 
 } t_simple_cmd;
 ```
@@ -94,7 +94,7 @@ Cette structure représente une commande shell simple (avant ou après un pipe) 
 - Un compteur d'arguments
 - Une liste de redirections associées à cette commande
 
-### ## Structure de Commande Complète|
+## Structure de Commande Complète|
 
 ```c
 
@@ -102,9 +102,9 @@ typedef *struct* s_command
 
 {
 
-t_simple_cmd    **commands;  *// Tableau de commandes simples*
+    t_simple_cmd    **commands;  *// Tableau de commandes simples*
 
-*int*             cmd_count;   *// Nombre de commandes dans le pipeline*
+    *int*             cmd_count;   *// Nombre de commandes dans le pipeline*
 
 } t_command;
 ```
@@ -114,7 +114,7 @@ Cette structure représente un pipeline complet de commandes avec:
 - Un tableau de commandes simples
 - Le nombre de commandes dans le pipeline (séparées par des pipes)
 
-## **## Flux de Traitement**
+## **Flux de Traitement**
 
 Le flux de traitement du parser suit les étapes suivantes:
 
@@ -124,11 +124,11 @@ Le flux de traitement du parser suit les étapes suivantes:
 4. **Parsing des redirections**: Les redirections sont détectées et parsées par `parse_redirection`
 5. **Construction de la structure**: Une structure hiérarchique est créée pour représenter la commande complète
 
-## **## Analyse Détaillée des Fichiers**
+## **Analyse Détaillée des Fichiers**
 
-### ###p_core.c - Fonctions Centrales
+##p_core.c - Fonctions Centrales
 
-### ### initialize_command
+### initialize_command
 
 ```c
 
@@ -136,55 +136,45 @@ t_command *initialize_command(*int* cmd_count)
 
 {
 
-t_command *cmd;
+    t_command *cmd;
 
-*int*       i;
+    *int*       i;   
 
-cmd = (t_command *)malloc(sizeof(t_command));
+    cmd = (t_command *)malloc(sizeof(t_command));
 
-if (!cmd)
+    if (!cmd)
+        return (NULL);
 
-return (NULL);
+    cmd->cmd_count = cmd_count;
+    cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd_count);
 
-cmd->cmd_count = cmd_count;
+    if (!cmd->commands)
+    {
+    free(cmd);
+    return (NULL);
+    }
 
-cmd->commands = (t_simple_cmd **)malloc(sizeof(t_simple_cmd *) * cmd_count);
+    i = 0;
 
-if (!cmd->commands)
-
-{
-
-free(cmd);
-
-return (NULL);
-
-}
-
-i = 0;
-
-while (i < cmd->cmd_count)
-
-{
-
-cmd->commands[i] = NULL;
-
-i++;
-
-}
+    while (i < cmd->cmd_count)
+    {
+        cmd->commands[i] = NULL;
+        i++;
+    }
 
 return (cmd);
 
 }
 ```
 
-**#### Analyse**:
+**Analyse**:
 
 - Alloue la mémoire pour la structure `t_command`
 - Alloue un tableau de pointeurs vers des commandes simples
 - Initialise tous les pointeurs à NULL
 - Gère proprement les erreurs d'allocation mémoire
 
-### ## count_commands
+## count_commands
 
 ```c
 
@@ -192,29 +182,24 @@ static *int* count_commands(t_token **tokens)
 
 {
 
-*int*     count;
+    *int*     count;
 
-t_token **current;
+    t_token **current;
+    count = 1; *// Au moins une commande*
 
-count = 1; *// Au moins une commande*
+    current = tokens;
 
-current = tokens;
-
-while (*current)
-
-{
-
-if ((*current)->type == PIPE)
-
-count++;
-
-current++;
-
-}
+    while (*current)
+    {
+        if ((*current)->type == PIPE)
+            count++;
+    current++;
+    }
 
 return (count);
 
 }
+```
 
 **Analyse**:
 
@@ -224,65 +209,44 @@ return (count);
 
 ### parse_tokens
 
+```c
 t_command *parse_tokens(t_token **tokens)
 
 {
 
-t_command *cmd;
+    t_command *cmd;
+    t_token   **current;
 
-t_token   **current;
+    *int*       i;
+    *int*       cmd_count;
 
-*int*       i;
-
-*int*       cmd_count;
-
-if (!tokens || !tokens[0])
-
-return (NULL);
-
-cmd_count = count_commands(tokens);
-
-cmd = initialize_command(cmd_count);
-
-if (!cmd)
-
-return (NULL);
-
-current = tokens;
-
-i = 0;
-
-while (i < cmd->cmd_count)
-
-{
-
-cmd->commands[i] = parse_simple_command(&current);
-
-if (!cmd->commands[i])
-
-{
-
-free_command(cmd);
-
-return (NULL);
-
-}
-
-if (*current && (*current)->type == PIPE)
-
-current++;
-
-i++;
-
-}
-
+    if (!tokens || !tokens[0])
+        return (NULL);
+    cmd_count = count_commands(tokens);
+    cmd = initialize_command(cmd_count);
+    if (!cmd)
+        return (NULL);
+    current = tokens;
+    i = 0;
+    while (i < cmd->cmd_count)
+    {
+        cmd->commands[i] = parse_simple_command(&current);
+        if (!cmd->commands[i])
+        {
+            free_command(cmd);
+            return (NULL);
+        }
+        if (*current && (*current)->type == PIPE)
+            current++;
+        i++;
+    }
 return (cmd);
 
 }
 
 ```
 
-**#### Analyse**:
+**Analyse**:
 
 - Fonction principale du parser qui:
     1. Vérifie la validité des tokens d'entrée
@@ -292,56 +256,41 @@ return (cmd);
     5. Gère proprement les erreurs et libère la mémoire en cas d'échec
 - Passe un pointeur vers le pointeur de token (`&current`) pour permettre à `parse_simple_command` de faire avancer le pointeur
 
-### ## p_simple.c - Parsing des Commandes Simples
+## p_simple.c - Parsing des Commandes Simples
 
-### ### add_arg
+### add_arg
 
 ```c
 
 static *int* add_arg(t_simple_cmd *cmd, *char* *arg)
-
 {
 
-*char* **new_args;
+    *char* **new_args;
+    *int*   i;
 
-*int*   i;
+    new_args = (*char* **)malloc(sizeof(*char* *) * (cmd->arg_count + 2));
+    if (!new_args)
+        return (0);
+    i = 0;
 
-new_args = (*char* **)malloc(sizeof(*char* *) * (cmd->arg_count + 2));
+    while (i < cmd->arg_count)
+    {
+        new_args[i] = cmd->args[i];
+        i++;
+    }
+    new_args[cmd->arg_count] = arg;
+    new_args[cmd->arg_count + 1] = NULL;
 
-if (!new_args)
-
-return (0);
-
-i = 0;
-
-while (i < cmd->arg_count)
-
-{
-
-new_args[i] = cmd->args[i];
-
-i++;
-
-}
-
-new_args[cmd->arg_count] = arg;
-
-new_args[cmd->arg_count + 1] = NULL;
-
-if (cmd->args)
-
-free(cmd->args);
-
-cmd->args = new_args;
-
-cmd->arg_count++;
-
+    if (cmd->args)
+        free(cmd->args);
+    cmd->args = new_args;
+    cmd->arg_count++;
 return (1);
 
 }
 ```
 
-**#### Analyse**:
+**Analyse**:
 
 - Fonction helper qui ajoute un argument à une commande simple
 - Réalloue le tableau d'arguments pour accommoder le nouvel argument
@@ -349,33 +298,24 @@ return (1);
 - Gère correctement la libération de l'ancien tableau
 - Note: Les chaînes individuelles ne sont pas dupliquées mais référencées directement depuis les tokens
 
-### ### add_redirect
+### add_redirect
 
 ```c
 
 static *int* add_redirect(t_simple_cmd *cmd, t_redirect *redirect)
-
 {
 
-t_redirect *current;
+    t_redirect *current;
 
-if (!cmd->redirects)
-
-cmd->redirects = redirect;
-
-else
-
-{
-
-current = cmd->redirects;
-
-while (current->next)
-
-current = current->next;
-
-current->next = redirect;
-
-}
+    if (!cmd->redirects)
+        cmd->redirects = redirect;
+    else
+    {
+        current = cmd->redirects;
+    while (current->next)
+        current = current->next;
+    current->next = redirect;
+    }
 
 return (1);
 
@@ -383,13 +323,13 @@ return (1);
 
 ```
 
-**#### Analyse**:
+**Analyse**:
 
 - Ajoute une redirection à la fin de la liste chaînée de redirections d'une commande
 - Gère le cas spécial où c'est la première redirection
 - Implémentation classique d'ajout à une liste chaînée
 
-### ### process_token
+### process_token
 
 ```c
 static *int* process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)

@@ -14,7 +14,7 @@ void	execute_pipeline_commands(t_command *cmd, t_env **env, t_status *status,
 		{
 			perror("minishell: fork");
 			status->exit_code = 1;
-			break;
+			break ;
 		}
 		else if (data->pids[i] == 0)
 		{

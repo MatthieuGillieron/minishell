@@ -2,23 +2,28 @@
 
 char	*expand_variables(char *str, t_env *env, t_status *status)
 {
-	char	*result;
-	int		i;
-	int		j;
+	t_expand	exp;
+	char		*result;
+	int			j;
 
 	if (!str)
 		return (NULL);
 	result = malloc(ft_strlen(str) * 4 + 1);
 	if (!result)
 		return (NULL);
-	i = 0;
 	j = 0;
-	while (str[i])
+	exp.str = str;
+	exp.result = result;
+	exp.i = 0;
+	exp.j = &j;
+	exp.env = env;
+	exp.status = status;
+	while (str[exp.i])
 	{
-		if (str[i] == '$' && str[i + 1] && str[i + 1] != ' ')
-			i = process_dollar(str, i, result, &j, env, status);
+		if (str[exp.i] == '$' && str[exp.i + 1] && str[exp.i + 1] != ' ')
+			exp.i = process_dollar(&exp);
 		else
-			result[j++] = str[i++];
+			result[j++] = str[exp.i++];
 	}
 	result[j] = '\0';
 	return (result);

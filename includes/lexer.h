@@ -28,11 +28,20 @@ int		is_quote(char c);
 int		is_special_command(char *str, t_status *status);
 
 // 	*** Expansion ***
+typedef struct s_expand
+{
+	char		*str;
+	char		*result;
+	int			i;
+	int			*j;
+	t_env		*env;
+	t_status	*status;
+}	t_expand;
+
 char	*expand_variables(char *str, t_env *env, t_status *status);
 char	*extract_var_name(char *str);
 void	expand_exit_code(char *result, int *j, t_status *status);
 void	expand_env_var(char *result, int *j, char *var_name, t_env *env);
-int		process_dollar(char *str, int i, char *result, int *j,
-			t_env *env, t_status *status);
+int		process_dollar(t_expand *exp);
 
 #endif

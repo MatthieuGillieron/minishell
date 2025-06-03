@@ -44,26 +44,28 @@ void	expand_env_var(char *result, int *j, char *var_name, t_env *env)
 	}
 }
 
-int	process_dollar(char *str, int i, char *result, int *j,
-		t_env *env, t_status *status)
+static int	handle_question_mark(t_expand *exp)
+{
+	expand_exit_code(exp->result, exp->j, exp->status);
+	return (exp->i + 1);
+}
+
+int	process_dollar(t_expand *exp)
 {
 	char	*var_name;
 	int		name_len;
 
-	i++;
-	if (str[i] == '?')
-	{
-		expand_exit_code(result, j, status);
-		return (i + 1);
-	}
-	var_name = extract_var_name(&str[i]);
+	exp->i++;
+	if (exp->str[exp->i] == '?')
+		return (handle_question_mark(exp));
+	var_name = extract_var_name(&exp->str[exp->i]);
 	if (var_name)
 	{
-		expand_env_var(result, j, var_name, env);
+		expand_env_var(exp->result, exp->j, var_name, exp->env);
 		name_len = ft_strlen(var_name);
 		free(var_name);
-		return (i + name_len);
+		return (exp->i + name_len);
 	}
-	result[(*j)++] = '$';
-	return (i);
+	exp->result[(*exp->j)++] = '$';
+	return (exp->i);
 }

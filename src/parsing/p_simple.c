@@ -40,11 +40,22 @@ static int	add_redirect(t_simple_cmd *cmd, t_redirect *redirect)
 	return (1);
 }
 
-static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+static int	process_redir(t_simple_cmd *cmd, t_token ***tokens_ptr)
 {
 	t_token_type	redir_type;
 	t_redirect		*redirect;
-	char			*value;
+
+	redir_type = (***tokens_ptr).type;
+	(*tokens_ptr)++;
+	redirect = parse_redirection(tokens_ptr, redir_type);
+	if (!redirect)
+		return (0);
+	return (add_redirect(cmd, redirect));
+}
+
+static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+{
+	char	*value;
 
 	if ((***tokens_ptr).type == WORD
 		|| (***tokens_ptr).type == SQUOTE
@@ -57,23 +68,14 @@ static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 				return (0);
 		}
 		(*tokens_ptr)++;
+		return (1);
 	}
 	else if ((***tokens_ptr).type == REDIR_IN
 		|| (***tokens_ptr).type == REDIR_OUT
 		|| (***tokens_ptr).type == REDIR_APPEND
 		|| (***tokens_ptr).type == HEREDOC)
-	{
-		redir_type = (***tokens_ptr).type;
-		(*tokens_ptr)++;
-		redirect = parse_redirection(tokens_ptr, redir_type);
-		if (!redirect)
-			return (0);
-		if (!add_redirect(cmd, redirect))
-			return (0);
-	}
-	else
-		return (0);
-	return (1);
+		return (process_redir(cmd, tokens_ptr));
+	return (0);
 }
 
 t_simple_cmd	*parse_simple_command(t_token ***tokens_ptr)

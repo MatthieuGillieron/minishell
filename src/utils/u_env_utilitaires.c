@@ -1,8 +1,5 @@
 #include "../includes/minishell.h"
 
-/**
- * Libère toute la mémoire associée à la liste chaînée d’environnement.
- */
 void	free_env_list(t_env *env)
 {
 	t_env	*tmp;
@@ -30,9 +27,6 @@ static int	count_env_elements(t_env *env)
 	return (count);
 }
 
-/**
- * Convertit la liste chaînée d'environnement en tableau de strings "KEY=VALUE".
- */
 char	**env_to_array(t_env *env)
 {
 	char	**envp;

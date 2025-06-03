@@ -50,6 +50,6 @@ void	shell_loop(t_status *status)
 		set_signal_mode(INTERACTIVE_MODE);
 		g_sig_received = 0;
 		if (!read_and_process_line(status))
-			break;
+			break ;
 	}
 }

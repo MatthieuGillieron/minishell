@@ -5,7 +5,6 @@ t_env	*init_env_list(char **envp)
 	t_env	*head;
 	t_env	*node;
 	t_env	*last;
-	char	*equal;
 	int		i;
 
 	head = NULL;
@@ -13,15 +12,9 @@ t_env	*init_env_list(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		equal = ft_strchr(envp[i], '=');
-		if (equal)
+		node = create_env_node(envp[i]);
+		if (node)
 		{
-			node = malloc(sizeof(t_env));
-			if (!node)
-				return (NULL);
-			node->key = ft_substr(envp[i], 0, equal - envp[i]);
-			node->value = ft_strdup(equal + 1);
-			node->next = NULL;
 			if (!head)
 				head = node;
 			else
@@ -30,20 +23,7 @@ t_env	*init_env_list(char **envp)
 		}
 		i++;
 	}
-	if (!env_get(head, "PATH"))
-	{
-		node = malloc(sizeof(t_env));
-		if (node)
-		{
-			node->key = ft_strdup("PATH");
-			node->value = ft_strdup("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
-			node->next = NULL;
-			if (!head)
-				head = node;
-			else
-				last->next = node;
-		}
-	}
+	add_default_path_if_missing(&head);
 	return (head);
 }
 

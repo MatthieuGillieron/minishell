@@ -6,7 +6,7 @@ static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 	int	stdout_backup;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
-		return;
+		return ;
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
 	if (cmd->redirects)

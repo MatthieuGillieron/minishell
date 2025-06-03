@@ -39,7 +39,8 @@ t_token	*tokenize_word(t_lexer *lexer)
 
 	start = lexer->position;
 	while (lexer->current_char && !is_whitespace(lexer->current_char)
-		&& !is_special_char(lexer->current_char) && !is_quote(lexer->current_char))
+		&& !is_special_char(lexer->current_char)
+		&& !is_quote(lexer->current_char))
 		advance_lexer(lexer);
 	value = ft_substr(lexer->input, start, lexer->position - start);
 	if (!value)

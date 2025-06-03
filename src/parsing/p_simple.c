@@ -46,16 +46,16 @@ static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 	t_redirect		*redirect;
 	char			*value;
 
-	if ((***tokens_ptr).type == WORD || 
-		(***tokens_ptr).type == SQUOTE || 
-		(***tokens_ptr).type == DQUOTE)
+	if ((***tokens_ptr).type == WORD
+		|| (***tokens_ptr).type == SQUOTE
+		|| (***tokens_ptr).type == DQUOTE)
 	{
 		if ((***tokens_ptr).value && (***tokens_ptr).value[0])
-        {
+		{
 			value = ft_strdup((***tokens_ptr).value);
 			if (!value || !add_arg(cmd, value))
 				return (0);
-        }
+		}
 		(*tokens_ptr)++;
 	}
 	else if ((***tokens_ptr).type == REDIR_IN

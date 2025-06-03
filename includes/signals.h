@@ -10,6 +10,10 @@ typedef enum e_signal_mode
 
 //		*** PROTOTYPES ***
 
+void	sigint_interactive_handler(int sig);
+void	sigint_execution_handler(int sig);
+void	sigint_heredoc_handler(int sig);
+
 void	init_signals(void);
 void	set_signal_mode(t_signal_mode mode);
 void	handle_signals_parent(void);

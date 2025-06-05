@@ -1,9 +1,13 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+//  *** Forward declarations ***
+
+struct						s_env;
+typedef struct s_env		t_env;
+struct						s_status;
+typedef struct s_status		t_status;
 typedef enum e_token_type	t_token_type;
-typedef struct s_token		t_token;
-typedef struct s_lexer		t_lexer;
 
 // 	*** Lexer ***
 t_lexer	*init_lexer(char *input);

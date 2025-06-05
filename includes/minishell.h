@@ -14,16 +14,14 @@
 # include <errno.h>
 # include <termios.h>
 # include "../libft/includes/libft.h"
-# include "signals.h"
-# include "loop.h"
-# include "executor.h"
-# include "path.h"
-# include "builtins.h"
-# include "env.h"
-# include "lexer.h"
-# include "parser.h"
-
-extern int					g_sig_received;
+# include "../includes/signals.h"
+# include "../includes/loop.h"
+# include "../includes/executor.h"
+# include "../includes/path.h"
+# include "../includes/builtins.h"
+# include "../includes/env.h"
+# include "../includes/lexer.h"
+# include "../includes/parser.h"
 
 //  *** Forward declarations ***
 struct						s_token;
@@ -42,6 +40,8 @@ struct						s_status;
 typedef struct s_status		t_status;
 struct						s_expand;
 typedef struct s_expand		t_expand;
+
+extern int					g_sig_received;
 
 // 	*** COLORS *** 
 # define RST		"\033[0m"		
@@ -99,7 +99,5 @@ typedef struct s_status
 	int		exit_code;
 	int		running;
 }	t_status;
-
-t_status	*get_status(void);
 
 #endif

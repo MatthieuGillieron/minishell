@@ -1,13 +1,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-//forward dec.
-struct						s_token;
-typedef struct s_token		t_token;
-typedef enum e_token_type	t_token_type;
-struct						s_env;
-typedef struct s_env		t_env;
-
 typedef enum e_redir_type
 {
 	REDIR_INPUT,

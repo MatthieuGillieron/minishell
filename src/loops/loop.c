@@ -1,65 +1,55 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:18:22 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/28 09:11:07 by mg               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
-/**
- * @brief Boucle principale de l'interpréteur Minishell.
- *
- * Cette boucle lit une ligne de commande de l'utilisateur via readline,
- * la stocke dans l'historique si elle n'est pas vide,
- * la parse en tokens (arguments), exécute la commande,
- * puis libère toute la mémoire allouée.
- *
- * Elle continue jusqu'à ce que l'utilisateur entre EOF (Ctrl+D),
- * auquel cas "exit" est affiché et la boucle se termine.
- *
- * @param env Structure chaînée contenant l'environnement courant.
- */
+static void	process_tokens(t_token **tokens, t_status *status)
+{
+	t_command	*cmd;
+	int			i;
 
+	expand_tokens(tokens, status->env, status);
+	cmd = parse_tokens(tokens);
+	if (cmd)
+	{
+		execute_parsed_command(cmd, &status->env, status);
+		free_command(cmd);
+	}
+	i = 0;
+	while (tokens[i])
+		free_token(tokens[i++]);
+	free(tokens);
+}
 
-void	shell_loop(t_status *status)
+static int	read_and_process_line(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
-	t_command	*cmd;
-	int			i;
-	
+
+	line = readline(MAGENTA"MNM$ "RST);
+	if (!line)
+	{
+		write(1, "exit\n", 5);
+		return (0);
+	}
+	if (*line)
+		add_history(line);
+	if (is_special_command(line, status))
+	{
+		free(line);
+		return (1);
+	}
+	tokens = tokenize_input(line);
+	if (tokens)
+		process_tokens(tokens, status);
+	free(line);
+	return (1);
+}
+
+void	shell_loop(t_status *status)
+{
 	while (status->running)
 	{
 		set_signal_mode(INTERACTIVE_MODE);
 		g_sig_received = 0;
-		line = readline(MAGENTA"MNM$ "RST);
-		if (!line)
-		{
-			write(1, "exit\n", 5);
+		if (!read_and_process_line(status))
 			break ;
-		}
-		if (*line)
-		add_history(line);
-		tokens = tokenize_input(line);
-		if (tokens)
-		{
-			cmd = parse_tokens(tokens);
-			if (cmd)
-			{
-				execute_parsed_command(cmd, &status->env, status);
-				free_command(cmd);
-			}
-			i = 0;
-			while (tokens[i])
-			free_token(tokens[i++]);
-			free(tokens);
-		}
-		free(line);
 	}
 }

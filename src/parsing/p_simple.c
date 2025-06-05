@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   p_simple.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:16:14 by mg                #+#    #+#             */
-/*   Updated: 2025/05/27 15:09:04 by mg               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 #include "../../includes/parser.h"
 
@@ -52,40 +40,42 @@ static int	add_redirect(t_simple_cmd *cmd, t_redirect *redirect)
 	return (1);
 }
 
-/**
- * Traite les tokens dans la commande simple
- * Retourne 0 si erreur, 1 si succès
- */
-static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+static int	process_redir(t_simple_cmd *cmd, t_token ***tokens_ptr)
 {
 	t_token_type	redir_type;
 	t_redirect		*redirect;
 
-	if ((***tokens_ptr).type == WORD)
+	redir_type = (***tokens_ptr).type;
+	(*tokens_ptr)++;
+	redirect = parse_redirection(tokens_ptr, redir_type);
+	if (!redirect)
+		return (0);
+	return (add_redirect(cmd, redirect));
+}
+
+static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+{
+	char	*value;
+
+	if ((***tokens_ptr).type == WORD
+		|| (***tokens_ptr).type == SQUOTE
+		|| (***tokens_ptr).type == DQUOTE)
 	{
 		if ((***tokens_ptr).value && (***tokens_ptr).value[0])
-        {
-            if (!add_arg(cmd, (***tokens_ptr).value))
+		{
+			value = ft_strdup((***tokens_ptr).value);
+			if (!value || !add_arg(cmd, value))
 				return (0);
-        }
+		}
 		(*tokens_ptr)++;
+		return (1);
 	}
 	else if ((***tokens_ptr).type == REDIR_IN
 		|| (***tokens_ptr).type == REDIR_OUT
 		|| (***tokens_ptr).type == REDIR_APPEND
 		|| (***tokens_ptr).type == HEREDOC)
-	{
-		redir_type = (***tokens_ptr).type;
-		(*tokens_ptr)++;
-		redirect = parse_redirection(tokens_ptr, redir_type);
-		if (!redirect)
-			return (0);
-		if (!add_redirect(cmd, redirect))
-			return (0);
-	}
-	else
-		return (0);
-	return (1);
+		return (process_redir(cmd, tokens_ptr));
+	return (0);
 }
 
 t_simple_cmd	*parse_simple_command(t_token ***tokens_ptr)

@@ -1,28 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 11:03:52 by mtaramar          #+#    #+#             */
-/*   Updated: 2025/05/21 15:40:59 by mtaramar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
-/**
- * builtin_echo - Affiche les arguments à la suite avec un espace.
- * @argv: Liste des mots à afficher.
- * 
- * Retourne toujours 0.
- */
 int	builtin_echo(char **argv)
 {
 	int	i;
+	int	n_flag;
 
 	i = 1;
+	n_flag = 0;
+	if (argv[i] && ft_strcmp(argv[i], "-n") == 0)
+	{
+		n_flag = 1;
+		i++;
+	}
 	while (argv[i])
 	{
 		printf("%s", argv[i]);
@@ -30,6 +19,7 @@ int	builtin_echo(char **argv)
 			printf(" ");
 		i++;
 	}
-	printf("\n");
+	if (!n_flag)
+		printf("\n");
 	return (0);
 }

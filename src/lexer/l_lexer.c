@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 11:53:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/27 20:57:19 by mg               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 t_lexer	*init_lexer(char *input)
@@ -45,6 +33,10 @@ t_token	*get_next_token(t_lexer *lexer)
 	skip_whitespace(lexer);
 	if (lexer->current_char == '\0')
 		return (create_token(END_OF_INPUT, NULL, lexer->position));
+	if (lexer->current_char == '\'')
+		return (tokenize_squote(lexer));
+	if (lexer->current_char == '"')
+		return (tokenize_dquote(lexer));
 	if (is_special_char(lexer->current_char))
 		return (tokenize_operator(lexer));
 	if (!is_whitespace(lexer->current_char))

@@ -1,20 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 16:08:06 by mg                #+#    #+#             */
-/*   Updated: 2025/05/27 21:27:19 by mg               ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
-/**
- * Crée un nouveau token.
- */
 t_token	*create_token(t_token_type type, char *value, int position)
 {
 	t_token	*token;
@@ -54,7 +39,8 @@ t_token	*tokenize_word(t_lexer *lexer)
 
 	start = lexer->position;
 	while (lexer->current_char && !is_whitespace(lexer->current_char)
-		&& !is_special_char(lexer->current_char))
+		&& !is_special_char(lexer->current_char)
+		&& !is_quote(lexer->current_char))
 		advance_lexer(lexer);
 	value = ft_substr(lexer->input, start, lexer->position - start);
 	if (!value)
@@ -62,10 +48,6 @@ t_token	*tokenize_word(t_lexer *lexer)
 	return (create_token(WORD, value, start));
 }
 
-
-/**
- * Tokenise un opérateur.
-*/
 t_token	*tokenize_operator(t_lexer *lexer)
 {
 	char	op;

@@ -32,6 +32,9 @@ struct		s_command;
 typedef struct s_command	t_command;
 struct		s_status;
 typedef struct s_status	t_status;
+struct		s_expand;
+typedef struct s_expand	t_expand;
+
 
 /*
 Colors

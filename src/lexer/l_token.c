@@ -36,6 +36,9 @@ t_token	*tokenize_word(t_lexer *lexer)
 {
 	size_t	start;
 	char	*value;
+	char	*temp;
+	char	*quote_content;
+	t_token	*quote_token;
 
 	start = lexer->position;
 	while (lexer->current_char && !is_whitespace(lexer->current_char)
@@ -45,8 +48,55 @@ t_token	*tokenize_word(t_lexer *lexer)
 	value = ft_substr(lexer->input, start, lexer->position - start);
 	if (!value)
 		return (NULL);
+	
+	// Si le mot est suivi directement par des guillemets, les fusionner
+	while (lexer->current_char && is_quote(lexer->current_char))
+	{
+		if (lexer->current_char == '"')
+			quote_token = tokenize_dquote(lexer);
+		else // if (lexer->current_char == '\'')
+			quote_token = tokenize_squote(lexer);
+		
+		if (!quote_token)
+		{
+			free(value);
+			return (NULL);
+		}
+		
+		quote_content = quote_token->value;
+		temp = ft_strjoin(value, quote_content);
+		free(value);
+		free_token(quote_token);
+		value = temp;
+		
+		// Continuer avec le texte après les guillemets s'il y en a
+		while (lexer->current_char && !is_whitespace(lexer->current_char)
+			&& !is_special_char(lexer->current_char)
+			&& !is_quote(lexer->current_char))
+		{
+			start = lexer->position;
+			while (lexer->current_char && !is_whitespace(lexer->current_char)
+				&& !is_special_char(lexer->current_char)
+				&& !is_quote(lexer->current_char))
+				advance_lexer(lexer);
+			
+			temp = ft_substr(lexer->input, start, lexer->position - start);
+			if (!temp)
+			{
+				free(value);
+				return (NULL);
+			}
+			
+			quote_content = ft_strjoin(value, temp);
+			free(value);
+			free(temp);
+			value = quote_content;
+		}
+	}
+	
 	return (create_token(WORD, value, start));
 }
+
 
 t_token	*tokenize_operator(t_lexer *lexer)
 {

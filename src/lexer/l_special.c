@@ -2,10 +2,8 @@
 
 int	is_special_command(char *str, t_status *status)
 {
-	if (ft_strcmp(str, "$?") == 0)
-	{
-		builtin_echo_status(status);
-		return (1);
-	}
+	// Désactiver complètement le traitement spécial des variables d'environnement
+	(void)str;
+	(void)status;
 	return (0);
 }

@@ -36,6 +36,14 @@ static int	is_valid_identifier(char *name)
  */
 static int	validate_export_arg(char *arg, char *eq_pos)
 {
+	if (arg[0] == '-')
+	{
+		ft_putstr_fd("minishell: export: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd(": invalid option", 2);
+		ft_putendl_fd("export: usage: export [name[=value] ...]", 2);
+		return (1);
+	}
 	if (!eq_pos)
 	{
 		if (!is_valid_identifier(arg))
@@ -56,6 +64,7 @@ static int	validate_export_arg(char *arg, char *eq_pos)
 		ft_putendl_fd("': not a valid identifier", 2);
 		return (1);
 	}
+	*eq_pos = '=';
 	return (0);
 }
 

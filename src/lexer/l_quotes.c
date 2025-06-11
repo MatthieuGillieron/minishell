@@ -29,8 +29,8 @@ t_token	*tokenize_squote(t_lexer *lexer)
 		advance_lexer(lexer);
 	if (lexer->current_char != '\'')
 		return (NULL);
+	value = ft_substr(lexer->input, start + 1, lexer->position - start - 1);
 	advance_lexer(lexer);
-	value = ft_substr(lexer->input, start + 1, lexer->position - start - 2);
 	if (!value)
 		return (NULL);
 	return (create_token(SQUOTE, value, start));
@@ -60,5 +60,5 @@ t_token	*tokenize_dquote(t_lexer *lexer)
 	}
 	advance_lexer(lexer);
 	processed[p_index] = '\0';
-	return (create_token(DQUOTE, processed, start));
+	return (create_token(WORD, processed, start));
 }

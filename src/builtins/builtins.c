@@ -4,20 +4,17 @@ static int	check_builtin_display(char **argv, t_env *env, t_status *status)
 {
 	if (ft_strcmp(argv[0], "echo") == 0)
 	{
-		builtin_echo(argv);
-		status->exit_code = 0;
+		status->exit_code = builtin_echo(argv);
 		return (1);
 	}
 	if (ft_strcmp(argv[0], "pwd") == 0)
 	{
-		builtin_pwd();
-		status->exit_code = 0;
+		status->exit_code = builtin_pwd();
 		return (1);
 	}
 	if (ft_strcmp(argv[0], "env") == 0)
 	{
-		builtin_env(env);
-		status->exit_code = 0;
+		status->exit_code = builtin_env(env);
 		return (1);
 	}
 	return (0);
@@ -27,25 +24,22 @@ static int	check_builtin_control(char **argv, t_env **env, t_status *status)
 {
 	if (ft_strcmp(argv[0], "cd") == 0)
 	{
-		builtin_cd(argv, env);
-		status->exit_code = 0;
+		status->exit_code = builtin_cd(argv, env);
 		return (1);
 	}
 	if (ft_strcmp(argv[0], "exit") == 0)
 	{
-		builtin_exit(argv);
+		status->exit_code = builtin_exit(argv);
 		return (1);
 	}
 	if (ft_strcmp(argv[0], "unset") == 0)
 	{
-		builtin_unset(argv, env);
-		status->exit_code = 0;
+		status->exit_code = builtin_unset(argv, env);
 		return (1);
 	}
 	if (ft_strcmp(argv[0], "export") == 0)
 	{
-		builtin_export(argv, env);
-		status->exit_code = 0;
+		status->exit_code = builtin_export(argv, env);
 		return (1);
 	}
 	return (0);

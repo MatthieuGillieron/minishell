@@ -2,9 +2,11 @@
 
 int	is_special_command(char *str, t_status *status)
 {
-	// Traiter le cas où l'utilisateur tape directement une variable d'environnement
 	if (str[0] == '$' && str[1] && !is_whitespace(str[1]))
 	{
+		if (str[1] == '?' && (str[2] == '\0' || is_whitespace(str[2])))
+			return (0);
+			
 		char *var_name = extract_var_name(&str[1]);
 		if (var_name)
 		{

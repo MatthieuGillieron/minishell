@@ -38,7 +38,18 @@ static int	read_and_process_line(t_status *status)
 	}
 	tokens = tokenize_input(line);
 	if (tokens)
-		process_tokens(tokens, status);
+	{
+		if (!check_syntax(tokens))
+		{
+			status->exit_code = 2;
+			int i = 0;
+			while (tokens[i])
+				free_token(tokens[i++]);
+			free(tokens);
+		}
+		else
+			process_tokens(tokens, status);
+	}
 	free(line);
 	return (1);
 }

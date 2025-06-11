@@ -39,6 +39,9 @@ t_redirect		*parse_redirection(t_token ***tokens_ptr,
 					t_token_type redir_type);
 void			free_command(t_command *cmd);
 
+// Vérification de syntaxe
+int				check_syntax(t_token **tokens);
+
 // Ajoutez cette ligne pour déclarer print_command
 void			print_command(t_command *cmd);
 

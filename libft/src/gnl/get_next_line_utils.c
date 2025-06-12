@@ -3,26 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:47:00 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 18:48:14 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:22:26 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "libft.h"
 
 /* affcihe suite (i = o : hello wordl -> o world)*/
 char	*gnl_strchr(const char *src, int i)

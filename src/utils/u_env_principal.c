@@ -22,10 +22,17 @@ t_env	*init_env_list(char **envp)
 			last = node;
 		}
 		i++;
+	}	
+	if (!head)
+	{
+		env_set(&head, "TERM", "xterm-256color");
+		char cwd[1024];
+		if (getcwd(cwd, sizeof(cwd)))
+			env_set(&head, "PWD", cwd);
 	}
-	add_default_path_if_missing(&head);
 	return (head);
 }
+
 
 char	*env_get(t_env *env, const char *key)
 {

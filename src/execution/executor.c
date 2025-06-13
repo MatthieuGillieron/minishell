@@ -84,4 +84,3 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 	exec_non_builtin(argv, env, status, path);
 	free(path);
 }
-

@@ -9,10 +9,13 @@ void	free_pipes(int **pipes, int count)
 {
 	int	i;
 
+	if (!pipes)
+		return ;
 	i = 0;
 	while (i < count)
 	{
-		free(pipes[i]);
+		if (pipes[i])
+			free(pipes[i]);
 		i++;
 	}
 	free(pipes);
@@ -29,6 +32,8 @@ void	wait_for_children(pid_t *pids, int count, t_status *status)
 	int	i;
 	int	cmd_status;
 
+	if (!pids)
+		return ;
 	i = 0;
 	while (i < count)
 	{
@@ -65,13 +70,13 @@ void	restore_std_fds(int stdin_fd, int stdout_fd)
  * @param status Structure contenant l'état du shell
  */
 void	execute_child_process(t_simple_cmd *cmd_data, t_env **env,
-								t_status *status)
+							t_status *status)
 {
 	handle_signals_child();
 	if (cmd_data->redirects)
 	{
 		if (apply_redirections(cmd_data->redirects, *env, status) == -1)
-		exit(1);
+			exit(1);
 	}
 	if (check_builtin(cmd_data->args, env, status))
 		exit(status->exit_code);

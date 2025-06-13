@@ -10,6 +10,8 @@ static int	**allocate_pipes(int count)
 	int	**pipes;
 	int	i;
 
+	if (count <= 0)
+		return (NULL);
 	pipes = malloc(sizeof(int *) * count);
 	if (!pipes)
 		return (NULL);
@@ -65,11 +67,16 @@ void	close_all_pipes(int **pipes, int count)
 {
 	int	i;
 
+	if (!pipes)
+		return ;
 	i = 0;
 	while (i < count)
 	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
+		if (pipes[i])
+		{
+			close(pipes[i][0]);
+			close(pipes[i][1]);
+		}
 		i++;
 	}
 }
@@ -82,6 +89,8 @@ void	close_all_pipes(int **pipes, int count)
  */
 void	setup_pipes(int cmd_index, int pipe_count, int **pipes)
 {
+	if (!pipes)
+		return ;
 	if (cmd_index == 0)
 		dup2(pipes[0][1], STDOUT_FILENO);
 	else if (cmd_index == pipe_count)
@@ -104,6 +113,11 @@ void	execute_pipeline(t_command *cmd, t_env **env, t_status *status)
 {
 	t_pipeline_data	data;
 
+	if (!cmd || cmd->cmd_count <= 0)
+	{
+		status->exit_code = 1;
+		return ;
+	}
 	data.pipe_count = cmd->cmd_count - 1;
 	data.pipes = create_pipes(data.pipe_count);
 	if (!data.pipes)

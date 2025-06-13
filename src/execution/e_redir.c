@@ -104,51 +104,51 @@ static int	process_redirection(t_redirect *current)
  */
 int apply_redirections(t_redirect *redirects, t_env *env, t_status *status)
 {
-    t_redirect *current;
-    
-    (void)env;  // Pour éviter l'avertissement de variable non utilisée
-    (void)status;  // Pour éviter l'avertissement de variable non utilisée
-    
-    current = redirects;
-    while (current)
-    {
-        if (current->type == REDIR_HEREDOC_OUT)
-        {
-            // Remplacer la fonction existante par celle avec expansion de variables
-            int pipe_fd[2];
-            
-            if (pipe(pipe_fd) == -1)
-            {
-                perror("minishell: pipe");
-                return (-1);
-            }
-            
-            // Utiliser process_heredoc au lieu de read_heredoc_input
-            char *heredoc_content = process_heredoc(current->file_or_delimiter, env, status);
-            if (!heredoc_content)
-                return -1;
-            
-            // Écrire le contenu du heredoc dans le pipe
-            write(pipe_fd[1], heredoc_content, ft_strlen(heredoc_content));
-            close(pipe_fd[1]);
-            free(heredoc_content);
-            
-            // Rediriger l'entrée standard vers le pipe
-            if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-            {
-                perror("minishell: dup2");
-                close(pipe_fd[0]);
-                return (-1);
-            }
-            close(pipe_fd[0]);
-        }
-        else
-        {
-            // Utiliser la fonction existante pour les autres types de redirection
-            if (process_redirection(current) == -1)
-                return (-1);
-        }
-        current = current->next;
-    }
-    return (0);
+	t_redirect *current;
+	
+	(void)env;  // Pour éviter l'avertissement de variable non utilisée
+	(void)status;  // Pour éviter l'avertissement de variable non utilisée
+	
+	current = redirects;
+	while (current)
+	{
+		if (current->type == REDIR_HEREDOC_OUT)
+		{
+			// Remplacer la fonction existante par celle avec expansion de variables
+			int pipe_fd[2];
+			
+			if (pipe(pipe_fd) == -1)
+			{
+				perror("minishell: pipe");
+				return (-1);
+			}
+			
+			// Utiliser process_heredoc au lieu de read_heredoc_input
+			char *heredoc_content = process_heredoc(current->file_or_delimiter, env, status);
+			if (!heredoc_content)
+				return -1;
+			
+			// Écrire le contenu du heredoc dans le pipe
+			write(pipe_fd[1], heredoc_content, ft_strlen(heredoc_content));
+			close(pipe_fd[1]);
+			free(heredoc_content);
+			
+			// Rediriger l'entrée standard vers le pipe
+			if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+			{
+				perror("minishell: dup2");
+				close(pipe_fd[0]);
+				return (-1);
+			}
+			close(pipe_fd[0]);
+		}
+		else
+		{
+			// Utiliser la fonction existante pour les autres types de redirection
+			if (process_redirection(current) == -1)
+				return (-1);
+		}
+		current = current->next;
+	}
+	return (0);
 }

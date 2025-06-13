@@ -52,6 +52,8 @@ t_token	**tokenize_input(char *input)
 	int		i;
 
 	lexer = init_lexer(input);
+	if (!lexer)
+		return (NULL);
 	tokens = malloc(sizeof(t_token *) * 1024);
 	i = 0;
 	if (!tokens)

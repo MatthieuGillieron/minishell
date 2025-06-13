@@ -64,8 +64,13 @@ static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 		if ((***tokens_ptr).value && (***tokens_ptr).value[0])
 		{
 			value = ft_strdup((***tokens_ptr).value);
-			if (!value || !add_arg(cmd, value))
+			if (!value)
 				return (0);
+			if (!add_arg(cmd, value))
+			{
+				free(value);
+				return (0);
+			}
 		}
 		(*tokens_ptr)++;
 		return (1);

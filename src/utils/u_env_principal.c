@@ -1,5 +1,14 @@
 #include "../includes/minishell.h"
 
+static void	setup_default_env(t_env **head)
+{
+	char	cwd[1024];
+
+	env_set(head, "TERM", "xterm-256color");
+	if (getcwd(cwd, sizeof(cwd)))
+		env_set(head, "PWD", cwd);
+}
+
 t_env	*init_env_list(char **envp)
 {
 	t_env	*head;
@@ -22,14 +31,9 @@ t_env	*init_env_list(char **envp)
 			last = node;
 		}
 		i++;
-	}	
-	if (!head)
-	{
-		env_set(&head, "TERM", "xterm-256color");
-		char cwd[1024];
-		if (getcwd(cwd, sizeof(cwd)))
-			env_set(&head, "PWD", cwd);
 	}
+	if (!head)
+		setup_default_env(&head);
 	return (head);
 }
 
@@ -65,7 +69,18 @@ int	env_set(t_env **env, const char *key, const char *value)
 	if (!new_node)
 		return (1);
 	new_node->key = ft_strdup(key);
+	if (!new_node->key)
+	{
+		free(new_node);
+		return (1);
+	}
 	new_node->value = ft_strdup(value);
+	if (!new_node->value)
+	{
+		free(new_node->key);
+		free(new_node);
+		return (1);
+	}
 	new_node->next = *env;
 	*env = new_node;
 	return (0);

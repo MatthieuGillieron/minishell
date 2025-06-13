@@ -59,8 +59,8 @@ static int	read_and_process_line(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
+	int			i;
 
-	// 🌐 Choisir entre readline et get_next_line selon le mode
 	if (isatty(fileno(stdin)))
 		line = readline(MAGENTA"MNM$ "RST);
 	else
@@ -69,35 +69,30 @@ static int	read_and_process_line(t_status *status)
 		if (line)
 		{
 			char *tmp = line;
-			line = ft_strtrim(line, "\n"); // ⚠️ n'oublie pas de libérer `tmp` ensuite
+			line = ft_strtrim(line, "\n");
 			free(tmp);
 		}
 	}
-
-	if (!line) // CTRL+D ou EOF
+	if (!line)
 	{
-		// Afficher "exit" uniquement en mode interactif
 		if (isatty(fileno(stdin)))
 			write(1, "exit\n", 5);
 		return (0);
 	}
-
 	if (*line && isatty(fileno(stdin)))
 		add_history(line);
-
 	if (is_special_command(line, status))
 	{
 		free(line);
 		return (1);
 	}
-
 	tokens = tokenize_input(line);
 	if (tokens)
 	{
 		if (!check_syntax(tokens))
 		{
 			status->exit_code = 2;
-			int i = 0;
+			i = 0;
 			while (tokens[i])
 				free_token(tokens[i++]);
 			free(tokens);
@@ -105,7 +100,6 @@ static int	read_and_process_line(t_status *status)
 		else
 			process_tokens(tokens, status);
 	}
-
 	free(line);
 	return (1);
 }

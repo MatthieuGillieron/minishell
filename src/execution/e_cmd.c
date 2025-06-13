@@ -11,7 +11,7 @@ static void	execute_simple_cmd(t_simple_cmd *cmd, t_env **env, t_status *status)
 	stdout_backup = dup(STDOUT_FILENO);
 	if (cmd->redirects)
 	{
-		if (apply_redirections(cmd->redirects) == -1)
+		if (apply_redirections(cmd->redirects, *env, status) == -1)
 		{
 			status->exit_code = 1;
 			dup2(stdin_backup, STDIN_FILENO);

@@ -17,12 +17,11 @@ void	restore_std_fds(int stdin_fd, int stdout_fd);
 void	close_all_pipes(int **pipes, int count);
 void	free_pipes(int **pipes, int count);
 void	setup_pipes(int cmd_index, int pipe_count, int **pipes);
-int		apply_redirections(t_redirect *redirects);
 int		apply_output_redirection(char *file_path);
 int		apply_append_redirection(char *file_path);
 void	execute_child_process(t_simple_cmd *cmd_data, t_env **env,
 			t_status *status);
 void	wait_for_children(pid_t *pids, int count, t_status *status);
-int		apply_redirections(t_redirect *redirects);
+int 	apply_redirections(t_redirect *redirects, t_env *env, t_status *status);
 
 #endif

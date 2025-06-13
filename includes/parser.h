@@ -50,6 +50,7 @@ t_redir_type	token_to_redir_type(t_token_type token_type);
 
 // Fonctions d'expansion
 void			expand_tokens(t_token **tokens, t_env *env, t_status *status);
+char			*process_heredoc(char *delimiter, t_env *env, t_status *status);
 t_token			*process_dquote_token(t_token *token,
 					t_env *env, t_status *status);
 t_token			*process_word_token(t_token *token,

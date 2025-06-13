@@ -70,8 +70,8 @@ void	execute_child_process(t_simple_cmd *cmd_data, t_env **env,
 	handle_signals_child();
 	if (cmd_data->redirects)
 	{
-		if (apply_redirections(cmd_data->redirects) == -1)
-			exit(1);
+		if (apply_redirections(cmd_data->redirects, *env, status) == -1)
+		exit(1);
 	}
 	if (check_builtin(cmd_data->args, env, status))
 		exit(status->exit_code);

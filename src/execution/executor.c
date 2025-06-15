@@ -55,14 +55,10 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 
 	if (check_builtin(argv, env, status))
 		return ;
-
-	// Vérifier si la commande est un chemin absolu ou relatif
 	if (ft_strchr(argv[0], '/'))
 	{
-		// Vérifier si le chemin existe
 		if (stat(argv[0], &file_stat) == 0)
 		{
-			// Vérifier si c'est un répertoire
 			if (S_ISDIR(file_stat.st_mode))
 			{
 				ft_putstr_fd(argv[0], 2);
@@ -72,7 +68,6 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 			}
 		}
 	}
-
 	path = get_command_path(argv[0], *env);
 	if (!path)
 	{

@@ -26,6 +26,7 @@ int		apply_redirections(t_redirect *redirects, t_env *env, t_status *status);
 
 // Fonctions pour les heredocs
 int		apply_heredoc_redirection(char *delimiter);
-int		apply_heredoc_with_expansion(t_redirect *current, t_env *env, t_status *status);
+int		apply_heredoc_with_expansion(t_redirect *current,
+			t_env *env, t_status *status);
 
 #endif

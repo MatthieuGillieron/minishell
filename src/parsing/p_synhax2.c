@@ -3,8 +3,9 @@
 
 static int	check_consecutive_redirections(t_token **tokens)
 {
-	int i = 0;
-	
+	int	i;
+
+	i = 0;
 	while (tokens[i] && tokens[i]->type != END_OF_INPUT)
 	{
 		if (is_redirection_token(tokens[i]->type))
@@ -17,10 +18,22 @@ static int	check_consecutive_redirections(t_token **tokens)
 	return (1);
 }
 
+static int	handle_pipe_error(t_token **tokens, int i)
+{
+	char	*error_value;
+
+	error_value = NULL;
+	if (tokens[i + 1])
+		error_value = tokens[i + 1]->value;
+	print_syntax_error(error_value);
+	return (0);
+}
+
 static int	check_pipe_syntax(t_token **tokens)
 {
-	int i = 0;
-	
+	int		i;
+
+	i = 0;
 	if (tokens[0] && tokens[0]->type == PIPE)
 	{
 		print_syntax_error(tokens[0]->value);
@@ -30,12 +43,9 @@ static int	check_pipe_syntax(t_token **tokens)
 	{
 		if (tokens[i]->type == PIPE)
 		{
-			if (!tokens[i + 1] || tokens[i + 1]->type == END_OF_INPUT || 
-				tokens[i + 1]->type == PIPE)
-			{
-				print_syntax_error(tokens[i + 1] ? tokens[i + 1]->value : NULL);
-				return (0);
-			}
+			if (!tokens[i + 1] || tokens[i + 1]->type == END_OF_INPUT
+				|| tokens[i + 1]->type == PIPE)
+				return (handle_pipe_error(tokens, i));
 		}
 		i++;
 	}

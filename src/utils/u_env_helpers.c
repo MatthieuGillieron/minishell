@@ -16,5 +16,3 @@ t_env	*create_env_node(const char *entry)
 	node->next = NULL;
 	return (node);
 }
-
-

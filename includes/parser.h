@@ -39,6 +39,7 @@ t_redirect		*parse_redirection(t_token ***tokens_ptr,
 					t_token_type redir_type);
 void			free_command(t_command *cmd);
 int				check_redirection_target(t_token *token);
+int				add_redirect(t_simple_cmd *cmd, t_redirect *redirect);
 
 // Fonctions de vérification de syntaxe
 int				check_syntax(t_token **tokens);

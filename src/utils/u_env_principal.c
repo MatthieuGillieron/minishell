@@ -1,5 +1,8 @@
 #include "../includes/minishell.h"
 
+/* Function prototype for the helper function in u_env_principal2.c */
+t_env	*create_env_node_with_kv(const char *key, const char *value);
+
 static void	setup_default_env(t_env **head)
 {
 	char	cwd[1024];
@@ -37,7 +40,6 @@ t_env	*init_env_list(char **envp)
 	return (head);
 }
 
-
 char	*env_get(t_env *env, const char *key)
 {
 	while (env)
@@ -65,22 +67,9 @@ int	env_set(t_env **env, const char *key, const char *value)
 		}
 		tmp = tmp->next;
 	}
-	new_node = malloc(sizeof(t_env));
+	new_node = create_env_node_with_kv(key, value);
 	if (!new_node)
 		return (1);
-	new_node->key = ft_strdup(key);
-	if (!new_node->key)
-	{
-		free(new_node);
-		return (1);
-	}
-	new_node->value = ft_strdup(value);
-	if (!new_node->value)
-	{
-		free(new_node->key);
-		free(new_node);
-		return (1);
-	}
 	new_node->next = *env;
 	*env = new_node;
 	return (0);

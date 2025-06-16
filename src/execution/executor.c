@@ -42,19 +42,17 @@ static void	exec_non_builtin(char **argv, t_env **env,
 	handle_child_signals(cmd_status, status);
 }
 
-void	execute_command(char **argv, t_env **env, t_status *status)
+/**
+ * check_command_path - Vérifie si le chemin de la commande est valide
+ * @argv: Arguments de la commande
+ * @status: Structure contenant l'état du shell
+ * 
+ * Retourne 1 si le chemin est un répertoire, 0 sinon
+ */
+static int	check_command_path(char **argv, t_status *status)
 {
-	char	*path;
-	struct stat file_stat;
+	struct stat	file_stat;
 
-	if (!argv || !argv[0] || !argv[0][0])
-	{
-		status->exit_code = 0;
-		return ;
-	}
-
-	if (check_builtin(argv, env, status))
-		return ;
 	if (ft_strchr(argv[0], '/'))
 	{
 		if (stat(argv[0], &file_stat) == 0)
@@ -64,10 +62,26 @@ void	execute_command(char **argv, t_env **env, t_status *status)
 				ft_putstr_fd(argv[0], 2);
 				ft_putendl_fd(": is a directory", 2);
 				status->exit_code = 126;
-				return ;
+				return (1);
 			}
 		}
 	}
+	return (0);
+}
+
+void	execute_command(char **argv, t_env **env, t_status *status)
+{
+	char	*path;
+
+	if (!argv || !argv[0] || !argv[0][0])
+	{
+		status->exit_code = 0;
+		return ;
+	}
+	if (check_builtin(argv, env, status))
+		return ;
+	if (check_command_path(argv, status))
+		return ;
 	path = get_command_path(argv[0], *env);
 	if (!path)
 	{

@@ -10,54 +10,90 @@ INCDIR = includes
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 
-SRCS := $(shell find $(SRCDIR) -type f -name "*.c" | sort)
+SRC_FILES = main.c \
+			loops/loop.c \
+			lexer/l_lexer.c \
+			lexer/l_lexer2.c \
+			lexer/l_token.c \
+			lexer/l_token2.c \
+			lexer/l_quotes.c \
+			lexer/l_expand.c \
+			lexer/l_expand2.c \
+			lexer/l_special.c \
+			parsing/p_core.c \
+			parsing/p_simple.c \
+			parsing/p_simple2.c \
+			parsing/p_redir.c \
+			parsing/p_expand.c \
+			parsing/p_syntax_check.c \
+			parsing/p_synhax2.c \
+			parsing/p_heredoc.c \
+			execution/executor.c \
+			execution/e_cmd.c \
+			execution/e_redir.c \
+			execution/e_redir2.c \
+			execution/e_pipe.c \
+			execution/e_pipe2.c \
+			execution/e_pipe3.c \
+			execution/e_heredoc.c \
+			builtins/builtins.c \
+			builtins/echo.c \
+			builtins/echo_status.c \
+			builtins/cd.c \
+			builtins/pwd.c \
+			builtins/env.c \
+			builtins/exit.c \
+			builtins/export.c \
+			builtins/unset.c \
+			signals/signals.c \
+			signals/signals_handlers.c \
+			utils/u_env_principal.c \
+			utils/u_env_principal2.c \
+			utils/u_env_helpers.c \
+			utils/u_env_utilitaires.c \
+			utils/u_export.c \
+			utils/u_lexer.c \
+			utils/u_parse.c \
+			utils/u_path.c \
+			utils/u_path2.c
 
-# Modification importante ici pour conserver la structure de dossiers
+SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-# Création dynamique de la liste des dossiers objets nécessaires
-# Cette commande extrait tous les dossiers présents dans les chemins d'objets
-OBJ_DIRS := $(shell dirname $(OBJS) | sort | uniq)
+OBJ_DIRS := $(sort $(dir $(OBJS)))
 
-# Flags for readline library - adaptés pour fonctionner sur différents systèmes
+# Flags pour readline - pour fonctionner sur différents OS
 ifeq ($(shell uname), Darwin) # macOS
     READLINE_DIR := $(shell brew --prefix readline 2>/dev/null || echo "/usr/local")
     LDFLAGS = -L$(READLINE_DIR)/lib -lreadline
     CPPFLAGS = -I$(READLINE_DIR)/include -D_GNU_SOURCE
-else # Linux et autres
+else
     LDFLAGS = -lreadline
     CPPFLAGS = -D_GNU_SOURCE
 endif
 
-# Colors for output messages
 SUCCESS = "\033[1;92m Compilation réussie ! ✅\033[0m"
-FAILURE = "\033[1;91m❌ Erreur de compilation ! ❌\033[0m"
-LIBFT_COMP = "\033[1;94m🔨 Compilation de la libft... 🔨\033[0m"
-MINISHELL_COMP = "\033[1;94m🔨 Compilation de minishell... 🔨\033[0m"
-CLEAN_MSG = "\033[1;93m🧹 Nettoyage des fichiers objets... 🧹\033[0m"
-FCLEAN_MSG = "\033[1;93m🧹 Nettoyage complet... 🧹\033[0m"
-NO_CHANGES = "\033[1;96m🔄 Aucun changement nécessaire 🔄\033[0m"
-
-# Suppression de la fonction print_success et utilisation d'une méthode plus directe
+FAILURE = "\033[1;91m Erreur de compilation ! ❌\033[0m"
+LIBFT_COMP = "\033[1;94m Compilation de la libft... 🔨\033[0m"
+MINISHELL_COMP = "\033[1;94m Compilation de minishell... 🔨\033[0m"
+CLEAN_MSG = "\033[1;93m Nettoyage des fichiers objets... 🧹\033[0m"
+FCLEAN_MSG = "\033[1;93m Nettoyage complet... 🧹\033[0m"
 
 all: $(OBJ_DIRS) libft_make $(NAME)
 
-# Création des répertoires d'objets
 $(OBJ_DIRS):
 	@mkdir -p $@
 
-# Règle pour compiler libft avec messages
 libft_make: $(LIBFT)
 
-# Règle pour la libft qui évite les relinks
 $(LIBFT):
 	@echo $(LIBFT_COMP)
 	@$(MAKE) -C $(LIBFTDIR) || (echo $(FAILURE) && exit 1)
 
-# Version simplifiée qui évite les problèmes de caractères spéciaux
 $(NAME): $(OBJS) $(LIBFT)
 	@echo $(MINISHELL_COMP)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(LDFLAGS) && { \
+		echo $(SUCCESS); \
         echo "\033[1;35m"; \
         echo "                                  __              ___    ___      "; \
         echo "           __          __        /\ \            /\_ \  /\_ \     "; \
@@ -67,33 +103,26 @@ $(NAME): $(OBJS) $(LIBFT)
         echo "\ \_\ \_\ \_\ \_\ \_\ \_\ \_\/\____/\ \_\ \_\ \____\/\____\/\____\\"; \
         echo " \/_/\/_/\/_/\/_/\/_/\/_/\/_/\/___/  \/_/\/_/\/____/\/____/\/____/"; \
         echo "\033[0m"; \
-        echo $(SUCCESS); \
     } || { echo $(FAILURE) && exit 1; }
-	@touch $@
 
-# Règle modifiée pour la compilation des fichiers objets
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -I$(INCDIR) -I$(LIBFTDIR) -c $< -o $@
 
 clean:
 	@echo $(CLEAN_MSG)
-	@$(RM) $(OBJS)
-	@rm -rf $(OBJDIR) 2>/dev/null || true
+	@$(RM) -r $(OBJDIR) 2>/dev/null || true
 	@$(MAKE) -C $(LIBFTDIR) clean
 
-fclean:
+fclean: clean
 	@echo $(FCLEAN_MSG)
 	@$(RM) $(NAME)
-	@$(RM) $(OBJS)
-	@rm -rf $(OBJDIR) 2>/dev/null || true
 	@$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all
 
-# Règle pour vérifier les leaks mémoire (utilise valgrind sous Linux et leaks sous macOS)
 leaks: $(NAME)
-	@echo "\033[1;94m🔍 Vérification des fuites mémoire... 🔍\033[0m"
+	@echo "\033[1;94m Vérification des fuites mémoire... 🔍\033[0m"
 ifeq ($(shell uname), Darwin)
 	@leaks -atExit -- ./$(NAME) || true
 else

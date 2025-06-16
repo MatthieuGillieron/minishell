@@ -24,4 +24,9 @@ void	execute_child_process(t_simple_cmd *cmd_data, t_env **env,
 void	wait_for_children(pid_t *pids, int count, t_status *status);
 int		apply_redirections(t_redirect *redirects, t_env *env, t_status *status);
 
+// Fonctions pour les heredocs
+int	apply_heredoc_redirection(char *delimiter);
+int	apply_heredoc_with_expansion(t_redirect *current, t_env *env, t_status *status);
+
+
 #endif

@@ -39,6 +39,21 @@ t_token	*tokenize_squote(t_lexer *lexer)
 	return (token);
 }
 
+static int	process_dquote_content(t_lexer *lexer,
+	char *processed, int *p_index)
+{
+	while (lexer->current_char && lexer->current_char != '"')
+	{
+		handle_escape_char(lexer, processed, p_index);
+		advance_lexer(lexer);
+	}
+	if (lexer->current_char != '"')
+		return (0);
+	advance_lexer(lexer);
+	processed[*p_index] = '\0';
+	return (1);
+}
+
 t_token	*tokenize_dquote(t_lexer *lexer)
 {
 	size_t	start;
@@ -52,18 +67,11 @@ t_token	*tokenize_dquote(t_lexer *lexer)
 	if (!processed)
 		return (NULL);
 	p_index = 0;
-	while (lexer->current_char && lexer->current_char != '"')
-	{
-		handle_escape_char(lexer, processed, &p_index);
-		advance_lexer(lexer);
-	}
-	if (lexer->current_char != '"')
+	if (!process_dquote_content(lexer, processed, &p_index))
 	{
 		free(processed);
 		return (NULL);
 	}
-	advance_lexer(lexer);
-	processed[p_index] = '\0';
 	token = create_token(WORD, processed, start);
 	free(processed);
 	return (token);

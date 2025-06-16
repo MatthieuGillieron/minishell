@@ -43,34 +43,3 @@ t_token	*get_next_token(t_lexer *lexer)
 		return (tokenize_word(lexer));
 	return (NULL);
 }
-
-t_token	**tokenize_input(char *input)
-{
-	t_lexer	*lexer;
-	t_token	**tokens;
-	t_token	*token;
-	int		i;
-
-	lexer = init_lexer(input);
-	if (!lexer)
-		return (NULL);
-	tokens = malloc(sizeof(t_token *) * 1024);
-	i = 0;
-	if (!tokens)
-	{
-		free(lexer);
-		return (NULL);
-	}
-	while (1)
-	{
-		token = get_next_token(lexer);
-		if (!token)
-			break ;
-		tokens[i++] = token;
-		if (token->type == END_OF_INPUT || i >= 1024)
-			break ;
-	}
-	tokens[i] = NULL;
-	free(lexer);
-	return (tokens);
-}

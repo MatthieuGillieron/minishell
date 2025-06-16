@@ -28,13 +28,12 @@ static int	is_valid_identifier(char *name)
 }
 
 /**
- * validate_export_arg - Valide un argument d'export.
- * @arg: Argument à valider.
- * @eq_pos: Position du signe égal ou NULL.
+ * check_export_option - Vérifie si l'argument est une option invalide.
+ * @arg: Argument à vérifier.
  * 
- * Retourne 0 si valide, 1 si invalide.
+ * Retourne 1 si c'est une option invalide, 0 sinon.
  */
-static int	validate_export_arg(char *arg, char *eq_pos)
+static int	check_export_option(char *arg)
 {
 	if (arg[0] == '-')
 	{
@@ -44,6 +43,20 @@ static int	validate_export_arg(char *arg, char *eq_pos)
 		ft_putendl_fd("export: usage: export [name[=value] ...]", 2);
 		return (1);
 	}
+	return (0);
+}
+
+/**
+ * validate_export_arg - Valide un argument d'export.
+ * @arg: Argument à valider.
+ * @eq_pos: Position du signe égal ou NULL.
+ * 
+ * Retourne 0 si valide, 1 si invalide.
+ */
+static int	validate_export_arg(char *arg, char *eq_pos)
+{
+	if (check_export_option(arg))
+		return (1);
 	if (!eq_pos)
 	{
 		if (!is_valid_identifier(arg))

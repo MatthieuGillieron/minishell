@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static int	process_tokens(t_lexer *lexer, t_token **tokens)
+static int	process_lexer_tokens(t_lexer *lexer, t_token **tokens)
 {
 	t_token	*token;
 	int		i;
@@ -38,7 +38,7 @@ t_token	**tokenize_input(char *input)
 		free(lexer);
 		return (NULL);
 	}
-	process_tokens(lexer, tokens);
+	process_lexer_tokens(lexer, tokens);
 	free(lexer);
 	return (tokens);
 }

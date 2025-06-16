@@ -38,8 +38,16 @@ t_simple_cmd	*parse_simple_command(t_token ***tokens_ptr);
 t_redirect		*parse_redirection(t_token ***tokens_ptr,
 					t_token_type redir_type);
 void			free_command(t_command *cmd);
+int				check_redirection_target(t_token *token);
 
-// Vérification de syntaxe
+// Fonctions de vérification de syntaxe
+int				check_syntax(t_token **tokens);
+void			print_syntax_error(char *token);
+int				is_redirection_token(t_token_type type);
+int				check_redirection_target(t_token *token);
+void			print_syntax_error(char *token);
+int				is_redirection_token(t_token_type type);
+int				check_redirection_target(t_token *token);
 int				check_syntax(t_token **tokens);
 
 // Ajoutez cette ligne pour déclarer print_command

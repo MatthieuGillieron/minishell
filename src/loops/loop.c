@@ -1,6 +1,26 @@
 #include "../includes/minishell.h"
 
-static void	process_tokens(t_token **tokens, t_status *status)
+static char	*read_input_line(void)
+{
+	char	*line;
+	char	*tmp;
+
+	if (isatty(fileno(stdin)))
+		line = readline(MAGENTA"MNM$ "RST);
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		if (line)
+		{
+			tmp = line;
+			line = ft_strtrim(line, "\n");
+			free(tmp);
+		}
+	}
+	return (line);
+}
+
+void	process_tokens(t_token **tokens, t_status *status)
 {
 	t_command	*cmd;
 	int			i;
@@ -17,62 +37,29 @@ static void	process_tokens(t_token **tokens, t_status *status)
 		free_token(tokens[i++]);
 	free(tokens);
 }
-/*
-static int	read_and_process_line(t_status *status)
+
+static void	handle_tokens(t_token **tokens, t_status *status)
 {
-	char		*line;
-	t_token		**tokens;
-	
-	line = readline(MAGENTA"MNM$ "RST);
-	if (!line)
+	int	i;
+
+	if (!check_syntax(tokens))
 	{
-		write(1, "exit\n", 5);
-		return (0);
-	}
-	if (*line)
-	add_history(line);
-	if (is_special_command(line, status))
-	{
-		free(line);
-		return (1);
-	}
-	tokens = tokenize_input(line);
-	if (tokens)
-	{
-		if (!check_syntax(tokens))
-		{
-			status->exit_code = 2;
-			int i = 0;
-			while (tokens[i])
+		status->exit_code = 2;
+		i = 0;
+		while (tokens[i])
 			free_token(tokens[i++]);
-			free(tokens);
-		}
-		else
-		process_tokens(tokens, status);
+		free(tokens);
 	}
-	free(line);
-	return (1);
+	else
+		process_tokens(tokens, status);
 }
-*/
 
 static int	read_and_process_line(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
-	int			i;
 
-	if (isatty(fileno(stdin)))
-		line = readline(MAGENTA"MNM$ "RST);
-	else
-	{
-		line = get_next_line(fileno(stdin));
-		if (line)
-		{
-			char *tmp = line;
-			line = ft_strtrim(line, "\n");
-			free(tmp);
-		}
-	}
+	line = read_input_line();
 	if (!line)
 	{
 		if (isatty(fileno(stdin)))
@@ -88,22 +75,10 @@ static int	read_and_process_line(t_status *status)
 	}
 	tokens = tokenize_input(line);
 	if (tokens)
-	{
-		if (!check_syntax(tokens))
-		{
-			status->exit_code = 2;
-			i = 0;
-			while (tokens[i])
-				free_token(tokens[i++]);
-			free(tokens);
-		}
-		else
-			process_tokens(tokens, status);
-	}
+		handle_tokens(tokens, status);
 	free(line);
 	return (1);
 }
-
 
 void	shell_loop(t_status *status)
 {

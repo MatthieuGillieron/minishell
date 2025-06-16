@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
-static char	*add_line_to_result(char *result, char *line, t_env *env, t_status *status)
+static char	*add_line_to_result(char *result,
+	char *line, t_env *env, t_status *status)
 {
 	char	*expanded_line;
 	char	*temp;
@@ -38,7 +39,7 @@ char	*process_heredoc(char *delimiter, t_env *env, t_status *status)
 		if (!line || ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		result = add_line_to_result(result, line, env, status);
 		if (!result)
@@ -46,4 +47,3 @@ char	*process_heredoc(char *delimiter, t_env *env, t_status *status)
 	}
 	return (result);
 }
-

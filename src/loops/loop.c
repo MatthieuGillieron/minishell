@@ -6,7 +6,7 @@ static char	*read_input_line(void)
 	char	*tmp;
 
 	if (isatty(fileno(stdin)))
-		line = readline(MAGENTA"MNM$ "RST);
+		line = readline(GREEN"MNM$ "RST);
 	else
 	{
 		line = get_next_line(fileno(stdin));

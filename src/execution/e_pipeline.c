@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 void	execute_pipeline_commands(t_command *cmd, t_env **env, t_status *status,
-								t_pipeline_data *data)
+				t_pipeline_data *data)
 {
 	int	i;
 
@@ -24,5 +24,8 @@ void	execute_pipeline_commands(t_command *cmd, t_env **env, t_status *status,
 		i++;
 	}
 	close_all_pipes(data->pipes, data->pipe_count);
-	wait_for_children(data->pids, cmd->cmd_count, status);
+	if (i > 0)
+		wait_for_children(data->pids, i, status);
+	free_pipes(data->pipes, data->pipe_count);
+	free(data->pids);
 }

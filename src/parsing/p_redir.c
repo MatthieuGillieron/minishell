@@ -23,7 +23,12 @@ t_redirect	*parse_redirection(t_token ***tokens_ptr, t_token_type redir_type)
 	if (!redirect)
 		return (NULL);
 	redirect->type = token_to_redir_type(redir_type);
-	redirect->file_or_delimiter = (***tokens_ptr).value;
+	redirect->file_or_delimiter = ft_strdup((***tokens_ptr).value);
+	if (!redirect->file_or_delimiter)
+	{
+		free(redirect);
+		return (NULL);
+	}
 	redirect->next = NULL;
 	(*tokens_ptr)++;
 	return (redirect);

@@ -24,22 +24,6 @@ static int	add_arg(t_simple_cmd *cmd, char *arg)
 	return (1);
 }
 
-static int	add_redirect(t_simple_cmd *cmd, t_redirect *redirect)
-{
-	t_redirect	*current;
-
-	if (!cmd->redirects)
-		cmd->redirects = redirect;
-	else
-	{
-		current = cmd->redirects;
-		while (current->next)
-			current = current->next;
-		current->next = redirect;
-	}
-	return (1);
-}
-
 static int	process_redir(t_simple_cmd *cmd, t_token ***tokens_ptr)
 {
 	t_token_type	redir_type;
@@ -53,23 +37,31 @@ static int	process_redir(t_simple_cmd *cmd, t_token ***tokens_ptr)
 	return (add_redirect(cmd, redirect));
 }
 
-static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+static int	handle_word_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
 {
 	char	*value;
 
+	if ((***tokens_ptr).value && (***tokens_ptr).value[0])
+	{
+		value = ft_strdup((***tokens_ptr).value);
+		if (!value)
+			return (0);
+		if (!add_arg(cmd, value))
+		{
+			free(value);
+			return (0);
+		}
+	}
+	(*tokens_ptr)++;
+	return (1);
+}
+
+static int	process_token(t_simple_cmd *cmd, t_token ***tokens_ptr)
+{
 	if ((***tokens_ptr).type == WORD
 		|| (***tokens_ptr).type == SQUOTE
 		|| (***tokens_ptr).type == DQUOTE)
-	{
-		if ((***tokens_ptr).value && (***tokens_ptr).value[0])
-		{
-			value = ft_strdup((***tokens_ptr).value);
-			if (!value || !add_arg(cmd, value))
-				return (0);
-		}
-		(*tokens_ptr)++;
-		return (1);
-	}
+		return (handle_word_token(cmd, tokens_ptr));
 	else if ((***tokens_ptr).type == REDIR_IN
 		|| (***tokens_ptr).type == REDIR_OUT
 		|| (***tokens_ptr).type == REDIR_APPEND

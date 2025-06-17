@@ -38,6 +38,18 @@ t_simple_cmd	*parse_simple_command(t_token ***tokens_ptr);
 t_redirect		*parse_redirection(t_token ***tokens_ptr,
 					t_token_type redir_type);
 void			free_command(t_command *cmd);
+int				check_redirection_target(t_token *token);
+int				add_redirect(t_simple_cmd *cmd, t_redirect *redirect);
+
+// Fonctions de vérification de syntaxe
+int				check_syntax(t_token **tokens);
+void			print_syntax_error(char *token);
+int				is_redirection_token(t_token_type type);
+int				check_redirection_target(t_token *token);
+void			print_syntax_error(char *token);
+int				is_redirection_token(t_token_type type);
+int				check_redirection_target(t_token *token);
+int				check_syntax(t_token **tokens);
 
 // Ajoutez cette ligne pour déclarer print_command
 void			print_command(t_command *cmd);
@@ -47,6 +59,7 @@ t_redir_type	token_to_redir_type(t_token_type token_type);
 
 // Fonctions d'expansion
 void			expand_tokens(t_token **tokens, t_env *env, t_status *status);
+char			*process_heredoc(char *delimiter, t_env *env, t_status *status);
 t_token			*process_dquote_token(t_token *token,
 					t_env *env, t_status *status);
 t_token			*process_word_token(t_token *token,

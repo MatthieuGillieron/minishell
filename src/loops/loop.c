@@ -1,6 +1,26 @@
 #include "../includes/minishell.h"
 
-static void	process_tokens(t_token **tokens, t_status *status)
+static char	*read_input_line(void)
+{
+	char	*line;
+	char	*tmp;
+
+	if (isatty(fileno(stdin)))
+		line = readline(GREEN"MNM$ "RST);
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		if (line)
+		{
+			tmp = line;
+			line = ft_strtrim(line, "\n");
+			free(tmp);
+		}
+	}
+	return (line);
+}
+
+void	process_tokens(t_token **tokens, t_status *status)
 {
 	t_command	*cmd;
 	int			i;
@@ -18,18 +38,35 @@ static void	process_tokens(t_token **tokens, t_status *status)
 	free(tokens);
 }
 
+static void	handle_tokens(t_token **tokens, t_status *status)
+{
+	int	i;
+
+	if (!check_syntax(tokens))
+	{
+		status->exit_code = 2;
+		i = 0;
+		while (tokens[i])
+			free_token(tokens[i++]);
+		free(tokens);
+	}
+	else
+		process_tokens(tokens, status);
+}
+
 static int	read_and_process_line(t_status *status)
 {
 	char		*line;
 	t_token		**tokens;
 
-	line = readline(MAGENTA"MNM$ "RST);
+	line = read_input_line();
 	if (!line)
 	{
-		write(1, "exit\n", 5);
+		if (isatty(fileno(stdin)))
+			write(1, "exit\n", 5);
 		return (0);
 	}
-	if (*line)
+	if (*line && isatty(fileno(stdin)))
 		add_history(line);
 	if (is_special_command(line, status))
 	{
@@ -38,7 +75,7 @@ static int	read_and_process_line(t_status *status)
 	}
 	tokens = tokenize_input(line);
 	if (tokens)
-		process_tokens(tokens, status);
+		handle_tokens(tokens, status);
 	free(line);
 	return (1);
 }

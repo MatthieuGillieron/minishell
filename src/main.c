@@ -13,8 +13,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	status.exit_code = 0;
 	status.running = 1;
-	if (!status.env)
-		return (1);
 	init_signals();
 	shell_loop(&status);
 	free_env_list(status.env);

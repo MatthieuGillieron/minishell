@@ -1,0 +1,29 @@
+#include "../includes/minishell.h"
+
+/*
+** Creates a new environment node with the given key and value
+** Returns NULL if memory allocation fails
+*/
+t_env	*create_env_node_with_kv(const char *key, const char *value)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->key = ft_strdup(key);
+	if (!new_node->key)
+	{
+		free(new_node);
+		return (NULL);
+	}
+	new_node->value = ft_strdup(value);
+	if (!new_node->value)
+	{
+		free(new_node->key);
+		free(new_node);
+		return (NULL);
+	}
+	new_node->next = NULL;
+	return (new_node);
+}

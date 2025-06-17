@@ -6,7 +6,7 @@
 /*   By: mtaramar <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:00:59 by mg                #+#    #+#             */
-/*   Updated: 2025/05/08 18:48:44 by mtaramar         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:37:37 by mtaramar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,15 @@ char	*next_in_stash(char *stash)
 	int		i;
 	int		j;
 	char	*next_stash;
+	size_t	len;
 
 	i = 0;
 	if (!stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	next_stash = malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
+	len = ft_strlen(stash);
+	next_stash = malloc(sizeof(char) * (len - i + 1));
 	if (!next_stash)
 		return (NULL);
 	i++;

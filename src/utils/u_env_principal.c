@@ -1,5 +1,17 @@
 #include "../includes/minishell.h"
 
+/* Function prototype for the helper function in u_env_principal2.c */
+t_env	*create_env_node_with_kv(const char *key, const char *value);
+
+static void	setup_default_env(t_env **head)
+{
+	char	cwd[1024];
+
+	env_set(head, "TERM", "xterm-256color");
+	if (getcwd(cwd, sizeof(cwd)))
+		env_set(head, "PWD", cwd);
+}
+
 t_env	*init_env_list(char **envp)
 {
 	t_env	*head;
@@ -23,7 +35,8 @@ t_env	*init_env_list(char **envp)
 		}
 		i++;
 	}
-	add_default_path_if_missing(&head);
+	if (!head)
+		setup_default_env(&head);
 	return (head);
 }
 
@@ -54,11 +67,9 @@ int	env_set(t_env **env, const char *key, const char *value)
 		}
 		tmp = tmp->next;
 	}
-	new_node = malloc(sizeof(t_env));
+	new_node = create_env_node_with_kv(key, value);
 	if (!new_node)
 		return (1);
-	new_node->key = ft_strdup(key);
-	new_node->value = ft_strdup(value);
 	new_node->next = *env;
 	*env = new_node;
 	return (0);

@@ -31,10 +31,10 @@ SRC_FILES = main.c \
 			execution/executor.c \
 			execution/e_cmd.c \
 			execution/e_redir.c \
-			execution/e_redir2.c \
+			execution/e_redir_out.c \
 			execution/e_pipe.c \
-			execution/e_pipe2.c \
-			execution/e_pipe3.c \
+			execution/e_process.c \
+			execution/e_pipeline.c \
 			execution/e_heredoc.c \
 			builtins/builtins.c \
 			builtins/echo.c \

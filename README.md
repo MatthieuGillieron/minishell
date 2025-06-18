@@ -159,6 +159,7 @@ ls -la | grep .c | wc -l
 cat << EOF
 This is a multi-line
 text input
+$USER
 EOF
 
 # Combinaisons complexes

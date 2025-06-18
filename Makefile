@@ -55,6 +55,7 @@ SRC_FILES = main.c \
 			utils/u_lexer.c \
 			utils/u_parse.c \
 			utils/u_path.c \
+			utils/u_export_alone.c \
 			utils/u_path2.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))

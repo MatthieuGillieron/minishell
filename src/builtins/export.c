@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: magillie <magillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:09:04 by mg                #+#    #+#             */
-/*   Updated: 2025/06/17 11:09:04 by mg               ###   ########.fr       */
+/*   Updated: 2025/06/17 16:21:11 by magillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ static int	handle_export_arg(char *arg, t_env **env)
 	if (validate_export_arg(arg, eq_pos))
 		return (1);
 	if (!eq_pos)
-		return (0);
+		return (handle_export_no_value(arg, env));
+	*eq_pos = '\0';
 	key = ft_strdup(arg);
 	value = ft_strdup(eq_pos + 1);
 	*eq_pos = '=';

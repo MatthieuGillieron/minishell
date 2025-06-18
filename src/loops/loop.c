@@ -18,7 +18,7 @@ static char	*read_input_line(void)
 	char	*tmp;
 
 	if (isatty(fileno(stdin)))
-		line = readline(GREEN"MNM$ "RST);
+		line = readline("MNM$ ");
 	else
 	{
 		line = get_next_line(fileno(stdin));

@@ -227,7 +227,7 @@ Une petite documentation détaillée est disponible dans le répertoire `doc/` :
 ## 👥 Contributeurs
 
 - [Matthieu Gillieron](https://github.com/MatthieuGillieron) - Développeur
-- [Mathieu taramarcaz](https://github.com/PalmaSkry) - Développeur
+- [Mathieu Taramarcaz](https://github.com/PalmaSkry) - Développeur
 
 ## 📄 Licence
 
